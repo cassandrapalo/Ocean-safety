@@ -233,24 +233,13 @@
   }
 
   async function fetchTidalData() {
-    const now = new Date();
-    const pad = n => String(n).padStart(2,'0');
-    const dateStr = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
-    const url = `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=${STATION_ID}&product=currents_predictions&date=today&time_zone=lst_ldt&interval=MAX_SLACK&units=english&application=ocean_safety&format=json`;
-    const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
     try {
-      const res = await fetch(proxy, { cache: 'no-cache' });
+      const res = await fetch('https://dry-shadow-6fc8.cassandrapalo.workers.dev/?coops=${STATION_ID}', { cache: 'no-cache' });
       if (!res.ok) throw new Error();
       const json = await res.json();
       return parseTidal(json);
-    } catch(e) {
-      try {
-        const alt = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-        const res2 = await fetch(alt, { cache: 'no-cache' });
-        const json2 = await res2.json();
-        return parseTidal(json2);
-      } catch(e2) { return null; }
-    }
+    } catch(e) { console.error('Tidal fetch failed', e); }
+    return null;
   }
 
   function parseTidal(json) {
