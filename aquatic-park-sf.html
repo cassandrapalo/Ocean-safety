@@ -247,7 +247,7 @@
 
   async function fetchTidalData() {
     try {
-      const res = await fetch('https://dry-shadow-6fc8.cassandrapalo.workers.dev/?coops=${STATION_ID}', { cache: 'no-cache' });
+      const res = await fetch(`https://dry-shadow-6fc8.cassandrapalo.workers.dev/?coops=${STATION_ID}`, { cache: 'no-cache' });
       if (!res.ok) throw new Error();
       const json = await res.json();
       return parseTidal(json);

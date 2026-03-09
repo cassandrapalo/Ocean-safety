@@ -292,7 +292,7 @@
 
   async function fetchBuoyData() {
     try {
-      const res = await fetch('https://dry-shadow-6fc8.cassandrapalo.workers.dev/?station=${BUOY_ID}', { cache: 'no-cache' });
+      const res = await fetch(`https://dry-shadow-6fc8.cassandrapalo.workers.dev/?station=${BUOY_ID}`, { cache: 'no-cache' });
       if (!res.ok) throw new Error('Worker fetch failed');
       const text = await res.text();
       if (text && text.includes('WVHT')) return parseNOAA(text);
