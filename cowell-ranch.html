@@ -648,28 +648,28 @@
         <div class="hazard-icon">🌊</div>
         <div>
           <div class="hazard-title">Long-Period Swell & Set Waves</div>
-          <div class="hazard-desc">The warning is the swell period number above. At 15+ seconds, waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives. Multiple fatalities recorded at this beach.</div>
+          <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives. Fatalities have occurred at this beach.</div>
         </div>
       </div>
       <div class="hazard-item">
         <div class="hazard-icon">🪨</div>
         <div>
           <div class="hazard-title">Powerful Shore Break</div>
-          <div class="hazard-desc">Waves break directly onto a steep, hard beach. The force is sufficient to cause spinal injuries and immediately pull people into the water.</div>
+          <div class="hazard-desc">Waves break powerfully onto the beach. The force is sufficient to cause injury and immediately pull people into the water.</div>
         </div>
       </div>
       <div class="hazard-item">
         <div class="hazard-icon">📵</div>
         <div>
           <div class="hazard-title">No Cell Service</div>
-          <div class="hazard-desc">The trail in is over a mile. Emergency response is severely delayed. If someone is swept in, calling 911 may require hiking back to the trailhead first.</div>
+          <div class="hazard-desc">Cell service is limited or unavailable at this beach. Do not rely on your phone to call for help. The trail in is over a mile — tell someone your plans before you leave the trailhead.</div>
         </div>
       </div>
       <div class="hazard-item">
         <div class="hazard-icon">🌡️</div>
         <div>
           <div class="hazard-title">Cold Water — Year Round</div>
-          <div class="hazard-desc">Pacific water here is 50–55°F in all seasons. Cold shock can cause involuntary gasping and swimming failure within seconds of immersion.</div>
+          <div class="hazard-desc">Pacific water here is cold year round. Hypothermia can set in quickly.</div>
         </div>
       </div>
     </div>
@@ -681,11 +681,11 @@
     <div class="rules-list">
       <div class="rule-item">
         <div class="rule-num">01</div>
-        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number above is your warning. A period of 15+ seconds means sets are arriving with long quiet intervals between them — sometimes 5 to 10 minutes of calm. That calm is not safety.</div>
+        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number above is your warning. A period of 15+ seconds means sets are arriving with long quiet intervals between them — sometimes 5 to 10 minutes of calm. </div>
       </div>
       <div class="rule-item">
         <div class="rule-num">02</div>
-        <div class="rule-text"><strong>Watch and count before you move.</strong> Sit above the water line and observe for at least 15 minutes. Count the time between large waves. Learn the rhythm of the sets before you go anywhere near the shore.</div>
+        <div class="rule-text"><strong>Watch the ocean.</strong> Stay on dry sand. Do not approach wet sand or the water's edge until you have watched the ocean and learned the rhythm of the sets.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">03</div>
@@ -693,15 +693,15 @@
       </div>
       <div class="rule-item">
         <div class="rule-num">04</div>
-        <div class="rule-text"><strong>A long wait between waves is the danger, not the signal to move.</strong> The sets that kill people arrive after the longest quiet intervals. If it's been calm for several minutes, stay back — do not walk toward the water.</div>
+        <div class="rule-text"><strong>A long wait between waves is a warning.</strong> During long period swells, stay vigilant. The ocean may appear completely calm between sets. Do not be fooled. If it has been calm for several minutes, stay back. Do not walk toward the water.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">05</div>
-        <div class="rule-text"><strong>Tell someone your plans before you hike in.</strong> No cell service at this beach. Leave your destination and expected return time with someone before you leave the trailhead.</div>
+        <div class="rule-text"><strong>Keep dogs on leash.</strong> Keep dogs on leash and away from the water's edge.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">06</div>
-        <div class="rule-text"><strong>If swept in: float, don't fight.</strong> Roll onto your back, conserve energy, signal for help. Fighting the current exhausts you in minutes in 52°F water.</div>
+        <div class="rule-text"><strong>Tell someone your plans before you hike in.</strong> Cell service is limited or unavailable at this beach. Do not rely on your phone to call for help. Leave your destination and expected return time with someone before you leave the trailhead.</div>
       </div>
     </div>
   </div>
@@ -710,7 +710,7 @@
   <div class="info-section">
     <div class="section-label">How to Read Sets</div>
     <div class="swell-explainer">
-      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of apparent calm. That calm is not safety. Energy is building offshore the entire time.</p>
+      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
       <div class="set-steps">
         <div class="set-step">
           <div class="step-num">1</div>
@@ -888,6 +888,9 @@
     const hEl = document.getElementById('waveHeight');
     hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
+    const dEl = document.getElementById('swellDir');
+    dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
+    dEl.className = 'metric-value';
 
     const pEl = document.getElementById('swellPeriod');
     pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
@@ -940,9 +943,10 @@
     } else {
       // Show stale warning with no data
       renderConditions(null, true);
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
-      document.getElementById('dangerValue').className = 'danger-value level-loading';
+      document.getElementById('dangerValue').textContent = 'Check Conditions';
+      document.getElementById('dangerValue').className = 'danger-value level-high';
     }
   }
 

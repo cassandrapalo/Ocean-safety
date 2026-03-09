@@ -43,10 +43,10 @@
   .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: rgba(255,255,255,0.5); }
   .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
   .stale-warning.visible { display: block; }
-  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
   .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
   .metric-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
-  .metric-value { font-family: 'DM Serif Display', serif; font-size: 1.8rem; line-height: 1; color: var(--foam); }
+  .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
   .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 4px; }
   .metric-value.loading { color: rgba(255,255,255,0.15); }
   .period-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
@@ -71,24 +71,24 @@
   .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
   .override-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic; }
   .info-section { margin-bottom: 32px; }
-  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .section-label { font-size: 0.85rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
   .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
   .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-  .hazard-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
-  .hazard-desc { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .hazard-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
+  .hazard-desc { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
   .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
   .rule-item { display: flex; gap: 14px; align-items: flex-start; }
   .rule-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .rule-text { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+  .rule-text { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
   .rule-text strong { color: var(--foam); font-weight: 600; }
   .swell-explainer { background: rgba(26,107,138,0.1); border: 1px solid rgba(26,107,138,0.25); border-radius: 8px; padding: 24px; }
-  .explainer-intro { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 20px; }
+  .explainer-intro { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 20px; }
   .explainer-intro em { color: #7ab8cc; font-style: italic; }
   .set-steps { display: flex; flex-direction: column; gap: 12px; }
   .set-step { display: flex; gap: 14px; align-items: flex-start; }
   .step-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(122,184,204,0.6); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .step-text { font-size: 0.86rem; color: rgba(255,255,255,0.58); line-height: 1.55; }
+  .step-text { font-size: 1rem; color: rgba(255,255,255,0.58); line-height: 1.55; }
   .step-text strong { color: var(--foam); font-weight: 600; }
   .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
   .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
@@ -123,6 +123,7 @@
     <div class="metrics">
       <div class="metric"><div class="metric-label">Wave Height</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
       <div class="metric"><div class="metric-label">Swell Period</div><div class="metric-value loading" id="swellPeriod">—</div><div class="metric-unit">seconds</div></div>
+      <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.6rem;">—</div><div class="metric-unit">swell from</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
     </div>
     <div class="period-bar">
@@ -156,14 +157,14 @@
         <div class="hazard-icon">🌊</div>
         <div>
           <div class="hazard-title">Long-Period Swell & Set Waves</div>
-          <div class="hazard-desc">The warning is the swell period number above. At 15+ seconds, waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
+          <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
         </div>
       </div>
       <div class="hazard-item">
         <div class="hazard-icon">⛰️</div>
         <div>
           <div class="hazard-title">Active Cliff Erosion</div>
-          <div class="hazard-desc">The bluffs above Thornton Beach are actively eroding and collapse without warning. Stay clear of the cliff face at all times. Do not stand beneath or near the bluffs.</div>
+          <div class="hazard-desc">The bluffs above Thornton Beach are actively eroding and collapse without warning. Stay clear of the cliff face at all times. Do not stand beneath or near the bluffs. Fatalities have occurred at this beach.</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -177,7 +178,7 @@
         <div class="hazard-icon">🌡️</div>
         <div>
           <div class="hazard-title">Cold Water — Year Round</div>
-          <div class="hazard-desc">Pacific water along this coast runs 50–55°F in all seasons. Cold shock can cause involuntary gasping and swimming failure within seconds of immersion. Hypothermia sets in fast.</div>
+          <div class="hazard-desc">Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -194,34 +195,34 @@
     <div class="rules-list">
       <div class="rule-item">
         <div class="rule-num">01</div>
-        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number above is your warning. At 15+ seconds, long quiet intervals between sets can last up to 20 minutes. That calm is not safety — energy is building offshore.</div>
+        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number in the chart above is your warning. A period of 15+ seconds means sets are arriving with long, quiet intervals between them — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">02</div>
-        <div class="rule-text"><strong>Watch and count before you move.</strong> Sit above the water line and observe for at least 15 minutes. Count the time between large waves. Learn the rhythm of the sets before going anywhere near the shore.</div>
+        <div class="rule-text"><strong>Watch the ocean.</strong> Stay on dry sand. Do not approach wet sand or the water's edge until you have watched the ocean and learned the rhythm of the sets.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">03</div>
-        <div class="rule-text"><strong>Wet rocks mark where the ocean has already been.</strong> If the rocks are wet, a wave reached them recently. Stay above the wet line — always.</div>
+        <div class="rule-text"><strong>Wet rocks or sand mark where the ocean has already been.</strong> If the rocks or sand are wet, a wave reached them recently. Stay above the wet line — always.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">04</div>
-        <div class="rule-text"><strong>A long wait between waves is the danger, not the signal to move.</strong> The sets that kill people arrive after the longest quiet intervals. If it's been calm for several minutes, stay back.</div>
+        <div class="rule-text"><strong>A long wait between waves is a warning.</strong> During long period swells, stay vigilant. The ocean may appear completely calm between sets. Do not be fooled. If it has been calm for several minutes, stay back. Do not walk toward the water.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">05</div>
-        <div class="rule-text"><strong>Tell someone your plans.</strong> Leave your destination and expected return time with someone before you go.</div>
+        <div class="rule-text"><strong>Keep dogs on leash.</strong> Keep dogs on leash and away from the water's edge.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">06</div>
-        <div class="rule-text"><strong>If swept in: float, don't fight.</strong> Roll onto your back, conserve energy, signal for help. Fighting the current exhausts you in minutes in cold water.</div>
+        <div class="rule-text"><strong>Tell someone your plans.</strong> Leave your destination and expected return time with someone before you go.</div>
       </div></div>
   </div>
 
   <div class="info-section">
     <div class="section-label">How to Read Sets</div>
     <div class="swell-explainer">
-      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of apparent calm. That calm is not safety. Energy is building offshore the entire time.</p>
+      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
       <div class="set-steps">
         <div class="set-step"><div class="step-num">1</div><div class="step-text"><strong>Find a high vantage point above the water line.</strong> Do not approach the shore first. Watch from above.</div></div>
         <div class="set-step"><div class="step-num">2</div><div class="step-text"><strong>Time the quiet intervals.</strong> Count the seconds — or minutes — between large waves. This is your set interval.</div></div>
@@ -293,12 +294,19 @@
     const wvhtM = parseFloat(row['WVHT']);
     const dpd = parseFloat(row['DPD']);
     const wtmpC = parseFloat(row['WTMP']);
+    const mwd = parseFloat(row['MWD']);
     return {
       timestamp: dt,
       waveHeightFt: isNaN(wvhtM) ? null : wvhtM * 3.28084,
       swellPeriodSec: isNaN(dpd) ? null : dpd,
       waterTempF: isNaN(wtmpC) ? null : wtmpC * 9/5 + 32,
+      swellDirDeg: isNaN(mwd) ? null : mwd,
     };
+  }
+
+  function degToCompass(deg) {
+    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+    return dirs[Math.round(deg / 22.5) % 16];
   }
 
   const LEVEL_LABELS = { extreme: 'Extreme Risk', high: 'High Risk', moderate: 'Moderate Risk', low: 'Lower Risk' };
@@ -321,6 +329,9 @@
     const hEl = document.getElementById('waveHeight');
     hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
+    const dEl = document.getElementById('swellDir');
+    dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
+    dEl.className = 'metric-value';
     const pEl = document.getElementById('swellPeriod');
     pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
     pEl.className = 'metric-value';
@@ -349,9 +360,10 @@
     if (data) { renderConditions(data, false); }
     else {
       renderConditions(null, true);
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
-      document.getElementById('dangerValue').className = 'danger-value level-loading';
+      document.getElementById('dangerValue').textContent = 'Check Conditions';
+      document.getElementById('dangerValue').className = 'danger-value level-high';
     }
   }
   init();

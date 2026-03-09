@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pigeon Point — Ocean Safety</title>
+<title>Ocean Beach — Ocean Safety</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -102,10 +102,10 @@
 <div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
 <div class="content">
   <header>
-    <a class="back-link" href="sanmateo-coast.html">← San Mateo County Beaches</a>
-    <div class="county-label">San Mateo County · Pescadero</div>
-    <h1>Pigeon Point</h1>
-    <div class="beach-type">Exposed Headland · No Beach · No Lifeguard</div>
+    <a class="back-link" href="sf-coast.html">← San Francisco Beaches</a>
+    <div class="county-label">San Francisco County · Outer Sunset / Richmond</div>
+    <h1>Ocean Beach</h1>
+    <div class="beach-type">Open Coast · 3.5 Miles Long · No Lifeguard Most of Year · Extreme Rip Currents</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
@@ -132,7 +132,7 @@
       <div class="period-segment" id="seg3"></div><div class="period-segment" id="seg4"></div>
       <div class="period-segment" id="seg5"></div>
     </div>
-    <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
+    <div class="buoy-source" id="buoySource">NOAA Buoy 46026 — San Francisco Bar</div>
   </div>
 
   <div class="override-section">
@@ -161,24 +161,24 @@
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">⚡</div>
+        <div class="hazard-icon">🌀</div>
         <div>
-          <div class="hazard-title">Exposed Headland — No Safe Shore</div>
-          <div class="hazard-desc">There is no beach at Pigeon Point. The lighthouse sits on an exposed rocky headland that receives full open-ocean swell. Wave surge reaches the bluff paths and rocks with no warning. Fatalities have occurred at this beach.</div>
+          <div class="hazard-title">Most Dangerous Rip Currents in California</div>
+          <div class="hazard-desc">Ocean Beach has some of the strongest and most persistent rip currents on the entire California coast. They form constantly along the length of the beach, are invisible from shore, and move faster than any person can swim against them. Do not enter the water here unless you are an expert swimmer and experienced in rip current survival. Fatalities have occurred at this beach.</div>
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">🚷</div>
+        <div class="hazard-icon">💥</div>
         <div>
-          <div class="hazard-title">Bluff Path Wave Reach</div>
-          <div class="hazard-desc">On long-period swell days, waves reach surfaces that appear to be safely above the water. Do not stand on any rock or path that faces the open ocean.</div>
+          <div class="hazard-title">Powerful Shore Break</div>
+          <div class="hazard-desc">Waves break hard and close to shore with little warning. Shore break at Ocean Beach regularly causes spinal injuries and immediate submersion.</div>
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">🌡️</div>
+        <div class="hazard-icon">🌫️</div>
         <div>
-          <div class="hazard-title">Cold Water — Year Round</div>
-          <div class="hazard-desc">Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</div>
+          <div class="hazard-title">Hypothermia Risk</div>
+          <div class="hazard-desc">Water temperature is cold year round. Combined with the physical exertion of fighting a rip current, hypothermia and incapacitation can occur within minutes.</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -236,20 +236,20 @@
   <div class="emergency">
     <p>Ocean Emergency</p>
     <span class="number">911</span>
-    <p class="sub">San Mateo County Sheriff · (650) 363-4911</p>
-    <p class="sub" style="margin-top:6px;">CA State Parks Emergency · (800) 952-5580</p>
+    <p class="sub">SFPD · 911 · No lifeguard except summer weekends</p>
+    <p class="sub" style="margin-top:6px;">SFFD Marine Unit · (415) 558-3200</p>
   </div>
 
   <footer>
-    Live data: NOAA Buoy 46012 — Half Moon Bay<br>
-    San Mateo County Coast · California State Parks<br>
+    Live data: NOAA Buoy 46026 — San Francisco Bar<br>
+    San Francisco County · NPS Golden Gate National Recreation Area<br>
     Danger levels auto-calculated from swell height and period
   </footer>
 </div>
 
 <script>
-  const BUOY_ID = '46012';
-  const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
+  const BUOY_ID = '46026';
+  const BUOY_NAME = 'NOAA Buoy 46026 — San Francisco Bar';
   const STALE_HOURS = 3;
 
   function calcDangerLevel(heightFt, periodSec) {
