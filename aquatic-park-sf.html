@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aquatic Park — Ocean Safety</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a2540; --deep: #061829; --wave: #1a6b8a; --foam: #e8f4f8;
+    --danger: #c0392b; --warn: #e67e22; --caution: #f1c40f; --safe: #27ae60; --light: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--deep); color: var(--light); font-family: 'Libre Franklin', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .ocean-bg { position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #061829 0%, #0a2540 40%, #0d3a5c 70%, #0a2540 100%); overflow: hidden; }
+  .wave-layer { position: absolute; bottom: 0; left: -50%; width: 200%; height: 180px; opacity: 0.12; border-radius: 50% 50% 0 0; animation: swell 8s ease-in-out infinite; }
+  .wave-layer:nth-child(1) { background: #1a6b8a; animation-delay: 0s; height: 140px; }
+  .wave-layer:nth-child(2) { background: #2589a8; animation-delay: -3s; height: 100px; opacity: 0.08; }
+  .wave-layer:nth-child(3) { background: #3aa0c0; animation-delay: -5s; height: 80px; opacity: 0.06; }
+  @keyframes swell { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-5%) scaleY(1.15); } }
+  .content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
+  header { padding: 40px 0 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 36px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
+  .back-link:hover { color: rgba(255,255,255,0.6); }
+  .county-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--foam); margin-bottom: 6px; }
+  .beach-type { font-size: 0.82rem; color: rgba(255,255,255,0.35); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+  .conditions-card { border-radius: 10px; padding: 28px; margin-bottom: 24px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); transition: background 0.5s, border-color 0.5s; }
+  .conditions-card.level-extreme { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.45); }
+  .conditions-card.level-high { background: rgba(230,126,34,0.12); border: 1px solid rgba(230,126,34,0.4); }
+  .conditions-card.level-moderate { background: rgba(241,196,15,0.1); border: 1px solid rgba(241,196,15,0.35); }
+  .conditions-card.level-low { background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.35); }
+  .conditions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .danger-level { flex: 1; }
+  .danger-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .danger-value { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; transition: color 0.5s; }
+  .danger-value.level-extreme { color: #e57368; } .danger-value.level-high { color: #f0a060; }
+  .danger-value.level-moderate { color: #f5d060; } .danger-value.level-low { color: #60c080; }
+  .danger-value.level-loading { color: rgba(255,255,255,0.3); }
+  .buoy-time { text-align: right; }
+  .buoy-time .time-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); display: block; margin-bottom: 4px; }
+  .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+  .stale-warning.visible { display: block; }
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .metric-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+  .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
+  .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 4px; }
+  .metric-value.loading { color: rgba(255,255,255,0.15); }
+  .current-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
+  .current-bar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-right: 6px; white-space: nowrap; }
+  .current-segment { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); transition: background 0.5s; }
+  .current-segment.active-safe { background: var(--safe); } .current-segment.active-caution { background: var(--caution); }
+  .current-segment.active-warn { background: var(--warn); } .current-segment.active-danger { background: var(--danger); }
+  .buoy-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); text-align: right; }
+  .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
+  .tide-direction.outgoing { color: #f0a060; } .tide-direction.incoming { color: #60c080; } .tide-direction.slack { color: #f5d060; }
+  .override-section { margin-bottom: 28px; }
+  .override-toggle { background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+  .override-panel { display: none; margin-top: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; }
+  .override-panel.open { display: block; }
+  .override-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+  .override-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .override-btn { padding: 8px 16px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
+  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
+  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
+  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
+  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
+  .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
+  .override-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic; }
+  .info-section { margin-bottom: 32px; }
+  .section-label { font-size: 0.85rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+  .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
+  .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .hazard-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
+  .hazard-desc { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .rule-item { display: flex; gap: 14px; align-items: flex-start; }
+  .rule-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
+  .rule-text { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+  .rule-text strong { color: var(--foam); font-weight: 600; }
+  .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
+  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
+  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Libre Franklin', sans-serif; letter-spacing: normal; }
+  footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.18); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); line-height: 1.8; }
+  @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
+</style>
+</head>
+<body>
+<div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
+<div class="content">
+  <header>
+    <a class="back-link" href="sf-coast.html">← San Francisco Beaches</a>
+    <div class="county-label">San Francisco County · Fisherman's Wharf</div>
+    <h1>Aquatic Park</h1>
+    <div class="beach-type">Protected Cove · Open Water Swimming · Tidal Current Risk Past Breakwater</div>
+  </header>
+
+  <div class="conditions-card level-loading" id="conditionsCard">
+    <div class="conditions-header">
+      <div class="danger-level">
+        <div class="danger-label">Current Danger Level</div>
+        <div class="danger-value level-loading" id="dangerValue">Loading…</div>
+      </div>
+      <div class="buoy-time">
+        <span class="time-label">Tidal Data</span>
+        <span class="time-value" id="buoyTime">—</span>
+      </div>
+    </div>
+    <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Current Speed</div><div class="metric-value loading" id="currentSpeed">—</div><div class="metric-unit">knots</div></div>
+      <div class="metric"><div class="metric-label">Tide Direction</div><div class="metric-value loading" id="tideDir" style="font-size:1.1rem;padding-top:8px;">—</div><div class="metric-unit">at Gate</div></div>
+      <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
+    </div>
+    <div class="current-bar">
+      <span class="current-bar-label">Current Risk</span>
+      <div class="current-segment" id="seg1"></div><div class="current-segment" id="seg2"></div>
+      <div class="current-segment" id="seg3"></div><div class="current-segment" id="seg4"></div>
+      <div class="current-segment" id="seg5"></div>
+    </div>
+    <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate (SFB1203)</div>
+  </div>
+
+  <div class="override-section">
+    <button class="override-toggle" onclick="toggleOverride()">⚙ Manual Override</button>
+    <div class="override-panel" id="overridePanel">
+      <div class="override-label">Set Danger Level Manually</div>
+      <div class="override-buttons">
+        <button class="override-btn extreme" onclick="setOverride('extreme')">Extreme</button>
+        <button class="override-btn high" onclick="setOverride('high')">High</button>
+        <button class="override-btn moderate" onclick="setOverride('moderate')">Moderate</button>
+        <button class="override-btn low" onclick="setOverride('low')">Low</button>
+        <button class="override-btn auto" onclick="setOverride('auto')">↺ Auto</button>
+      </div>
+      <div class="override-note">Override stays active until page reload or reset to Auto.</div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-label">Known Hazards</div>
+    <div class="hazard-list">
+      <div class="hazard-item">
+        <div class="hazard-icon">🌊</div>
+        <div>
+          <div class="hazard-title">Tidal Currents Past the Breakwater</div>
+          <div class="hazard-desc">Aquatic Park cove is protected and popular with open water swimmers. But the moment you swim past the breakwater, you enter the full force of Golden Gate tidal currents — up to 4–5 knots on strong tides. Swimmers have been swept out and unable to return. The current data above shows live conditions at the Gate. On outgoing tide, stay inside the breakwater.</div>
+        </div>
+      </div>
+      <div class="hazard-item">
+        <div class="hazard-icon">🧊</div>
+        <div>
+          <div class="hazard-title">Cold Water Incapacitation</div>
+          <div class="hazard-desc">Bay water is cold year round. Even strong, experienced swimmers have been affected by cold water in Aquatic Park. Enter the water slowly. Never swim alone. Know the signs: gasping, inability to control breathing, sudden muscle cramping.</div>
+        </div>
+      </div>
+      <div class="hazard-item">
+        <div class="hazard-icon">⛴️</div>
+        <div>
+          <div class="hazard-title">Boat Traffic & Visibility</div>
+          <div class="hazard-desc">Aquatic Park has active ferry and recreational boat traffic nearby. In fog — common in summer — swimmers outside the cove are extremely difficult to see from boats.</div>
+        </div>
+      </div>
+      <div class="hazard-item">
+        <div class="hazard-icon">👁️</div>
+        <div>
+          <div class="hazard-title">Deceptive Calm</div>
+          <div class="hazard-desc">The cove looks inviting and safe. This is exactly what makes it dangerous for swimmers who venture past the protected area without understanding the current conditions outside.</div>
+        </div>
+      </div></div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-label">Before You Enter the Water</div>
+    <div class="rules-list">
+      <div class="rule-item">
+        <div class="rule-num">01</div>
+        <div class="rule-text"><strong>Check the tide before you swim.</strong> Outgoing tides push water hard through the Golden Gate. Swimming against a 3-4 knot current is impossible for most people. Always swim on an incoming or slack tide.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">02</div>
+        <div class="rule-text"><strong>Stay inside the breakwater.</strong> The Aquatic Park cove is protected. The moment you swim past the breakwater you enter open bay current. Many swimmers have been swept out and could not return.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">03</div>
+        <div class="rule-text"><strong>Never swim alone.</strong> Cold water incapacitation can happen fast. Always have someone watching from shore who knows where you are.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">04</div>
+        <div class="rule-text"><strong>Know the signs of cold shock.</strong> Hypothermia can set in quickly. Enter slowly and acclimate before swimming.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">05</div>
+        <div class="rule-text"><strong>Watch for boat traffic.</strong> In fog or low visibility, boat traffic in the bay is a serious hazard for swimmers who venture outside the protected cove.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">06</div>
+        <div class="rule-text"><strong>If swept out: float, signal, conserve.</strong> Do not fight the current. Float on your back, signal for help, and wait for rescue. The current will not pull you under — it will carry you. Stay calm.</div>
+      </div></div>
+  </div>
+
+  <div class="emergency">
+    <p>Ocean Emergency</p>
+    <span class="number">911</span>
+    <p class="sub">SF Police · 911 · USCG San Francisco · (415) 399-3547</p>
+    <p class="sub" style="margin-top:6px;">SFFD Marine Unit · (415) 558-3200</p>
+    <p class="sub" style="margin-top:4px;">USCG San Francisco · (415) 399-3547</p>
+  </div>
+
+  <footer>
+    Live tidal current data: NOAA CO-OPS · Golden Gate Station SFB1203<br>
+    San Francisco County · National Park Service GGNRA<br>
+    Danger levels auto-calculated from current speed and direction
+  </footer>
+</div>
+
+<script>
+  // NOAA CO-OPS tidal current predictions for Golden Gate (station SFB1203)
+  const STATION_ID = 'SFB1203';
+  const STALE_HOURS = 2;
+  let overrideLevel = null;
+  let lastData = null;
+
+  function calcDangerLevel(speedKnots, isOutgoing) {
+    if (speedKnots >= 4.0) return isOutgoing ? 'extreme' : 'high';
+    if (speedKnots >= 2.5) return isOutgoing ? 'high' : 'moderate';
+    if (speedKnots >= 1.0) return 'moderate';
+    return 'low';
+  }
+
+  async function fetchTidalData() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    const dateStr = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+    const url = `https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=${STATION_ID}&product=currents_predictions&date=today&time_zone=lst_ldt&interval=MAX_SLACK&units=english&application=ocean_safety&format=json`;
+    const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    try {
+      const res = await fetch(proxy, { cache: 'no-cache' });
+      if (!res.ok) throw new Error();
+      const json = await res.json();
+      return parseTidal(json);
+    } catch(e) {
+      try {
+        const alt = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+        const res2 = await fetch(alt, { cache: 'no-cache' });
+        const json2 = await res2.json();
+        return parseTidal(json2);
+      } catch(e2) { return null; }
+    }
+  }
+
+  function parseTidal(json) {
+    if (!json || !json.current_predictions || !json.current_predictions.cp) return null;
+    const predictions = json.current_predictions.cp;
+    const now = new Date();
+    // Find the two predictions surrounding now
+    let prev = null, next = null;
+    for (const p of predictions) {
+      const t = new Date(p.Time);
+      if (t <= now) prev = p;
+      else if (!next) next = p;
+    }
+    if (!prev) return null;
+    const speed = Math.abs(parseFloat(prev.Velocity_Major || prev.Speed || 0));
+    const isOutgoing = (prev.Type === 'ebb' || parseFloat(prev.Velocity_Major || 0) < 0);
+    return {
+      timestamp: new Date(prev.Time),
+      speedKnots: speed,
+      isOutgoing: isOutgoing,
+      direction: isOutgoing ? 'Outgoing (Ebb)' : 'Incoming (Flood)',
+      waterTempF: 56, // Bay water is consistently cold year round
+    };
+  }
+
+  const LEVEL_LABELS = { extreme: 'Extreme Risk', high: 'High Risk', moderate: 'Moderate Risk', low: 'Lower Risk' };
+
+  function renderConditions(data, stale) {
+    if (!data) {
+      document.getElementById('dangerValue').textContent = 'Data Unavailable';
+      document.getElementById('buoyTime').textContent = '—';
+      document.getElementById('currentSpeed').textContent = '—';
+      document.getElementById('tideDir').textContent = '—';
+      document.getElementById('waterTemp').textContent = '—';
+      return;
+    }
+    lastData = data;
+    const level = overrideLevel || calcDangerLevel(data.speedKnots, data.isOutgoing);
+    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
+    const dv = document.getElementById('dangerValue');
+    dv.textContent = LEVEL_LABELS[level];
+    dv.className = `danger-value level-${level}`;
+    document.getElementById('buoyTime').textContent = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    if (stale) document.getElementById('staleWarning').classList.add('visible');
+    document.getElementById('currentSpeed').textContent = data.speedKnots.toFixed(1);
+    document.getElementById('currentSpeed').className = 'metric-value';
+    const dirEl = document.getElementById('tideDir');
+    dirEl.textContent = data.isOutgoing ? '↓ Ebb' : '↑ Flood';
+    dirEl.className = `metric-value ${data.isOutgoing ? 'level-high' : 'level-low'}`;
+    dirEl.style.fontSize = '1.3rem';
+    document.getElementById('waterTemp').textContent = Math.round(data.waterTempF);
+    document.getElementById('waterTemp').className = 'metric-value';
+    const speed = data.speedKnots;
+    [['seg1',1.0,'active-safe'],['seg2',1.5,'active-caution'],['seg3',2.5,'active-warn'],['seg4',3.5,'active-danger'],['seg5',4.5,'active-danger']].forEach(([id,thresh,cls]) => {
+      const el = document.getElementById(id);
+      el.className = 'current-segment';
+      if (speed >= thresh) el.classList.add(cls);
+    });
+    document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate (SFB1203)' + (overrideLevel ? ' · Manual Override Active' : '');
+  }
+
+  function toggleOverride() { document.getElementById('overridePanel').classList.toggle('open'); }
+  function setOverride(level) {
+    document.querySelectorAll('.override-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+    overrideLevel = level === 'auto' ? null : level;
+    if (lastData) renderConditions(lastData, false);
+  }
+
+  async function init() {
+    const data = await fetchTidalData();
+    if (data) { renderConditions(data, false); }
+    else {
+      renderConditions(null, true);
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
+      document.getElementById('staleWarning').classList.add('visible');
+      document.getElementById('dangerValue').textContent = 'Check Conditions';
+      document.getElementById('dangerValue').className = 'danger-value level-high';
+    }
+  }
+  init();
+  setInterval(init, 15 * 60 * 1000);
+</script>
+</body>
+</html>
