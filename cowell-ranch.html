@@ -892,7 +892,6 @@
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
     if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
-    dEl.className = 'metric-value';
 
     const pEl = document.getElementById('swellPeriod');
     pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';

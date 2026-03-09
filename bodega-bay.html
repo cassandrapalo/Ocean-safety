@@ -282,7 +282,44 @@
 
 <script>
   const BUOY_ID = '46013';
-  const BUOY_NAME = 'NOAA Buoy 46013 — Bodega Bay< 50 ? 2000 : 1900);
+  const BUOY_NAME = 'NOAA Buoy 46013 — Bodega Bay';
+  const STALE_HOURS = 3;
+
+  // Risk levels — NOAA surf zone thresholds, NorCal
+  function calcDangerLevel(heightFt, periodSec) {
+    if (heightFt >= 15 || periodSec >= 20)                    return 'extreme';
+    if (heightFt >= 10 && periodSec >= 15)                    return 'extreme';
+    if (heightFt >= 8  || (heightFt >= 5 && periodSec >= 14)) return 'high';
+    if (heightFt >= 4  || periodSec >= 14)                    return 'moderate';
+    return 'low';
+  }
+
+  let overrideLevel = null;
+  let lastData = null;
+
+  async function fetchBuoyData() {
+    try {
+      const res = await fetch(`https://dry-shadow-6fc8.cassandrapalo.workers.dev/?station=${BUOY_ID}`, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Worker fetch failed');
+      const text = await res.text();
+      if (text && text.includes('WVHT')) return parseNOAA(text);
+    } catch(e) {
+      console.error('Buoy fetch failed:', e);
+    }
+    return null;
+  }
+
+  function parseNOAA(text) {
+    const allLines = text.trim().split('\n');
+    const headerLine = allLines.find(l => l.startsWith('#YY'));
+    if (!headerLine) return null;
+    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
+    const dataLine = allLines.find(l => !l.startsWith('#'));
+    if (!dataLine) return null;
+    const vals = dataLine.trim().split(/[ \t]+/);
+    const row = {};
+    headers.forEach((h, i) => { row[h] = vals[i]; });
+    const yr  = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
     const ts  = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']),
                                   parseInt(row['hh']), parseInt(row['mm'])));
     const wvhtM = parseFloat(row['WVHT']);
@@ -351,59 +388,6 @@
     event.target.classList.add('selected');
     overrideLevel = level === 'auto' ? null : level;
     if (lastData) renderConditions(lastData, false);
-  }
-
-  async function fetchBuoyData() {
-    try {
-      const res = await fetch(`https://dry-shadow-6fc8.cassandrapalo.workers.dev/?station=${BUOY_ID}`, { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Worker fetch failed');
-      const text = await res.text();
-      if (text && text.includes('WVHT')) return parseNOAA(text);
-    } catch(e) {
-      console.error('Buoy fetch failed:', e);
-    }
-    return null;
-  }
-
-  function parseNOAA(text) {
-    const allLines = text.trim().split('\n');
-    const headerLine = allLines.find(l => l.startsWith('#YY'));
-    if (!headerLine) return null;
-    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
-    const dataLine = allLines.find(l => !l.startsWith('#'));
-    if (!dataLine) return null;
-    const vals = dataLine.trim().split(/[ \t]+/);
-    const row = {};
-    headers.forEach((h, i) => { row[h] = vals[i]; });
-    const yr  = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
-    const ts  = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']),
-                                  parseInt(row['hh']), parseInt(row['mm'])));
-    const wvhtM = parseFloat(row['WVHT']);
-    const dpd   = parseFloat(row['DPD']);
-    const wtmpC = parseFloat(row['WTMP']);
-    const mwd   = parseFloat(row['MWD']);
-    return {
-      timestamp:      ts,
-      waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
-      swellPeriodSec: isNaN(dpd)   ? null : dpd,
-      waterTempF:     isNaN(wtmpC) ? null : wtmpC * 9/5 + 32,
-      swellDirDeg:    isNaN(mwd)   ? null : mwd,
-    };
-  }
-
-  function degToCompass(deg) {
-    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE',
-                  'S','SSW','SW','WSW','W','WNW','NW','NNW'];
-    return dirs[Math.round(deg / 22.5) % 16];
-  }
-
-  // Risk levels — NOAA surf zone thresholds, NorCal
-  function calcDangerLevel(heightFt, periodSec) {
-    if (heightFt >= 15 || periodSec >= 20)                    return 'extreme';
-    if (heightFt >= 10 && periodSec >= 15)                    return 'extreme';
-    if (heightFt >= 8  || (heightFt >= 5 && periodSec >= 14)) return 'high';
-    if (heightFt >= 4  || periodSec >= 14)                    return 'moderate';
-    return 'low';
   }
 
   async function init() {
