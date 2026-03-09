@@ -280,15 +280,28 @@
 
 <script>
   const BUOY_ID = '46012';
+  const BEACH_FACING = 270;
   const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
   const STALE_HOURS = 3;
 
-  // Risk levels — standard beach, NorCal
-  function calcDangerLevel(heightFt, periodSec) {
-    if (periodSec >= 20 || (heightFt >= 10 && periodSec >= 16)) return 'extreme';
-    if (periodSec >= 15 || (heightFt >= 8  && periodSec >= 12) || heightFt >= 10) return 'high';
-    if (periodSec >= 12)                                         return 'moderate';
-    return 'low';
+  function applyDirectionMod(level, swellDirDeg) {
+    if (swellDirDeg === null || swellDirDeg === undefined) return level;
+    const diff = Math.abs(((swellDirDeg - BEACH_FACING + 180) % 360) - 180);
+    const LEVELS = ['low','moderate','high','extreme'];
+    const idx = LEVELS.indexOf(level);
+    if (diff <= 70)  return level;
+    if (diff <= 120) return LEVELS[Math.max(0, idx - 1)];
+    return LEVELS[Math.max(0, idx - 2)];
+  }
+
+  function calcDangerLevel(heightFt, periodSec, swellDirDeg) {
+    // Break beach, standard — period is primary hazard
+    let level;
+    if (periodSec >= 20 || (heightFt >= 10 && periodSec >= 16))             level = 'extreme';
+    else if (periodSec >= 15 || (heightFt >= 8 && periodSec >= 12) || heightFt >= 10) level = 'high';
+    else if (periodSec >= 12)                                                level = 'moderate';
+    else                                                                     level = 'low';
+    return applyDirectionMod(level, swellDirDeg);
   }
 
   let overrideLevel = null;
@@ -364,7 +377,7 @@
       return;
     }
     lastData = data;
-    const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0);
+    const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
     document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
     const dv = document.getElementById('dangerValue');
     dv.textContent = LEVEL_LABELS[level];

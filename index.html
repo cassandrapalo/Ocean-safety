@@ -458,7 +458,7 @@
       <div class="county-meta">Daly City → Año Nuevo · Buoy 46012</div>
     </div>
     <div class="beach-grid">
-      <a class="beach-card" href="thornton-beach.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="thornton-beach.html" data-facing="270" data-surge="false" data-buoy="46012" data-high-risk="true">
         <div class="beach-card-name">Thornton State Beach</div>
         <div class="beach-card-type">Daly City · Bluffs</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -468,12 +468,12 @@
         <div class="beach-card-type">Daly City · Rock Shelf</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="rockaway-beach.html" data-buoy="46012">
+      <a class="beach-card" href="rockaway-beach.html" data-facing="260" data-surge="false" data-buoy="46012">
         <div class="beach-card-name">Rockaway Beach</div>
         <div class="beach-card-type">Pacifica · Sandy</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="linda-mar.html" data-buoy="46012">
+      <a class="beach-card" href="linda-mar.html" data-facing="280" data-surge="false" data-buoy="46012">
         <div class="beach-card-name">Linda Mar</div>
         <div class="beach-card-type">Pacifica · Sandy</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -518,7 +518,7 @@
         <div class="beach-card-type">Pescadero · Tide Pools</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="pigeon-point.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="pigeon-point.html" data-facing="250" data-surge="true" data-buoy="46012" data-high-risk="true">
         <div class="beach-card-name">Pigeon Point</div>
         <div class="beach-card-type">Pescadero · Headland</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -543,12 +543,12 @@
         <div class="beach-card-type">Outer Sunset · Open Coast</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="china-beach-sf.html" data-buoy="46026">
+      <a class="beach-card" href="china-beach-sf.html" data-facing="300" data-surge="true" data-buoy="46026">
         <div class="beach-card-name">China Beach</div>
         <div class="beach-card-type">Sea Cliff · Cove</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="baker-beach-sf.html" data-buoy="46026" data-high-risk="true">
+      <a class="beach-card" href="baker-beach-sf.html" data-facing="310" data-surge="true" data-buoy="46026" data-high-risk="true">
         <div class="beach-card-name">Baker Beach</div>
         <div class="beach-card-type">Presidio · Sandy</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -578,7 +578,7 @@
         <div class="beach-card-type">Stinson · Sandy · Rip Currents</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="muir-beach.html" data-buoy="46026">
+      <a class="beach-card" href="muir-beach.html" data-facing="210" data-surge="true" data-buoy="46026">
         <div class="beach-card-name">Muir Beach</div>
         <div class="beach-card-type">Marin Headlands · Cove</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -608,7 +608,7 @@
         <div class="beach-card-type">Bodega · Sandy · Creek Mouth</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="goat-rock-beach.html" data-buoy="46013" data-high-risk="true">
+      <a class="beach-card" href="goat-rock-beach.html" data-facing="240" data-surge="true" data-buoy="46013" data-high-risk="true">
         <div class="beach-card-name">Goat Rock Beach</div>
         <div class="beach-card-type">Jenner · Rocky · River Mouth</div>
         <span class="risk-pill">—</span><span class="beach-period"></span>
@@ -677,19 +677,34 @@
     return dirs[Math.round(deg / 22.5) % 16];
   }
 
-  function calcDanger(heightFt, periodSec, highRisk) {
+  function calcDanger(heightFt, periodSec, highRisk, surge, facingDeg, swellDirDeg) {
     const h = heightFt || 0, p = periodSec || 0;
-    if (highRisk) {
-      if (p >= 18 || (h >= 8  && p >= 15))                    return 'extreme';
-      if (p >= 14 || (h >= 6  && p >= 12) || h >= 10)         return 'high';
-      if (p >= 12)                                             return 'moderate';
-      return 'low';
+    let level;
+    if (surge) {
+      if (h >= 10 || (h >= 7 && p >= 15))              level = 'extreme';
+      else if (h >= 7 || (h >= 5 && p >= 12))          level = 'high';
+      else if (h >= 4 || p >= 12)                       level = 'moderate';
+      else                                              level = 'low';
+    } else if (highRisk) {
+      if (p >= 18 || (h >= 8 && p >= 15))              level = 'extreme';
+      else if (p >= 14 || (h >= 6 && p >= 12) || h >= 10) level = 'high';
+      else if (p >= 12)                                 level = 'moderate';
+      else                                              level = 'low';
     } else {
-      if (p >= 20 || (h >= 10 && p >= 16))                    return 'extreme';
-      if (p >= 15 || (h >= 8  && p >= 12) || h >= 10)         return 'high';
-      if (p >= 12)                                             return 'moderate';
-      return 'low';
+      if (p >= 20 || (h >= 10 && p >= 16))             level = 'extreme';
+      else if (p >= 15 || (h >= 8 && p >= 12) || h >= 10) level = 'high';
+      else if (p >= 12)                                 level = 'moderate';
+      else                                              level = 'low';
     }
+    // Direction modifier
+    if (swellDirDeg !== null && swellDirDeg !== undefined && facingDeg !== undefined) {
+      const diff = Math.abs(((swellDirDeg - facingDeg + 180) % 360) - 180);
+      const LEVELS = ['low','moderate','high','extreme'];
+      const idx = LEVELS.indexOf(level);
+      if (diff > 120)     level = LEVELS[Math.max(0, idx - 2)];
+      else if (diff > 70) level = LEVELS[Math.max(0, idx - 1)];
+    }
+    return level;
   }
 
   const LABELS = { extreme: 'Extreme Risk', high: 'High Risk', moderate: 'Moderate Risk', low: 'Lower Risk' };
@@ -709,7 +724,13 @@
       const pill = card.querySelector('.risk-pill');
       const periodEl = card.querySelector('.beach-period');
       if (!data) { if (pill) pill.textContent = 'Data unavailable'; return; }
-      const level = calcDanger(data.waveHeightFt, data.swellPeriodSec, card.dataset.highRisk === 'true');
+      const level = calcDanger(
+        data.waveHeightFt, data.swellPeriodSec,
+        card.dataset.highRisk === 'true',
+        card.dataset.surge === 'true',
+        parseInt(card.dataset.facing),
+        data.swellDirDeg
+      );
       card.classList.remove('level-extreme','level-high','level-moderate','level-low');
       card.classList.add(`level-${level}`);
       if (pill) { pill.textContent = LABELS[level]; pill.className = `risk-pill level-${level}`; }
