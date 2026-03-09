@@ -371,7 +371,9 @@
     letter-spacing: 0.04em;
     text-align: center;
   }
-</style>
+
+  .disclaimer-inline { font-size: 0.82rem; color: #7ab8cc; opacity: 0.85; margin-top: 0.75rem; line-height: 1.5; max-width: 640px; }
+  </style>
 </head>
 <body>
 
@@ -387,6 +389,7 @@
     <div class="site-tag">oceansafety.info</div>
     <h1>Know the ocean<br>before you<br><em>enter it.</em></h1>
     <p class="hero-body">Real-time swell conditions and safety information for Northern California beaches. Select your beach below.</p>
+    <p class="disclaimer-inline">This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
     <div class="swell-warning">
       <div class="icon">⚠️</div>
       <p><strong>Read the swell period before you approach the water.</strong> Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore.</p>
@@ -677,16 +680,14 @@
   function calcDanger(heightFt, periodSec, highRisk) {
     const h = heightFt || 0, p = periodSec || 0;
     if (highRisk) {
-      if (h >= 12 || p >= 20)                    return 'extreme';
-      if (h >= 8  && p >= 12)                    return 'extreme';
-      if (h >= 5  && p >= 10)                    return 'high';
-      if (h >= 4  || p >= 12)                    return 'moderate';
+      if (p >= 18 || (h >= 8  && p >= 15))                    return 'extreme';
+      if (p >= 14 || (h >= 6  && p >= 12) || h >= 10)         return 'high';
+      if (p >= 12)                                             return 'moderate';
       return 'low';
     } else {
-      if (h >= 15 || p >= 20)                    return 'extreme';
-      if (h >= 10 && p >= 15)                    return 'extreme';
-      if (h >= 8  || (h >= 5 && p >= 14))        return 'high';
-      if (h >= 4  || p >= 14)                    return 'moderate';
+      if (p >= 20 || (h >= 10 && p >= 16))                    return 'extreme';
+      if (p >= 15 || (h >= 8  && p >= 12) || h >= 10)         return 'high';
+      if (p >= 12)                                             return 'moderate';
       return 'low';
     }
   }

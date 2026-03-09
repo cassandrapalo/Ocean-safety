@@ -280,10 +280,9 @@
 
   // Risk levels — high hazard beach, NorCal
   function calcDangerLevel(heightFt, periodSec) {
-    if (heightFt >= 12 || periodSec >= 20)                    return 'extreme';
-    if (heightFt >= 8  && periodSec >= 12)                    return 'extreme';
-    if (heightFt >= 5  && periodSec >= 10)                    return 'high';
-    if (heightFt >= 4  || periodSec >= 12)                    return 'moderate';
+    if (periodSec >= 18 || (heightFt >= 8  && periodSec >= 15)) return 'extreme';
+    if (periodSec >= 14 || (heightFt >= 6  && periodSec >= 12) || heightFt >= 10) return 'high';
+    if (periodSec >= 12)                                         return 'moderate';
     return 'low';
   }
 

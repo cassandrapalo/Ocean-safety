@@ -285,12 +285,11 @@
   const BUOY_NAME = 'NOAA Buoy 46013 — Bodega Bay';
   const STALE_HOURS = 3;
 
-  // Risk levels — NOAA surf zone thresholds, NorCal
+  // Risk levels — standard beach, NorCal
   function calcDangerLevel(heightFt, periodSec) {
-    if (heightFt >= 15 || periodSec >= 20)                    return 'extreme';
-    if (heightFt >= 10 && periodSec >= 15)                    return 'extreme';
-    if (heightFt >= 8  || (heightFt >= 5 && periodSec >= 14)) return 'high';
-    if (heightFt >= 4  || periodSec >= 14)                    return 'moderate';
+    if (periodSec >= 20 || (heightFt >= 10 && periodSec >= 16)) return 'extreme';
+    if (periodSec >= 15 || (heightFt >= 8  && periodSec >= 12) || heightFt >= 10) return 'high';
+    if (periodSec >= 12)                                         return 'moderate';
     return 'low';
   }
 
