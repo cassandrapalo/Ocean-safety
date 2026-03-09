@@ -645,11 +645,20 @@
     const headerLine = allLines.find(l => l.startsWith('#YY'));
     if (!headerLine) return null;
     const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
-    const dataLine = allLines.find(l => !l.startsWith('#'));
-    if (!dataLine) return null;
-    const vals = dataLine.trim().split(/[ \t]+/);
-    const row = {};
-    headers.forEach((h, i) => { row[h] = vals[i]; });
+    const dataLines = allLines.filter(l => !l.startsWith('#'));
+    if (!dataLines.length) return null;
+    let row = null;
+    for (const line of dataLines.slice(0, 10)) {
+      const vals = line.trim().split(/[ \t]+/);
+      const r = {};
+      headers.forEach((h, i) => { r[h] = vals[i]; });
+      if (r['WVHT'] && r['WVHT'] !== 'MM') { row = r; break; }
+    }
+    if (!row) {
+      const vals = dataLines[0].trim().split(/[ \t]+/);
+      row = {};
+      headers.forEach((h, i) => { row[h] = vals[i]; });
+    }
     const wvhtM = parseFloat(row['WVHT']);
     const dpd   = parseFloat(row['DPD']);
     const mwd   = parseFloat(row['MWD']);
