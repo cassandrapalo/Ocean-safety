@@ -418,6 +418,23 @@
         </div>
       </div>
     </div>
+    <div class="buoy-card">
+      <div class="buoy-card-label">Buoy 46013 — Bodega Bay · Marin/Sonoma Coast</div>
+      <div class="buoy-stats">
+        <div>
+          <span class="buoy-stat-val loading" id="b46013-height">—</span>
+          <span class="buoy-stat-unit">ft height</span>
+        </div>
+        <div>
+          <span class="buoy-stat-val loading" id="b46013-period">—</span>
+          <span class="buoy-stat-unit">sec period</span>
+        </div>
+        <div>
+          <span class="buoy-stat-val loading" id="b46013-dir" style="font-size:1.2rem;">—</span>
+          <span class="buoy-stat-unit">direction</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- SAN MATEO -->
@@ -539,24 +556,24 @@
   <div class="county-section">
     <div class="county-header">
       <div class="county-name">Marin County</div>
-      <div class="county-meta">Coming Soon</div>
+      <div class="county-meta">Stinson → Point Reyes · Buoys 46026 · 46013</div>
     </div>
     <div class="beach-grid">
-      <div class="beach-card coming-soon">
+      <a class="beach-card" href="stinson-beach.html" data-buoy="46026">
         <div class="beach-card-name">Stinson Beach</div>
-        <div class="beach-card-type">Stinson · Sandy</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
-      <div class="beach-card coming-soon">
+        <div class="beach-card-type">Stinson · Sandy · Rip Currents</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
+      <a class="beach-card" href="muir-beach.html" data-buoy="46026">
         <div class="beach-card-name">Muir Beach</div>
-        <div class="beach-card-type">Muir · Cove</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
-      <div class="beach-card coming-soon">
-        <div class="beach-card-name">Point Reyes</div>
-        <div class="beach-card-type">Point Reyes · Remote</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
+        <div class="beach-card-type">Marin Headlands · Cove</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
+      <a class="beach-card" href="point-reyes-beach.html" data-buoy="46013" data-high-risk="true">
+        <div class="beach-card-name">Point Reyes Beach</div>
+        <div class="beach-card-type">Point Reyes · Exposed · Remote</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
     </div>
   </div>
 
@@ -564,24 +581,24 @@
   <div class="county-section">
     <div class="county-header">
       <div class="county-name">Sonoma County</div>
-      <div class="county-meta">Coming Soon</div>
+      <div class="county-meta">Bodega Bay → Jenner · Buoy 46013</div>
     </div>
     <div class="beach-grid">
-      <div class="beach-card coming-soon">
+      <a class="beach-card" href="bodega-bay.html" data-buoy="46013">
         <div class="beach-card-name">Bodega Bay</div>
-        <div class="beach-card-type">Bodega · Bay/Ocean</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
-      <div class="beach-card coming-soon">
-        <div class="beach-card-name">Salmon Creek</div>
-        <div class="beach-card-type">Bodega · Sandy</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
-      <div class="beach-card coming-soon">
-        <div class="beach-card-name">Goat Rock</div>
-        <div class="beach-card-type">Jenner · Rocky</div>
-        <span class="risk-pill">Coming Soon</span>
-      </div>
+        <div class="beach-card-type">Bodega · Bay and Ocean</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
+      <a class="beach-card" href="salmon-creek-beach.html" data-buoy="46013">
+        <div class="beach-card-name">Salmon Creek Beach</div>
+        <div class="beach-card-type">Bodega · Sandy · Creek Mouth</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
+      <a class="beach-card" href="goat-rock-beach.html" data-buoy="46013" data-high-risk="true">
+        <div class="beach-card-name">Goat Rock Beach</div>
+        <div class="beach-card-type">Jenner · Rocky · River Mouth</div>
+        <span class="risk-pill">—</span><span class="beach-period"></span>
+      </a>
     </div>
   </div>
 
@@ -627,19 +644,19 @@
     const allLines = text.trim().split('\n');
     const headerLine = allLines.find(l => l.startsWith('#YY'));
     if (!headerLine) return null;
-    const headers = headerLine.replace(/^#/, '').trim().split(/\s+/);
+    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
     const dataLine = allLines.find(l => !l.startsWith('#'));
     if (!dataLine) return null;
-    const vals = dataLine.trim().split(/\s+/);
+    const vals = dataLine.trim().split(/[ \t]+/);
     const row = {};
     headers.forEach((h, i) => { row[h] = vals[i]; });
     const wvhtM = parseFloat(row['WVHT']);
     const dpd   = parseFloat(row['DPD']);
     const mwd   = parseFloat(row['MWD']);
     return {
-      waveHeightFt: isNaN(wvhtM) ? null : wvhtM * 3.28084,
-      swellPeriodSec: isNaN(dpd) ? null : dpd,
-      swellDirDeg: isNaN(mwd) ? null : mwd,
+      waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
+      swellPeriodSec: isNaN(dpd)   ? null : dpd,
+      swellDirDeg:    isNaN(mwd)   ? null : mwd,
     };
   }
 
@@ -691,11 +708,14 @@
   }
 
   async function init() {
-    const [d12, d26] = await Promise.all([fetchBuoy('46012'), fetchBuoy('46026')]);
+    const [d12, d26, d13] = await Promise.all([
+      fetchBuoy('46012'), fetchBuoy('46026'), fetchBuoy('46013')
+    ]);
     updateBanner('46012', d12);
     updateBanner('46026', d26);
     updateCards('46012', d12);
     updateCards('46026', d26);
+    updateCards('46013', d13);
   }
 
   init();

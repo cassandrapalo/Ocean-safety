@@ -40,6 +40,16 @@
   .danger-value.level-loading { color: rgba(255,255,255,0.3); }
   .buoy-time { text-align: right; }
   .buoy-time .time-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); display: block; margin-bottom: 4px; }
+  .buoy-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: #7ab8cc;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 3px;
+  }
+  .buoy-link:hover { text-decoration: underline; }
   .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: rgba(255,255,255,0.5); }
   .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
   .stale-warning.visible { display: block; }
@@ -118,6 +128,7 @@
       <div class="buoy-time">
         <span class="time-label">Buoy Reading</span>
         <span class="time-value" id="buoyTime">—</span>
+        <a class="buoy-link" id="buoyLink" href="#" target="_blank">View Buoy ↗</a>
       </div>
     </div>
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
@@ -186,7 +197,7 @@
         <div class="hazard-icon">🚫</div>
         <div>
           <div class="hazard-title">No Year-Round Lifeguard Posted</div>
-          <div class="hazard-desc">CA State Parks lifeguards patrol state beaches. There is no year-round posted lifeguard. Emergency response times are long.</div>
+          <div class="hazard-desc">CA State Parks lifeguards patrol state beaches. There is no year-round posted lifeguard. Emergency response times on remote beaches may take longer than in urban environments.</div>
         </div>
       </div></div>
   </div>
@@ -257,10 +268,11 @@
   const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
   const STALE_HOURS = 3;
 
+  // Risk levels aligned with NOAA surf zone advisory thresholds for NorCal
   function calcDangerLevel(heightFt, periodSec) {
-    if (periodSec >= 15 || heightFt >= 10) return 'extreme';
-    if (periodSec >= 10 || heightFt >= 5)  return 'high';
-    if (periodSec >= 7  || heightFt >= 3)  return 'moderate';
+    if (periodSec >= 15 || heightFt >= 15) return 'extreme';
+    if (periodSec >= 12 || heightFt >= 8)  return 'high';
+    if (periodSec >= 9  || heightFt >= 4)  return 'moderate';
     return 'low';
   }
 
@@ -277,15 +289,13 @@
     for (const proxy of proxies) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
+        const tid = setTimeout(() => controller.abort(), 7000);
         const res = await fetch(proxy, { cache: 'no-cache', signal: controller.signal });
-        clearTimeout(timeout);
+        clearTimeout(tid);
         if (!res.ok) continue;
         const text = await res.text();
         if (text && text.includes('WVHT')) return parseNOAA(text);
-      } catch(e) {
-        console.warn('Proxy failed:', proxy, e.message);
-      }
+      } catch(e) { /* try next */ }
     }
     return null;
   }
@@ -294,29 +304,31 @@
     const allLines = text.trim().split('\n');
     const headerLine = allLines.find(l => l.startsWith('#YY'));
     if (!headerLine) return null;
-    const headers = headerLine.replace(/^#/, '').trim().split(/\s+/);
+    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
     const dataLine = allLines.find(l => !l.startsWith('#'));
     if (!dataLine) return null;
-    const vals = dataLine.trim().split(/\s+/);
+    const vals = dataLine.trim().split(/[ \t]+/);
     const row = {};
     headers.forEach((h, i) => { row[h] = vals[i]; });
-    const yr = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
-    const dt = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']), parseInt(row['hh']), parseInt(row['mm'])));
+    const yr  = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
+    const ts  = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']),
+                                  parseInt(row['hh']), parseInt(row['mm'])));
     const wvhtM = parseFloat(row['WVHT']);
-    const dpd = parseFloat(row['DPD']);
+    const dpd   = parseFloat(row['DPD']);
     const wtmpC = parseFloat(row['WTMP']);
-    const mwd = parseFloat(row['MWD']);
+    const mwd   = parseFloat(row['MWD']);
     return {
-      timestamp: dt,
-      waveHeightFt: isNaN(wvhtM) ? null : wvhtM * 3.28084,
-      swellPeriodSec: isNaN(dpd) ? null : dpd,
-      waterTempF: isNaN(wtmpC) ? null : wtmpC * 9/5 + 32,
-      swellDirDeg: isNaN(mwd) ? null : mwd,
+      timestamp:      ts,
+      waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
+      swellPeriodSec: isNaN(dpd)   ? null : dpd,
+      waterTempF:     isNaN(wtmpC) ? null : wtmpC * 9/5 + 32,
+      swellDirDeg:    isNaN(mwd)   ? null : mwd,
     };
   }
 
   function degToCompass(deg) {
-    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE',
+                  'S','SSW','SW','WSW','W','WNW','NW','NNW'];
     return dirs[Math.round(deg / 22.5) % 16];
   }
 
@@ -335,11 +347,17 @@
     dv.textContent = LEVEL_LABELS[level];
     dv.className = `danger-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
-    document.getElementById('buoyTime').textContent = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) + ' UTC';
+    const tsEl = document.getElementById('buoyTime');
+    tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric', timeZone:'UTC'})
+      + ' ' + data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', timeZone:'UTC'}) + ' UTC';
+    const linkEl = document.getElementById('buoyLink');
+    if (linkEl) linkEl.href = `https://www.ndbc.noaa.gov/station_page.php?station=${BUOY_ID}`;
     if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
     const hEl = document.getElementById('waveHeight');
     hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
+    const dEl = document.getElementById('swellDir');
+    if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
     const dEl = document.getElementById('swellDir');
     dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
     dEl.className = 'metric-value';

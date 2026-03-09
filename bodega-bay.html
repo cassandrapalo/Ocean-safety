@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mussel Rock — Ocean Safety</title>
+<title>Bodega Bay — Ocean Safety</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -112,10 +112,10 @@
 <div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
 <div class="content">
   <header>
-    <a class="back-link" href="sanmateo-coast.html">← San Mateo County Beaches</a>
-    <div class="county-label">San Mateo County · Daly City</div>
-    <h1>Mussel Rock</h1>
-    <div class="beach-type">Rock Shelf · No Beach · No Lifeguard</div>
+    <a class="back-link" href="index.html">← Sonoma County Beaches</a>
+    <div class="county-label">Sonoma County · Año Nuevo</div>
+    <h1>Bodega Bay</h1>
+    <div class="beach-type">Bay and Ocean Beach · Sonoma County · Exposed Coast · No Year-Round Lifeguard</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
@@ -143,7 +143,7 @@
       <div class="period-segment" id="seg3"></div><div class="period-segment" id="seg4"></div>
       <div class="period-segment" id="seg5"></div>
     </div>
-    <div class="buoy-source" id="buoySource">NOAA Buoy 46026 — San Francisco Bar</div>
+    <div class="buoy-source" id="buoySource">NOAA Buoy 46013 — Bodega Bay</div>
   </div>
 
   <div class="override-section">
@@ -172,17 +172,25 @@
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">🪨</div>
+        <div class="hazard-icon">🦭</div>
         <div>
-          <div class="hazard-title">Exposed Rock Shelf</div>
-          <div class="hazard-desc">There is no sandy beach here. Visitors stand on exposed rock shelves directly in the wave impact zone. When a set arrives, there is nowhere to run. Fatalities have occurred at this beach.</div>
+          <div class="hazard-title">Low-Lying Point — Waves Sweep the Land</div>
+          <div class="hazard-desc">Año Nuevo Point sits barely above sea level. On long-period swell days, waves sweep across the entire point. There is no high ground to retreat to. Stay on designated paths only, and only with a guide during seal season.</div>
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">💧</div>
+        <div class="hazard-icon">🚷</div>
         <div>
-          <div class="hazard-title">Surge & Backwash</div>
-          <div class="hazard-desc">Even modest swell produces powerful surge across the rocks. Backwash pulls people off their feet and into the water before they can react.</div>
+          <div class="hazard-title">No Unauthorized Access to Point</div>
+          <div class="hazard-desc">The point itself is closed to unguided visitors during elephant seal season. Boundary signs exist for your safety — not just for the seals.</div>
+        </div>
+      </div>
+      
+      <div class="hazard-item">
+        <div class="hazard-icon">⚡</div>
+        <div>
+          <div class="hazard-title">Rip Currents</div>
+          <div class="hazard-desc">Rip currents are not always visible. They can appear as calmer, clearer water with less white water than the surf on either side — which can make them look like a better place to swim. They are not. If you see a break in the surf line with calmer water, stay out.</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -247,65 +255,20 @@
   <div class="emergency">
     <p>Ocean Emergency</p>
     <span class="number">911</span>
-    <p class="sub">Daly City Fire · (650) 991-8100</p>
+    <p class="sub">Bodega Bay · (650) 879-2025</p>
     <p class="sub" style="margin-top:6px;">CA State Parks Emergency · (800) 952-5580</p>
   </div>
 
   <footer>
-    Live data: NOAA Buoy 46026 — San Francisco Bar<br>
-    San Mateo County Coast · California State Parks<br>
+    Live data: NOAA Buoy 46013 — Bodega Bay<br>
+    Sonoma County Coast · California State Parks<br>
     Danger levels auto-calculated from swell height and period
   </footer>
 </div>
 
 <script>
-  const BUOY_ID = '46026';
-  const BUOY_NAME = 'NOAA Buoy 46026 — San Francisco Bar';
-  const STALE_HOURS = 3;
-
-  // Risk levels aligned with NOAA surf zone advisory thresholds — high hazard beach
-  function calcDangerLevel(heightFt, periodSec) {
-    if (periodSec >= 12 || heightFt >= 8)  return 'extreme';
-    if (periodSec >= 9  || heightFt >= 5)  return 'high';
-    if (periodSec >= 7  || heightFt >= 3)  return 'moderate';
-    return 'low';
-  }
-
-  let overrideLevel = null;
-  let lastData = null;
-
-  async function fetchBuoyData() {
-    const url = `https://www.ndbc.noaa.gov/data/realtime2/${BUOY_ID}.txt`;
-    const proxies = [
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-      `https://corsproxy.io/?${encodeURIComponent(url)}`,
-      `https://api.codetabs.com/v1/proxy?quest=${url}`,
-    ];
-    for (const proxy of proxies) {
-      try {
-        const controller = new AbortController();
-        const tid = setTimeout(() => controller.abort(), 7000);
-        const res = await fetch(proxy, { cache: 'no-cache', signal: controller.signal });
-        clearTimeout(tid);
-        if (!res.ok) continue;
-        const text = await res.text();
-        if (text && text.includes('WVHT')) return parseNOAA(text);
-      } catch(e) { /* try next */ }
-    }
-    return null;
-  }
-
-  function parseNOAA(text) {
-    const allLines = text.trim().split('\n');
-    const headerLine = allLines.find(l => l.startsWith('#YY'));
-    if (!headerLine) return null;
-    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
-    const dataLine = allLines.find(l => !l.startsWith('#'));
-    if (!dataLine) return null;
-    const vals = dataLine.trim().split(/[ \t]+/);
-    const row = {};
-    headers.forEach((h, i) => { row[h] = vals[i]; });
-    const yr  = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
+  const BUOY_ID = '46013';
+  const BUOY_NAME = 'NOAA Buoy 46013 — Bodega Bay< 50 ? 2000 : 1900);
     const ts  = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']),
                                   parseInt(row['hh']), parseInt(row['mm'])));
     const wvhtM = parseFloat(row['WVHT']);
