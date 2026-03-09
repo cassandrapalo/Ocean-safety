@@ -566,6 +566,17 @@
     .conditions-header { flex-direction: column; }
     .buoy-time { text-align: left; }
   }
+  .disclaimer {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -613,6 +624,11 @@
         <div class="metric-label">Swell Period</div>
         <div class="metric-value loading" id="swellPeriod">—</div>
         <div class="metric-unit">seconds</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Direction</div>
+        <div class="metric-value loading" id="swellDir" style="font-size:1.5rem;">—</div>
+        <div class="metric-unit">swell from</div>
       </div>
       <div class="metric">
         <div class="metric-label">Water Temp</div>
@@ -747,18 +763,21 @@
     </div>
   </div>
 
-  <!-- EMERGENCY -->
+    <!-- EMERGENCY -->
   <div class="emergency">
     <p>Ocean Emergency</p>
     <span class="number">911</span>
-    <p class="sub">You may need to hike to the trailhead to get cell signal</p>
-    <p class="sub" style="margin-top:6px;">CA State Parks Emergency · (800) 952-5580</p>
+    <p class="sub">CA State Parks Emergency · (800) 952-5580</p>
+    <p class="sub" style="margin-top:4px;">USCG San Francisco · (415) 399-3547</p>
   </div>
 
   <footer>
     Live data: NOAA Buoy 46012 · Half Moon Bay<br>
     San Mateo County Coast · California State Parks<br>
     Danger levels auto-calculated from swell height and period
+      <div class="disclaimer">
+      This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
+    </div>
   </footer>
 
 </div>
@@ -873,8 +892,6 @@
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
     if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
-    const dEl = document.getElementById('swellDir');
-    dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
     dEl.className = 'metric-value';
 
     const pEl = document.getElementById('swellPeriod');
@@ -921,6 +938,12 @@
   }
 
   // ── INIT ─────────────────────────────────────────────────
+  function degToCompass(deg) {
+    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE',
+                  'S','SSW','SW','WSW','W','WNW','NW','NNW'];
+    return dirs[Math.round(deg / 22.5) % 16];
+  }
+
   async function init() {
     const data = await fetchBuoyData();
     if (data) {

@@ -106,6 +106,17 @@
   .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Libre Franklin', sans-serif; letter-spacing: normal; }
   footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.18); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); line-height: 1.8; }
   @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
+  .disclaimer {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -237,17 +248,20 @@
     </div>
   </div>
 
-  <div class="emergency">
+    <div class="emergency">
     <p>Ocean Emergency</p>
     <span class="number">911</span>
-    <p class="sub">NPS Rangers · (415) 561-4300</p>
-    <p class="sub" style="margin-top:6px;">SFFD Marine Unit · (415) 558-3200</p>
+    <p class="sub">GGNRA Dispatch · (415) 561-5505</p>
+    <p class="sub" style="margin-top:4px;">USCG San Francisco · (415) 399-3547</p>
   </div>
 
   <footer>
     Live data: NOAA Buoy 46026 — San Francisco Bar<br>
     San Francisco County · NPS Golden Gate National Recreation Area<br>
     Danger levels auto-calculated from swell height and period
+      <div class="disclaimer">
+      This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
+    </div>
   </footer>
 </div>
 
@@ -338,9 +352,6 @@
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
     if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
-    const dEl = document.getElementById('swellDir');
-    dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
-    dEl.className = 'metric-value';
     const pEl = document.getElementById('swellPeriod');
     pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
     pEl.className = 'metric-value';

@@ -360,6 +360,17 @@
     h1 { font-size: 2.8rem; }
     .conditions-banner { flex-direction: column; }
   }
+  .disclaimer {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -657,14 +668,16 @@
   function calcDanger(heightFt, periodSec, highRisk) {
     const h = heightFt || 0, p = periodSec || 0;
     if (highRisk) {
-      if (p >= 13 || h >= 8)  return 'extreme';
-      if (p >= 10 || h >= 5)  return 'high';
-      if (p >= 7  || h >= 3)  return 'moderate';
+      if (h >= 12 || p >= 20)                    return 'extreme';
+      if (h >= 8  || (h >= 5 && p >= 14))        return 'extreme';
+      if (h >= 5  || (h >= 3 && p >= 12))        return 'high';
+      if (h >= 3  || p >= 12)                    return 'moderate';
       return 'low';
     } else {
-      if (p >= 15 || h >= 10) return 'extreme';
-      if (p >= 10 || h >= 5)  return 'high';
-      if (p >= 7  || h >= 3)  return 'moderate';
+      if (h >= 15 || p >= 20)                    return 'extreme';
+      if (h >= 10 && p >= 15)                    return 'extreme';
+      if (h >= 8  || (h >= 5 && p >= 14))        return 'high';
+      if (h >= 4  || p >= 14)                    return 'moderate';
       return 'low';
     }
   }
@@ -702,6 +715,7 @@
     ]);
     updateBanner('46012', d12);
     updateBanner('46026', d26);
+    updateBanner('46013', d13);
     updateCards('46012', d12);
     updateCards('46026', d26);
     updateCards('46013', d13);
@@ -713,3 +727,4 @@
 
 </body>
 </html>
+<!-- Ethel10 -->
