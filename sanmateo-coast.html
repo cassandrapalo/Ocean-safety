@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Mateo Coast — Ocean Safety</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a2540;
+    --deep: #061829;
+    --wave: #1a6b8a;
+    --foam: #e8f4f8;
+    --danger: #c0392b;
+    --warn: #e67e22;
+    --safe: #27ae60;
+    --sand: #f5e6c8;
+    --ink: #0a2540;
+    --light: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    color: var(--light);
+    font-family: 'Libre Franklin', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* animated ocean bg */
+  .ocean-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg, #061829 0%, #0a2540 40%, #0d3a5c 70%, #0a2540 100%);
+    overflow: hidden;
+  }
+  .wave-layer {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 180px;
+    opacity: 0.12;
+    border-radius: 50% 50% 0 0;
+    animation: swell 8s ease-in-out infinite;
+  }
+  .wave-layer:nth-child(1) { background: #1a6b8a; animation-delay: 0s; height: 140px; }
+  .wave-layer:nth-child(2) { background: #2589a8; animation-delay: -3s; height: 100px; opacity: 0.08; }
+  .wave-layer:nth-child(3) { background: #3aa0c0; animation-delay: -5s; height: 80px; opacity: 0.06; }
+
+  @keyframes swell {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    50% { transform: translateX(-5%) scaleY(1.15); }
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Header */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 48px;
+  }
+
+  .county-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: #7ab8cc;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.05;
+    color: var(--foam);
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: #7ab8cc;
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  /* Warning banner */
+  .alert-banner {
+    background: rgba(192, 57, 43, 0.15);
+    border: 1px solid rgba(192, 57, 43, 0.5);
+    border-left: 4px solid var(--danger);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .alert-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .alert-text strong {
+    display: block;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #e57368;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .alert-text p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+
+  /* Section heading */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #7ab8cc;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Beach grid */
+  .beach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .beach-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .beach-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .beach-card.danger::before { background: var(--danger); }
+  .beach-card.warning::before { background: var(--warn); }
+  .beach-card.caution::before { background: #f1c40f; }
+
+  .beach-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+
+  .beach-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--foam);
+    margin-bottom: 6px;
+  }
+
+  .beach-sub {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+
+  .risk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  .risk-badge.danger { background: rgba(192,57,43,0.2); color: #e57368; border: 1px solid rgba(192,57,43,0.3); }
+  .risk-badge.warning { background: rgba(230,126,34,0.2); color: #f0a060; border: 1px solid rgba(230,126,34,0.3); }
+  .risk-badge.caution { background: rgba(241,196,15,0.15); color: #f5d060; border: 1px solid rgba(241,196,15,0.25); }
+
+  .beach-hazards {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  /* Rules section */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .rule-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .rule-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: rgba(122, 184, 204, 0.25);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .rule-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--foam);
+    margin-bottom: 8px;
+  }
+
+  .rule-text {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* Swell explainer */
+  .swell-explainer {
+    background: rgba(26, 107, 138, 0.12);
+    border: 1px solid rgba(26, 107, 138, 0.3);
+    border-radius: 8px;
+    padding: 32px;
+    margin-bottom: 64px;
+  }
+
+  .swell-explainer h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--foam);
+  }
+
+  .swell-explainer .intro {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .period-scale {
+    display: flex;
+    gap: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .period-item {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .period-item span {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .period-item.p1 { background: rgba(39,174,96,0.25); color: #60c080; }
+  .period-item.p2 { background: rgba(241,196,15,0.2); color: #f5d060; }
+  .period-item.p3 { background: rgba(230,126,34,0.2); color: #f0a060; }
+  .period-item.p4 { background: rgba(192,57,43,0.25); color: #e57368; }
+
+  .swell-note {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+  }
+
+  /* Emergency */
+  .emergency {
+    text-align: center;
+    padding: 40px;
+    background: rgba(192, 57, 43, 0.08);
+    border: 1px solid rgba(192, 57, 43, 0.2);
+    border-radius: 8px;
+    margin-bottom: 48px;
+  }
+
+  .emergency p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .emergency .number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    color: #e57368;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .emergency .sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    text-transform: none;
+    font-family: 'Libre Franklin', sans-serif;
+    letter-spacing: normal;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .dot { color: rgba(255,255,255,0.1); margin: 0 8px; }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg">
+  <div class="wave-layer"></div>
+  <div class="wave-layer"></div>
+  <div class="wave-layer"></div>
+</div>
+
+<div class="content">
+
+  <header>
+    <div class="county-label">San Mateo County · California Coast</div>
+    <h1>Know the<br><em>ocean</em> before<br>you enter it.</h1>
+    <p class="tagline">Beautiful days and calm-looking surf can hide powerful swells capable of sweeping people off rocks and beaches with no warning.</p>
+  </header>
+
+  <div class="alert-banner">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text">
+      <strong>Long-Period Swell Kills on Calm Days</strong>
+      <p>The danger is not a rogue wave out of nowhere — it's a predictable pattern you can learn to read. Long-period swell arrives in sets, separated by long quiet intervals. People walk to the water during the calm and are swept in when the set arrives. Check the swell period. Watch the sets before you approach. A long wait between waves is not safety — it's the setup.</p>
+    </div>
+  </div>
+
+  <!-- Beaches -->
+  <div class="section-label">Beaches — North to South</div>
+  <div class="beach-grid">
+
+    <a class="beach-card danger" href="#thornton">
+      <div class="beach-name">Thornton State Beach</div>
+      <div class="beach-sub">Daly City · Unstable Bluffs</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Active cliff erosion. Bluff collapses without warning. Sneaker wave zone. No lifeguard.</div>
+    </a>
+
+    <a class="beach-card danger" href="#mussel">
+      <div class="beach-name">Mussel Rock</div>
+      <div class="beach-sub">Daly City · Rock Shelf</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Exposed rock shelf. Surge and backwash. No safe footing when wet. Multiple fatalities.</div>
+    </a>
+
+    <a class="beach-card warning" href="#rockaway">
+      <div class="beach-name">Rockaway Beach</div>
+      <div class="beach-sub">Pacifica · Sandy Shore</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Rip currents common. Shore break. No lifeguard off-season.</div>
+    </a>
+
+    <a class="beach-card warning" href="#lindamar">
+      <div class="beach-name">Linda Mar / Pacifica SB</div>
+      <div class="beach-sub">Pacifica · Sandy Beach</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Popular surf spot. Strong rips along north end. Shore break injury risk.</div>
+    </a>
+
+    <a class="beach-card danger" href="#graywhale">
+      <div class="beach-name">Gray Whale Cove</div>
+      <div class="beach-sub">Montara · Cove Beach</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Isolated. Rock outcroppings. Swell amplified in cove. No cell service.</div>
+    </a>
+
+    <a class="beach-card warning" href="#montara">
+      <div class="beach-name">Montara State Beach</div>
+      <div class="beach-sub">Montara · Sandy/Rocky</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Mixed sand and rock. Rip currents. Cold water. No lifeguard.</div>
+    </a>
+
+    <a class="beach-card caution" href="#francis">
+      <div class="beach-name">Francis Beach</div>
+      <div class="beach-sub">Half Moon Bay · Sandy</div>
+      <span class="risk-badge caution">⬤ Moderate Risk</span>
+      <div class="beach-hazards">Seasonal lifeguard. Shore break. Cold water hypothermia risk.</div>
+    </a>
+
+    <a class="beach-card danger" href="#cowellranch">
+      <div class="beach-name">Cowell Ranch State Beach</div>
+      <div class="beach-sub">Half Moon Bay · Remote</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Long trail-in. Isolated. Powerful shore break. No cell service. Multiple fatalities. Do not approach water's edge.</div>
+    </a>
+
+    <a class="beach-card warning" href="#pomponio">
+      <div class="beach-name">Pomponio State Beach</div>
+      <div class="beach-sub">San Gregorio · Sandy</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Creek outlet creates rip. Strong shore break on larger swell.</div>
+    </a>
+
+    <a class="beach-card warning" href="#sangregorio">
+      <div class="beach-name">San Gregorio State Beach</div>
+      <div class="beach-sub">San Gregorio · Sandy</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Rip currents at creek mouth. Remote. No lifeguard.</div>
+    </a>
+
+    <a class="beach-card warning" href="#pescadero">
+      <div class="beach-name">Pescadero State Beach</div>
+      <div class="beach-sub">Pescadero · Sandy/Rocky</div>
+      <span class="risk-badge warning">⬤ High Risk</span>
+      <div class="beach-hazards">Rock outcroppings. Sneaker wave history. Lagoon rip currents.</div>
+    </a>
+
+    <a class="beach-card caution" href="#beanhollow">
+      <div class="beach-name">Bean Hollow State Beach</div>
+      <div class="beach-sub">Pescadero · Rocky Cove</div>
+      <span class="risk-badge caution">⬤ Moderate Risk</span>
+      <div class="beach-hazards">Tide pool area. Slippery rocks. Wave surge on bluff trails.</div>
+    </a>
+
+    <a class="beach-card danger" href="#pigeonpoint">
+      <div class="beach-name">Pigeon Point</div>
+      <div class="beach-sub">Pescadero · Rocky Headland</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Exposed headland. No beach. Wave surge onto rocks and bluff paths. Fatal incidents recorded.</div>
+    </a>
+
+    <a class="beach-card danger" href="#anonuevo">
+      <div class="beach-name">Año Nuevo State Park</div>
+      <div class="beach-sub">Año Nuevo · Reserve</div>
+      <span class="risk-badge danger">⬤ Extreme Risk</span>
+      <div class="beach-hazards">Low-lying point. Sneaker waves sweep entire areas. Stay on designated paths only.</div>
+    </a>
+
+  </div>
+
+  <!-- Swell period explainer -->
+  <div class="swell-explainer">
+    <h3>What is swell period — and why it kills?</h3>
+    <p class="intro">Swell height alone doesn't tell the story. A 4-foot wave with a 20-second period carries exponentially more energy than a 6-foot wave at 8 seconds. Long-period swell travels from storms thousands of miles away — arriving silently on what looks like a calm day.</p>
+    <div class="period-scale">
+      <div class="period-item p1"><span>5–8s</span>Local wind swell</div>
+      <div class="period-item p2"><span>9–12s</span>Moderate risk</div>
+      <div class="period-item p3"><span>13–16s</span>High risk</div>
+      <div class="period-item p4"><span>17s+</span>Extreme risk</div>
+    </div>
+    <p class="swell-note">Check NOAA Buoy 46012 (Half Moon Bay) for current swell period before visiting any San Mateo County beach.</p>
+  </div>
+
+  <!-- Rules -->
+  <div class="section-label">Rules That Save Lives</div>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-number">01</div>
+      <div class="rule-title">Check the Period First</div>
+      <div class="rule-text">Swell period is your warning. At 12+ seconds, sets arrive with long quiet intervals between them. At 15+ seconds, stay completely clear of the shore.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">02</div>
+      <div class="rule-title">Watch Before You Move</div>
+      <div class="rule-text">Sit above the water line and observe for 15 minutes. Count the time between large waves. Learn the set rhythm before you go anywhere near the water.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">03</div>
+      <div class="rule-title">A Long Calm Is the Danger</div>
+      <div class="rule-text">The sets that kill people arrive after the longest quiet intervals. If it's been calm for several minutes, stay back — do not walk toward the water.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">04</div>
+      <div class="rule-title">Wet Rocks = No-Go</div>
+      <div class="rule-text">If rocks are wet, the ocean has already reached them during the last set. Stay above the wet line. The next set will reach the same place.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">05</div>
+      <div class="rule-title">Cold Water Kills Fast</div>
+      <div class="rule-text">Pacific water here runs 50–55°F year-round. Cold shock and swimming failure happen within minutes of immersion.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">06</div>
+      <div class="rule-title">If Swept In: Float</div>
+      <div class="rule-text">Don't fight the current. Float on your back, conserve energy, signal for help, and swim parallel to shore.</div>
+    </div>
+  </div>
+
+  <!-- Emergency -->
+  <div class="emergency">
+    <p>Ocean Emergency — Call</p>
+    <span class="number">911</span>
+    <p class="sub">State Parks Emergency · (800) 952-5580</p>
+    <p class="sub" style="margin-top:4px;">NOAA Buoy 46012 · buoyweather.com · Surfline Half Moon Bay</p>
+  </div>
+
+  <footer>
+    San Mateo County Coast
+    <span class="dot">·</span>
+    California State Parks
+    <span class="dot">·</span>
+    Data: NOAA / NWS
+    <span class="dot">·</span>
+    Check conditions before every visit
+  </footer>
+
+</div>
+
+</body>
+</html>
