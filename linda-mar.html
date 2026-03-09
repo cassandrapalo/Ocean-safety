@@ -258,19 +258,24 @@
 
   async function fetchBuoyData() {
     const url = `https://www.ndbc.noaa.gov/data/realtime2/${BUOY_ID}.txt`;
-    const proxy = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-    try {
-      const res = await fetch(proxy, { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Fetch failed');
-      return parseNOAA(await res.text());
-    } catch(e) {
+    const proxies = [
+      `https://corsproxy.io/?${encodeURIComponent(url)}`,
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+      `https://thingproxy.freeboard.io/fetch/${url}`,
+      `https://api.codetabs.com/v1/proxy?quest=${url}`,
+    ];
+    for (const proxy of proxies) {
       try {
-        const alt = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-        const res2 = await fetch(alt, { cache: 'no-cache' });
-        if (!res2.ok) throw new Error();
-        return parseNOAA(await res2.text());
-      } catch(e2) { return null; }
+        const res = await fetch(proxy, { cache: 'no-cache' });
+        if (!res.ok) continue;
+        const text = await res.text();
+        if (text && text.includes('WVHT')) return parseNOAA(text);
+      } catch(e) {
+        console.warn('Proxy failed:', proxy, e);
+      }
     }
+    console.error('All proxies failed for buoy', BUOY_ID);
+    return null;
   }
 
   function parseNOAA(text) {
