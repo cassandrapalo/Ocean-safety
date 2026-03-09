@@ -261,11 +261,12 @@
   const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
   const STALE_HOURS = 3;
 
-  // Risk levels aligned with NOAA surf zone advisory thresholds for NorCal
+  // Risk levels — NOAA surf zone thresholds, NorCal
   function calcDangerLevel(heightFt, periodSec) {
-    if (periodSec >= 15 || heightFt >= 15) return 'extreme';
-    if (periodSec >= 12 || heightFt >= 8)  return 'high';
-    if (periodSec >= 9  || heightFt >= 4)  return 'moderate';
+    if (heightFt >= 15 || periodSec >= 20)                    return 'extreme';
+    if (heightFt >= 10 && periodSec >= 15)                    return 'extreme';
+    if (heightFt >= 8  || (heightFt >= 5 && periodSec >= 14)) return 'high';
+    if (heightFt >= 4  || periodSec >= 14)                    return 'moderate';
     return 'low';
   }
 
