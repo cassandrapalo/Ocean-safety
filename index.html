@@ -316,14 +316,14 @@
   .site-footer {
     text-align: center;
     padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.18);
   }
 
   .site-footer p {
     font-family: 'Inter', sans-serif;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.72);
+    letter-spacing: 0.05em;
     line-height: 2;
   }
 
@@ -338,7 +338,7 @@
     border-top: 1px solid rgba(255,255,255,0.08);
     font-family: 'Inter', sans-serif;
     font-size: 0.92rem;
-    color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.5);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
@@ -375,7 +375,7 @@
       <div class="buoy-stats">
         <div>
           <span class="buoy-stat-val loading" id="b46012-height">—</span>
-          <span class="buoy-stat-unit">ft height</span>
+          <span class="buoy-stat-unit">swell height</span>
         </div>
         <div>
           <span class="buoy-stat-val loading" id="b46012-period">—</span>
@@ -392,7 +392,7 @@
       <div class="buoy-stats">
         <div>
           <span class="buoy-stat-val loading" id="b46026-height">—</span>
-          <span class="buoy-stat-unit">ft height</span>
+          <span class="buoy-stat-unit">swell height</span>
         </div>
         <div>
           <span class="buoy-stat-val loading" id="b46026-period">—</span>
@@ -409,7 +409,7 @@
       <div class="buoy-stats">
         <div>
           <span class="buoy-stat-val loading" id="b46013-height">—</span>
-          <span class="buoy-stat-unit">ft height</span>
+          <span class="buoy-stat-unit">swell height</span>
         </div>
         <div>
           <span class="buoy-stat-val loading" id="b46013-period">—</span>
@@ -572,7 +572,7 @@
   <div class="site-footer">
     <p>
       oceansafety.info · Northern California Coast<br>
-      Live data: NOAA Buoys 46012 · 46026 · 46013 · National Weather Service<br>
+      Live data: NOAA Buoys 46012 · 46026 · 46013 · <a href="https://www.weather.gov/mtr/CoastalHazards" target="_blank" style="color:inherit;opacity:0.8;text-decoration:underline;">National Weather Service</a><br>
       Stay on dry sand. Watch the ocean. Know the sets.
     </p>
   </div>
@@ -627,9 +627,9 @@
     const h = document.getElementById(`b${buoyId}-height`);
     const p = document.getElementById(`b${buoyId}-period`);
     const d = document.getElementById(`b${buoyId}-dir`);
-    if (h) { h.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM'; h.classList.remove('loading'); }
-    if (p) { p.textContent = data.swellPeriodSec ? data.swellPeriodSec.toFixed(0) : 'MM'; p.classList.remove('loading'); }
-    if (d) { d.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; d.classList.remove('loading'); }
+    if (h) { h.textContent = (data.waveHeightFt !== null && data.waveHeightFt !== undefined) ? data.waveHeightFt.toFixed(1) : '—'; h.classList.remove('loading'); }
+    if (p) { p.textContent = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? data.swellPeriodSec.toFixed(0) : '—'; p.classList.remove('loading'); }
+    if (d) { d.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; d.classList.remove('loading'); }
   }
 
   async function init() {
