@@ -97,6 +97,15 @@
     letter-spacing: 0.04em;
     text-align: center;
   }
+
+  .metrics-footnote {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
 </style>
 </head>
 <body>
@@ -123,16 +132,14 @@
     </div>
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
     <div class="metrics">
-      <div class="metric"><div class="metric-label">Wave Height</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
+      <div class="metric"><div class="metric-label">Swell Height*</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
       <div class="metric"><div class="metric-label">Swell Period</div><div class="metric-value loading" id="swellPeriod">—</div><div class="metric-unit">seconds</div></div>
       <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.6rem;">—</div><div class="metric-unit">swell from</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
-    </div><div class="period-segment" id="seg2"></div>
-      <div class="period-segment" id="seg3"></div><div class="period-segment" id="seg4"></div>
-      <div class="period-segment" id="seg5"></div>
     </div>
+    <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
+
     <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
-  </div>
   </div>
 
   <div class="info-section">
@@ -267,6 +274,7 @@
     else                                                            level = 'low';
     return applyDirectionMod(level, swellDirDeg);
   }
+
   let lastData = null;
 
   async function fetchBuoyData() {
@@ -332,7 +340,7 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
+        ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
@@ -359,12 +367,12 @@
     const tEl = document.getElementById('waterTemp');
     tEl.textContent = data.waterTempF ? Math.round(data.waterTempF) : 'MM';
     tEl.className = 'metric-value';
+;
     document.getElementById('buoySource').textContent = BUOY_NAME;
   }
 
-  // NWS advisory fetch
-  const NWS_ZONES = ['CAZ529', 'CAZ006'];
 
+  const NWS_ZONES = ['CAZ529', 'CAZ006'];
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -372,7 +380,7 @@
       const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
       const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
       const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
-      if (!res.ok) throw new Error('NWS fetch failed');
+      if (!res.ok) throw new Error();
       const data = await res.json();
       const alerts = data.features || [];
       if (!alerts.length) {
@@ -382,15 +390,11 @@
       }
       const priority = { 'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1 };
       alerts.sort((a, b) => (priority[b.properties.event] || 0) - (priority[a.properties.event] || 0));
-      const alert = alerts[0].properties;
-      const levelMap = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' };
-      const level = levelMap[alert.event] || 'moderate';
+      const a0 = alerts[0].properties;
+      const level = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' }[a0.event] || 'moderate';
       if (card) card.className = 'conditions-card level-' + level;
-      if (dv) { dv.textContent = alert.event; dv.className = 'danger-value level-' + level; }
-    } catch(e) {
-      console.warn('NWS fetch failed:', e);
-      if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; }
-    }
+      if (dv) { dv.textContent = a0.event; dv.className = 'danger-value level-' + level; }
+    } catch(e) { if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; } }
   }
 
   async function init() {
@@ -400,7 +404,7 @@
       renderConditions(null, true);
       document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-    }
+        }
   }
   init();
   fetchNWSAdvisory();

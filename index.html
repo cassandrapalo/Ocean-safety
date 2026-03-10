@@ -98,7 +98,7 @@
 
   .hero-body {
     font-size: 1.15rem;
-    color: rgba(255,255,255,0.78);
+    color: rgba(255,255,255,0.55);
     max-width: 540px;
     line-height: 1.7;
     margin-bottom: 40px;
@@ -147,7 +147,7 @@
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.3);
     margin-bottom: 12px;
   }
 
@@ -174,7 +174,7 @@
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.3);
     display: block;
     margin-top: 4px;
   }
@@ -216,7 +216,7 @@
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.3);
   }
 
   .beach-grid {
@@ -278,38 +278,10 @@
     font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.3);
     margin-bottom: 10px;
   }
 
-  .risk-pill {
-    display: inline-flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 3px;
-    background: rgba(255,255,255,0.05);
-    color: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.4s ease;
-  }
-
-  .risk-pill.level-extreme  { background: rgba(192,57,43,0.2);  color: #e57368; border-color: rgba(192,57,43,0.35); }
-  .risk-pill.level-high     { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.3); }
-  .risk-pill.level-moderate { background: rgba(241,196,15,0.15);color: #f5d060; border-color: rgba(241,196,15,0.25); }
-  .risk-pill.level-low      { background: rgba(96,192,128,0.15);color: #60c080; border-color: rgba(96,192,128,0.25); }
-
-  .beach-period {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: rgba(255,255,255,0.55);
-    margin-top: 6px;
-    letter-spacing: 0.04em;
-  }
 
   .emergency-bar {
     display: flex;
@@ -339,19 +311,19 @@
     color: #e57368;
   }
 
-  .e-sub { font-size: 1.15rem; color: rgba(255,255,255,0.6); }
+  .e-sub { font-size: 1.15rem; color: rgba(255,255,255,0.25); }
 
   .site-footer {
     text-align: center;
     padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.18);
+    border-top: 1px solid rgba(255,255,255,0.06);
   }
 
   .site-footer p {
     font-family: 'Inter', sans-serif;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.06em;
     line-height: 2;
   }
 
@@ -366,7 +338,7 @@
     border-top: 1px solid rgba(255,255,255,0.08);
     font-family: 'Inter', sans-serif;
     font-size: 0.92rem;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.25);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
@@ -458,75 +430,61 @@
       <div class="county-meta">Daly City → Año Nuevo · Buoy 46012</div>
     </div>
     <div class="beach-grid">
-      <a class="beach-card" href="thornton-beach.html" data-facing="270" data-surge="false" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="thornton-beach.html">
         <div class="beach-card-name">Thornton State Beach</div>
         <div class="beach-card-type">Daly City · Bluffs</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="mussel-rock.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="mussel-rock.html">
         <div class="beach-card-name">Mussel Rock</div>
         <div class="beach-card-type">Daly City · Rock Shelf</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="rockaway-beach.html" data-facing="260" data-surge="false" data-buoy="46012">
+      <a class="beach-card" href="rockaway-beach.html">
         <div class="beach-card-name">Rockaway Beach</div>
         <div class="beach-card-type">Pacifica · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="linda-mar.html" data-facing="280" data-surge="false" data-buoy="46012">
+      <a class="beach-card" href="linda-mar.html">
         <div class="beach-card-name">Linda Mar</div>
         <div class="beach-card-type">Pacifica · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="gray-whale-cove.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="gray-whale-cove.html">
         <div class="beach-card-name">Gray Whale Cove</div>
         <div class="beach-card-type">Montara · Cove</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="montara-beach.html" data-buoy="46012">
+      <a class="beach-card" href="montara-beach.html">
         <div class="beach-card-name">Montara State Beach</div>
         <div class="beach-card-type">Montara · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="francis-beach.html" data-buoy="46012">
+      <a class="beach-card" href="francis-beach.html">
         <div class="beach-card-name">Francis Beach</div>
         <div class="beach-card-type">Half Moon Bay · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="cowell-ranch.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="cowell-ranch.html">
         <div class="beach-card-name">Cowell Ranch</div>
         <div class="beach-card-type">Half Moon Bay · Remote</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="pomponio-beach.html" data-buoy="46012">
+      <a class="beach-card" href="pomponio-beach.html">
         <div class="beach-card-name">Pomponio Beach</div>
         <div class="beach-card-type">San Gregorio · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="san-gregorio-beach.html" data-buoy="46012">
+      <a class="beach-card" href="san-gregorio-beach.html">
         <div class="beach-card-name">San Gregorio</div>
         <div class="beach-card-type">San Gregorio · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="pescadero-beach.html" data-buoy="46012">
+      <a class="beach-card" href="pescadero-beach.html">
         <div class="beach-card-name">Pescadero Beach</div>
         <div class="beach-card-type">Pescadero · Sandy/Rocky</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="bean-hollow-beach.html" data-buoy="46012">
+      <a class="beach-card" href="bean-hollow-beach.html">
         <div class="beach-card-name">Bean Hollow</div>
         <div class="beach-card-type">Pescadero · Tide Pools</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="pigeon-point.html" data-facing="250" data-surge="true" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="pigeon-point.html">
         <div class="beach-card-name">Pigeon Point</div>
         <div class="beach-card-type">Pescadero · Headland</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="ano-nuevo.html" data-buoy="46012" data-high-risk="true">
+      <a class="beach-card" href="ano-nuevo.html">
         <div class="beach-card-name">Año Nuevo</div>
         <div class="beach-card-type">Año Nuevo · Reserve</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
     </div>
   </div>
@@ -538,30 +496,25 @@
       <div class="county-meta">Ocean Beach → Aquatic Park · Buoy 46026</div>
     </div>
     <div class="beach-grid">
-      <a class="beach-card" href="ocean-beach-sf.html" data-buoy="46026" data-high-risk="true">
+      <a class="beach-card" href="ocean-beach-sf.html">
         <div class="beach-card-name">Ocean Beach</div>
         <div class="beach-card-type">Outer Sunset · Open Coast</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="china-beach-sf.html" data-facing="300" data-surge="true" data-buoy="46026">
+      <a class="beach-card" href="china-beach-sf.html">
         <div class="beach-card-name">China Beach</div>
         <div class="beach-card-type">Sea Cliff · Cove</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="baker-beach-sf.html" data-facing="310" data-surge="true" data-buoy="46026" data-high-risk="true">
+      <a class="beach-card" href="baker-beach-sf.html">
         <div class="beach-card-name">Baker Beach</div>
         <div class="beach-card-type">Presidio · Sandy</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="crissy-field-sf.html" data-buoy="46026">
+      <a class="beach-card" href="crissy-field-sf.html">
         <div class="beach-card-name">Crissy Field</div>
         <div class="beach-card-type">Presidio · Bay · Currents</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="aquatic-park-sf.html" data-buoy="46026">
+      <a class="beach-card" href="aquatic-park-sf.html">
         <div class="beach-card-name">Aquatic Park</div>
         <div class="beach-card-type">Fisherman's Wharf · Cove</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
     </div>
   </div>
@@ -573,20 +526,17 @@
       <div class="county-meta">Stinson → Point Reyes · Buoys 46026 · 46013</div>
     </div>
     <div class="beach-grid">
-      <a class="beach-card" href="stinson-beach.html" data-buoy="46026">
+      <a class="beach-card" href="stinson-beach.html">
         <div class="beach-card-name">Stinson Beach</div>
         <div class="beach-card-type">Stinson · Sandy · Rip Currents</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="muir-beach.html" data-facing="210" data-surge="true" data-buoy="46026">
+      <a class="beach-card" href="muir-beach.html">
         <div class="beach-card-name">Muir Beach</div>
         <div class="beach-card-type">Marin Headlands · Cove</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="point-reyes-beach.html" data-buoy="46013" data-high-risk="true">
+      <a class="beach-card" href="point-reyes-beach.html">
         <div class="beach-card-name">Point Reyes Beach</div>
         <div class="beach-card-type">Point Reyes · Exposed · Remote</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
     </div>
   </div>
@@ -598,20 +548,17 @@
       <div class="county-meta">Bodega Bay → Jenner · Buoy 46013</div>
     </div>
     <div class="beach-grid">
-      <a class="beach-card" href="bodega-bay.html" data-buoy="46013">
+      <a class="beach-card" href="bodega-bay.html">
         <div class="beach-card-name">Bodega Bay</div>
         <div class="beach-card-type">Bodega · Bay and Ocean</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="salmon-creek-beach.html" data-buoy="46013">
+      <a class="beach-card" href="salmon-creek-beach.html">
         <div class="beach-card-name">Salmon Creek Beach</div>
         <div class="beach-card-type">Bodega · Sandy · Creek Mouth</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
-      <a class="beach-card" href="goat-rock-beach.html" data-facing="240" data-surge="true" data-buoy="46013" data-high-risk="true">
+      <a class="beach-card" href="goat-rock-beach.html">
         <div class="beach-card-name">Goat Rock Beach</div>
         <div class="beach-card-type">Jenner · Rocky · River Mouth</div>
-        <span class="risk-pill">—</span><span class="beach-period"></span>
       </a>
     </div>
   </div>
@@ -675,38 +622,6 @@
     return dirs[Math.round(deg / 22.5) % 16];
   }
 
-  function calcDanger(heightFt, periodSec, highRisk, surge, facingDeg, swellDirDeg) {
-    const h = heightFt || 0, p = periodSec || 0;
-    let level;
-    if (surge) {
-      if (h >= 10 || (h >= 7 && p >= 15))              level = 'extreme';
-      else if (h >= 7 || (h >= 5 && p >= 12))          level = 'high';
-      else if (h >= 4 || p >= 12)                       level = 'moderate';
-      else                                              level = 'low';
-    } else if (highRisk) {
-      if (p >= 18 || (h >= 8 && p >= 15))              level = 'extreme';
-      else if (p >= 14 || (h >= 6 && p >= 12) || h >= 10) level = 'high';
-      else if (p >= 12)                                 level = 'moderate';
-      else                                              level = 'low';
-    } else {
-      if (p >= 20 || (h >= 10 && p >= 16))             level = 'extreme';
-      else if (p >= 15 || (h >= 8 && p >= 12) || h >= 10) level = 'high';
-      else if (p >= 12)                                 level = 'moderate';
-      else                                              level = 'low';
-    }
-    // Direction modifier
-    if (swellDirDeg !== null && swellDirDeg !== undefined && facingDeg !== undefined) {
-      const diff = Math.abs(((swellDirDeg - facingDeg + 180) % 360) - 180);
-      const LEVELS = ['low','moderate','high','extreme'];
-      const idx = LEVELS.indexOf(level);
-      if (diff > 120)     level = LEVELS[Math.max(0, idx - 2)];
-      else if (diff > 70) level = LEVELS[Math.max(0, idx - 1)];
-    }
-    return level;
-  }
-
-  const LABELS = { extreme: 'Extreme Risk', high: 'High Risk', moderate: 'Moderate Risk', low: 'Lower Risk' };
-
   function updateBanner(buoyId, data) {
     if (!data) return;
     const h = document.getElementById(`b${buoyId}-height`);
@@ -717,27 +632,6 @@
     if (d) { d.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; d.classList.remove('loading'); }
   }
 
-  function updateCards(buoyId, data) {
-    document.querySelectorAll(`.beach-card[data-buoy="${buoyId}"]`).forEach(card => {
-      const pill = card.querySelector('.risk-pill');
-      const periodEl = card.querySelector('.beach-period');
-      if (!data) { if (pill) pill.textContent = 'Data unavailable'; return; }
-      const level = calcDanger(
-        data.waveHeightFt, data.swellPeriodSec,
-        card.dataset.highRisk === 'true',
-        card.dataset.surge === 'true',
-        parseInt(card.dataset.facing),
-        data.swellDirDeg
-      );
-      card.classList.remove('level-extreme','level-high','level-moderate','level-low');
-      card.classList.add(`level-${level}`);
-      if (pill) { pill.textContent = LABELS[level]; pill.className = `risk-pill level-${level}`; }
-      if (periodEl && data.swellPeriodSec) {
-        periodEl.textContent = `${data.swellPeriodSec.toFixed(0)}s · ${data.waveHeightFt ? data.waveHeightFt.toFixed(1) : '—'}ft`;
-      }
-    });
-  }
-
   async function init() {
     const [d12, d26, d13] = await Promise.all([
       fetchBuoy('46012'), fetchBuoy('46026'), fetchBuoy('46013')
@@ -745,9 +639,6 @@
     updateBanner('46012', d12);
     updateBanner('46026', d26);
     updateBanner('46013', d13);
-    updateCards('46012', d12);
-    updateCards('46026', d26);
-    updateCards('46013', d13);
   }
 
   init();

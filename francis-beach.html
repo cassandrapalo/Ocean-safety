@@ -20,11 +20,11 @@
   @keyframes swell { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-5%) scaleY(1.15); } }
   .content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
   header { padding: 40px 0 28px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 36px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
-  .back-link:hover { color: rgba(255,255,255,0.8); }
-  .county-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
+  .back-link:hover { color: rgba(255,255,255,0.6); }
+  .county-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
   h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--foam); margin-bottom: 6px; }
-  .beach-type { font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.6); letter-spacing: 0.04em; }
+  .beach-type { font-size: 0.82rem; color: rgba(255,255,255,0.35); font-family: 'Inter', sans-serif; letter-spacing: 0.08em; }
   .conditions-card { border-radius: 10px; padding: 28px; margin-bottom: 24px; position: relative; overflow: hidden; transition: background 0.5s, border-color 0.5s; }
   .conditions-card.level-extreme { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.45); }
   .conditions-card.level-high { background: rgba(230,126,34,0.12); border: 1px solid rgba(230,126,34,0.4); }
@@ -33,82 +33,78 @@
   .conditions-card.level-loading { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
   .conditions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
   .danger-level { flex: 1; }
-  .danger-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+  .danger-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
   .danger-value { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; transition: color 0.5s; }
   .danger-value.level-extreme { color: #e57368; } .danger-value.level-high { color: #f0a060; }
   .danger-value.level-moderate { color: #f5d060; } .danger-value.level-low { color: #60c080; }
   .danger-value.level-loading { color: rgba(255,255,255,0.3); }
   .buoy-time { text-align: right; }
-  .buoy-time .time-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.65); display: block; margin-bottom: 4px; }
-  .buoy-link { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: #7ab8cc; text-decoration: none; letter-spacing: 0.03em; display: block; margin-top: 3px; }
+  .buoy-time .time-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); display: block; margin-bottom: 4px; }
+  .buoy-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: #7ab8cc;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 3px;
+  }
   .buoy-link:hover { text-decoration: underline; }
   .buoy-time .time-value { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.75); }
-  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.78rem; color: #f5d060; margin-bottom: 16px; font-family: 'Inter', sans-serif; font-weight: 500; }
+  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'Inter', sans-serif; letter-spacing: 0.05em; }
   .stale-warning.visible { display: block; }
   .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
   .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
-  .metric-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
+  .metric-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
-  .metric-unit { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; color: rgba(255,255,255,0.6); margin-top: 4px; }
-  .metric-value.loading { color: rgba(255,255,255,0.15); }
-
-  .buoy-source { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; color: rgba(255,255,255,0.45); text-align: right; }
-
-  /* NWS Advisory Box */
-  .nws-advisory { display: none; margin-bottom: 24px; border-radius: 8px; padding: 16px 20px; border-left: 4px solid; }
-  .nws-advisory.active { display: block; }
-  .nws-advisory.surf-warning { background: rgba(192,57,43,0.15); border-color: #e57368; }
-  .nws-advisory.surf-advisory { background: rgba(230,126,34,0.12); border-color: #f0a060; }
-  .nws-advisory.beach-hazards { background: rgba(241,196,15,0.10); border-color: #f5d060; }
-  .nws-advisory-badge { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
-  .nws-advisory.surf-warning .nws-advisory-badge { color: #e57368; }
-  .nws-advisory.surf-advisory .nws-advisory-badge { color: #f0a060; }
-  .nws-advisory.beach-hazards .nws-advisory-badge { color: #f5d060; }
-  .nws-advisory-headline { font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 600; color: rgba(255,255,255,0.92); line-height: 1.4; margin-bottom: 6px; }
-  .nws-advisory-expires { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.55); }
-  .nws-advisory-link { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600; color: #7ab8cc; text-decoration: none; margin-left: 10px; }
-  .nws-advisory-link:hover { text-decoration: underline; }
-
-
+  .metric-unit { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .metric-value.loading { color: rgba(255,255,255,0.15); } .period-segment.active-caution { background: var(--caution); } .period-segment.active-danger { background: var(--danger); }
+  .buoy-source { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); text-align: right; } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
   .info-section { margin-bottom: 32px; }
-  .section-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .section-label { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-  .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 16px 18px; }
-  .hazard-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-  .hazard-title { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 6px; }
-  .hazard-desc { font-size: 0.97rem; font-weight: 400; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
+  .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .hazard-title { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
+  .hazard-desc { font-size: 0.95rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
   .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
   .rule-item { display: flex; gap: 14px; align-items: flex-start; }
-  .rule-num { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; color: rgba(122,184,204,0.7); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .rule-text { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.82); line-height: 1.6; }
-  .rule-text strong { color: var(--foam); font-weight: 700; }
+  .rule-num { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
+  .rule-text { font-size: 1rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .rule-text strong { color: var(--foam); font-weight: 600; }
   .swell-explainer { background: rgba(26,107,138,0.1); border: 1px solid rgba(26,107,138,0.25); border-radius: 8px; padding: 24px; }
-  .explainer-intro { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px; }
+  .explainer-intro { font-size: 1rem; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 20px; }
   .explainer-intro em { color: #7ab8cc; font-style: italic; }
   .set-steps { display: flex; flex-direction: column; gap: 12px; }
   .set-step { display: flex; gap: 14px; align-items: flex-start; }
-  .step-num { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; color: rgba(122,184,204,0.7); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .step-text { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.82); line-height: 1.6; }
-  .step-text strong { color: var(--foam); font-weight: 700; }
+  .step-num { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(122,184,204,0.6); flex-shrink: 0; padding-top: 2px; width: 20px; }
+  .step-text { font-size: 1rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .step-text strong { color: var(--foam); font-weight: 600; }
   .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
-  .emergency p { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.65); margin-bottom: 6px; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
-  .emergency .sub { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.55); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
-  footer a { color: rgba(122,184,204,0.85); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
+  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.68rem; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
   @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
   .disclaimer {
     margin-top: 20px;
     padding: 16px 20px;
     border-top: 1px solid rgba(255,255,255,0.12);
     font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
+    font-size: 0.72rem;
     color: rgba(255,255,255,0.5);
     line-height: 1.7;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     text-align: center;
+  }
+
+  .metrics-footnote {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 </style>
 </head>
@@ -136,11 +132,12 @@
     </div>
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
     <div class="metrics">
-      <div class="metric"><div class="metric-label">Wave Height</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
+      <div class="metric"><div class="metric-label">Swell Height*</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
       <div class="metric"><div class="metric-label">Swell Period</div><div class="metric-value loading" id="swellPeriod">—</div><div class="metric-unit">seconds</div></div>
       <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.6rem;">—</div><div class="metric-unit">swell from</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
     </div>
+    <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
 
     <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
   </div>
@@ -175,9 +172,7 @@
           <div class="hazard-title">Cold Water — Year Round</div>
           <div class="hazard-desc">Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</div>
         </div>
-      </div>
-      <!-- STEEP_HAZARD_SLOT: insert steep beach card here if beach slope = steep -->
-    </div>
+      </div></div>
   </div>
 
   <div class="info-section">
@@ -185,7 +180,7 @@
     <div class="rules-list">
       <div class="rule-item">
         <div class="rule-num">01</div>
-        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number in the chart above is your warning. A period of 15+ seconds means sets are arriving with long, quiet intervals between them — sometimes up to 20 minutes of calm. Do not approach the water's edge during a quiet stretch. Stay back and watch.</div>
+        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number in the chart above is your warning. A period of 15+ seconds means sets are arriving with long, quiet intervals between them — sometimes up to 20 minutes of calm. Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</div>
       </div>
       <div class="rule-item">
         <div class="rule-num">02</div>
@@ -216,7 +211,7 @@
   <div class="info-section">
     <div class="section-label">How to Read Sets</div>
     <div class="swell-explainer">
-      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. Do not read the quiet as safety. That stillness is when energy is building offshore.</p>
+      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</p>
       <div class="set-steps">
         <div class="set-step"><div class="step-num">1</div><div class="step-text"><strong>Find a high vantage point above the water line.</strong> Do not approach the shore first. Watch from above.</div></div>
         <div class="set-step"><div class="step-num">2</div><div class="step-text"><strong>Time the quiet intervals.</strong> Count the seconds — or minutes — between large waves. This is your set interval.</div></div>
@@ -237,7 +232,7 @@
 
   <footer>
     Live data: NOAA Buoy 46012 — Half Moon Bay · National Weather Service<br>
-    San Mateo County Coast · California State Parks
+    San Mateo County Coast · California State Parks<br>
       <div class="disclaimer">
       This site displays publicly available NOAA buoy data and National Weather Service advisories. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
     </div>
@@ -335,10 +330,15 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
+        ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
+    const level = calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
+    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
+    const dv = document.getElementById('dangerValue');
+    dv.textContent = LEVEL_LABELS[level];
+    dv.className = `danger-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})
@@ -357,47 +357,34 @@
     const tEl = document.getElementById('waterTemp');
     tEl.textContent = data.waterTempF ? Math.round(data.waterTempF) : 'MM';
     tEl.className = 'metric-value';
+;
     document.getElementById('buoySource').textContent = BUOY_NAME;
   }
 
-  // NWS zones covering San Mateo County coast
-  const NWS_ZONES = ['CAZ529', 'CAZ006'];
 
+  const NWS_ZONES = ['CAZ529', 'CAZ006'];
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
     try {
-      const zonesParam = NWS_ZONES.map(z => `zone=${z}`).join('&');
-      const url = `https://api.weather.gov/alerts/active?${zonesParam}&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement`;
+      const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
+      const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
       const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
-      if (!res.ok) throw new Error('NWS fetch failed');
+      if (!res.ok) throw new Error();
       const data = await res.json();
       const alerts = data.features || [];
-
       if (!alerts.length) {
-        // No active advisory
-        card.className = 'conditions-card level-low';
-        dv.textContent = 'No Active Advisory';
-        dv.className = 'danger-value level-low';
+        if (card) card.className = 'conditions-card level-low';
+        if (dv) { dv.textContent = 'No Active Advisory'; dv.className = 'danger-value level-low'; }
         return;
       }
-
-      // Priority: Warning > Advisory > Statement
       const priority = { 'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1 };
       alerts.sort((a, b) => (priority[b.properties.event] || 0) - (priority[a.properties.event] || 0));
-      const alert = alerts[0].properties;
-
-      const levelMap = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' };
-      const level = levelMap[alert.event] || 'moderate';
-      card.className = `conditions-card level-${level}`;
-      dv.textContent = alert.event;
-      dv.className = `danger-value level-${level}`;
-    } catch(e) {
-      console.warn('NWS advisory fetch failed:', e);
-      card.className = 'conditions-card level-loading';
-      dv.textContent = 'N/A';
-      dv.className = 'danger-value level-loading';
-    }
+      const a0 = alerts[0].properties;
+      const level = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' }[a0.event] || 'moderate';
+      if (card) card.className = 'conditions-card level-' + level;
+      if (dv) { dv.textContent = a0.event; dv.className = 'danger-value level-' + level; }
+    } catch(e) { if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; } }
   }
 
   async function init() {
@@ -407,7 +394,7 @@
       renderConditions(null, true);
       document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-    }
+        }
   }
   init();
   fetchNWSAdvisory();

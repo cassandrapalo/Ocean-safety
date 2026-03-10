@@ -47,12 +47,7 @@
   .metric-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
   .metric-unit { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 4px; }
-  .metric-value.loading { color: rgba(255,255,255,0.15); }
-  .current-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
-  .current-bar-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-right: 6px; white-space: nowrap; }
-  .current-segment { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); transition: background 0.5s; }
-  .current-segment.active-safe { background: var(--safe); } .current-segment.active-caution { background: var(--caution); }
-  .current-segment.active-warn { background: var(--warn); } .current-segment.active-danger { background: var(--danger); }
+  .metric-value.loading { color: rgba(255,255,255,0.15); } .current-segment.active-caution { background: var(--caution); } .current-segment.active-danger { background: var(--danger); }
   .buoy-source { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); text-align: right; }
   .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
   .tide-direction.outgoing { color: #f0a060; } .tide-direction.incoming { color: #60c080; } .tide-direction.slack { color: #f5d060; } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
@@ -85,6 +80,15 @@
     letter-spacing: 0.04em;
     text-align: center;
   }
+
+  .metrics-footnote {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
 </style>
 </head>
 <body>
@@ -114,14 +118,9 @@
       <div class="metric"><div class="metric-label">Tide Direction</div><div class="metric-value loading" id="tideDir" style="font-size:1.1rem;padding-top:8px;">—</div><div class="metric-unit">at Gate</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
     </div>
-    <div class="current-bar">
-      <span class="current-bar-label">Current Risk</span>
-      <div class="current-segment" id="seg1"></div><div class="current-segment" id="seg2"></div>
-      <div class="current-segment" id="seg3"></div><div class="current-segment" id="seg4"></div>
-      <div class="current-segment" id="seg5"></div>
-    </div>
+    <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
+
     <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate (SFB1203)</div>
-  </div>
   </div>
 
   <div class="info-section">
@@ -252,7 +251,7 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('buoyTime').textContent = '—';
+        document.getElementById('buoyTime').textContent = '—';
       document.getElementById('currentSpeed').textContent = '—';
       document.getElementById('tideDir').textContent = '—';
       document.getElementById('waterTemp').textContent = '—';
@@ -274,12 +273,12 @@
     dirEl.style.fontSize = '1.3rem';
     document.getElementById('waterTemp').textContent = Math.round(data.waterTempF);
     document.getElementById('waterTemp').className = 'metric-value';
+;
     document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate (SFB1203)';
   }
 
-  // NWS advisory fetch
-  const NWS_ZONES = ['CAZ006'];
 
+  const NWS_ZONES = ['CAZ006'];
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -287,7 +286,7 @@
       const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
       const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
       const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
-      if (!res.ok) throw new Error('NWS fetch failed');
+      if (!res.ok) throw new Error();
       const data = await res.json();
       const alerts = data.features || [];
       if (!alerts.length) {
@@ -297,15 +296,11 @@
       }
       const priority = { 'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1 };
       alerts.sort((a, b) => (priority[b.properties.event] || 0) - (priority[a.properties.event] || 0));
-      const alert = alerts[0].properties;
-      const levelMap = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' };
-      const level = levelMap[alert.event] || 'moderate';
+      const a0 = alerts[0].properties;
+      const level = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' }[a0.event] || 'moderate';
       if (card) card.className = 'conditions-card level-' + level;
-      if (dv) { dv.textContent = alert.event; dv.className = 'danger-value level-' + level; }
-    } catch(e) {
-      console.warn('NWS fetch failed:', e);
-      if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; }
-    }
+      if (dv) { dv.textContent = a0.event; dv.className = 'danger-value level-' + level; }
+    } catch(e) { if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; } }
   }
 
   async function init() {
@@ -315,7 +310,7 @@
       renderConditions(null, true);
       document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-    }
+        }
   }
   init();
   fetchNWSAdvisory();
