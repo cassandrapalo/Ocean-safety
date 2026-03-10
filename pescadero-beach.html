@@ -85,7 +85,29 @@
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
   .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
   footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.72); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
-  @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
+  @media (max-width: 600px) {
+    .content { padding: 0 16px 60px; }
+    header { padding: 24px 0 20px; margin-bottom: 24px; }
+    h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+    .conditions-card { padding: 18px 16px; }
+    .conditions-header { flex-direction: column; gap: 12px; }
+    .buoy-time { text-align: left; }
+    .danger-value { font-size: 1.6rem; }
+    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .metric { padding: 12px 8px; }
+    .metric-label { font-size: 8px; }
+    .metric-value { font-size: 2rem; }
+    .metric-unit { font-size: 0.65rem; }
+    .hazard-item { padding: 12px; }
+    .hazard-title { font-size: 0.9rem; }
+    .hazard-desc { font-size: 0.88rem; }
+    .rule-text { font-size: 0.92rem; }
+    .step-text { font-size: 0.92rem; }
+    .explainer-intro { font-size: 0.92rem; }
+    .emergency .number { font-size: 2.2rem; }
+    footer { font-size: 0.78rem; }
+    .metrics-footnote { font-size: 0.65rem; }
+  }
   .disclaimer {
     margin-top: 20px;
     padding: 16px 20px;
@@ -303,7 +325,8 @@
     });
     // Find best value for each field — first row that isn't MM
     function bestVal(field) {
-      const r = rows.find(r => r[field] && r[field] !== 'MM');
+      const SENTINEL = new Set(['MM','999','9999','99.0','999.0','9999.0']);
+      const r = rows.find(r => r[field] && !SENTINEL.has(r[field]));
       return r ? r[field] : null;
     }
     // Timestamp from first row

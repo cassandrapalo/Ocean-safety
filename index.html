@@ -327,10 +327,21 @@
     line-height: 2;
   }
 
-  @media (max-width: 480px) {
-    .beach-grid { grid-template-columns: repeat(2, 1fr); }
-    h1 { font-size: 2.9rem; }
-    .conditions-banner { flex-direction: column; }
+  @media (max-width: 600px) {
+    .content { padding: 0 14px 60px; }
+    h1 { font-size: clamp(2rem, 9vw, 3rem); }
+    .hero { padding: 40px 0 36px; }
+    .hero-body { font-size: 1rem; }
+    .swell-warning { max-width: 100%; }
+    .conditions-banner { flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .buoy-card { min-width: unset; padding: 14px 16px; }
+    .buoy-stats { gap: 16px; }
+    .buoy-stat-val { font-size: 1.4rem; }
+    .beach-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .beach-card { padding: 12px; }
+    .beach-card-name { font-size: 1rem; }
+    .county-name { font-size: 1.5rem; }
+    .e-sub { font-size: 0.9rem; }
   }
   .disclaimer {
     margin-top: 20px;
@@ -344,7 +355,7 @@
     text-align: center;
   }
 
-  .disclaimer-inline { font-size: 0.82rem; color: #7ab8cc; opacity: 0.85; margin-top: 0.75rem; line-height: 1.5; max-width: 640px; }
+  .disclaimer-inline { font-size: 0.82rem; color: #7ab8cc; opacity: 0.85; margin-top: 0.75rem; line-height: 1.5; max-width: 640px; margin-bottom: 28px; display: block; }
   </style>
 </head>
 <body>
