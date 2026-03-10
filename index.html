@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ocean Safety — Northern California Coast</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --deep: #061829;
@@ -21,7 +21,7 @@
   body {
     background: var(--deep);
     color: var(--light);
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: 'Inter', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -66,7 +66,7 @@
   }
 
   .site-tag {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -98,7 +98,7 @@
 
   .hero-body {
     font-size: 1.15rem;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.78);
     max-width: 540px;
     line-height: 1.7;
     margin-bottom: 40px;
@@ -143,11 +143,11 @@
   }
 
   .buoy-card-label {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.6);
     margin-bottom: 12px;
   }
 
@@ -159,7 +159,7 @@
   }
 
   .buoy-stat-val {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 1.7rem;
     font-weight: 500;
     color: var(--foam);
@@ -170,11 +170,11 @@
   .buoy-stat-val.loading { color: rgba(255,255,255,0.15); }
 
   .buoy-stat-unit {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.6);
     display: block;
     margin-top: 4px;
   }
@@ -212,11 +212,11 @@
   }
 
   .county-meta {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.6);
   }
 
   .beach-grid {
@@ -274,11 +274,11 @@
   }
 
   .beach-card-type {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.6);
     margin-bottom: 10px;
   }
 
@@ -304,9 +304,9 @@
 
   .beach-period {
     display: block;
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
-    color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.55);
     margin-top: 6px;
     letter-spacing: 0.04em;
   }
@@ -326,7 +326,7 @@
   }
 
   .e-label {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -339,19 +339,19 @@
     color: #e57368;
   }
 
-  .e-sub { font-size: 1.15rem; color: rgba(255,255,255,0.25); }
+  .e-sub { font-size: 1.15rem; color: rgba(255,255,255,0.6); }
 
   .site-footer {
     text-align: center;
     padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.18);
   }
 
   .site-footer p {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.05em;
     line-height: 2;
   }
 
@@ -364,9 +364,9 @@
     margin-top: 20px;
     padding: 16px 20px;
     border-top: 1px solid rgba(255,255,255,0.08);
-    font-family: 'DM Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 0.92rem;
-    color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.5);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
@@ -389,7 +389,7 @@
     <div class="site-tag">oceansafety.info</div>
     <h1>Know the ocean<br>before you<br><em>enter it.</em></h1>
     <p class="hero-body">Real-time swell conditions and safety information for Northern California beaches. Select your beach below.</p>
-    <p class="disclaimer-inline">This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
+    <p class="disclaimer-inline">This site displays publicly available NOAA buoy data and National Weather Service advisories. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
     <div class="swell-warning">
       <div class="icon">⚠️</div>
       <p><strong>Read the swell period before you approach the water.</strong> Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore.</p>
@@ -625,7 +625,7 @@
   <div class="site-footer">
     <p>
       oceansafety.info · Northern California Coast<br>
-      Live data: NOAA Buoys 46012 · 46026 · CO-OPS Golden Gate<br>
+      Live data: NOAA Buoys 46012 · 46026 · 46013 · National Weather Service<br>
       Stay on dry sand. Watch the ocean. Know the sets.
     </p>
   </div>
