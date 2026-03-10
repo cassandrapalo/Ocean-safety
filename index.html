@@ -650,21 +650,19 @@
     const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
     const dataLines = allLines.filter(l => !l.startsWith('#'));
     if (!dataLines.length) return null;
-    let row = null;
-    for (const line of dataLines.slice(0, 10)) {
+    const rows = dataLines.slice(0, 20).map(line => {
       const vals = line.trim().split(/[ \t]+/);
       const r = {};
       headers.forEach((h, i) => { r[h] = vals[i]; });
-      if (r['WVHT'] && r['WVHT'] !== 'MM') { row = r; break; }
+      return r;
+    });
+    function bestVal(field) {
+      const r = rows.find(r => r[field] && r[field] !== 'MM');
+      return r ? r[field] : null;
     }
-    if (!row) {
-      const vals = dataLines[0].trim().split(/[ \t]+/);
-      row = {};
-      headers.forEach((h, i) => { row[h] = vals[i]; });
-    }
-    const wvhtM = parseFloat(row['WVHT']);
-    const dpd   = parseFloat(row['DPD']);
-    const mwd   = parseFloat(row['MWD']);
+    const wvhtM = parseFloat(bestVal('WVHT'));
+    const dpd   = parseFloat(bestVal('DPD'));
+    const mwd   = parseFloat(bestVal('MWD'));
     return {
       waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
       swellPeriodSec: isNaN(dpd)   ? null : dpd,

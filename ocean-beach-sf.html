@@ -325,33 +325,31 @@
     const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
     const dataLines = allLines.filter(l => !l.startsWith('#'));
     if (!dataLines.length) return null;
-    // Walk rows until we find one with actual wave height data
-    let row = null, ts = null;
-    for (const line of dataLines.slice(0, 10)) {
+    // Parse all rows into objects
+    const rows = dataLines.slice(0, 20).map(line => {
       const vals = line.trim().split(/[ \t]+/);
       const r = {};
       headers.forEach((h, i) => { r[h] = vals[i]; });
-      if (r['WVHT'] && r['WVHT'] !== 'MM') {
-        row = r;
-        const yr = parseInt(r['YY']) + (parseInt(r['YY']) < 50 ? 2000 : 1900);
-        ts = new Date(Date.UTC(yr, parseInt(r['MM'])-1, parseInt(r['DD']),
-                               parseInt(r['hh']), parseInt(r['mm'])));
-        break;
-      }
+      return r;
+    });
+    // Find best value for each field — first row that isn't MM
+    function bestVal(field) {
+      const r = rows.find(r => r[field] && r[field] !== 'MM');
+      return r ? r[field] : null;
     }
-    // Fall back to first row for timestamp even if no wave data
-    if (!row) {
-      const vals = dataLines[0].trim().split(/[ \t]+/);
-      row = {};
-      headers.forEach((h, i) => { row[h] = vals[i]; });
-      const yr = parseInt(row['YY']) + (parseInt(row['YY']) < 50 ? 2000 : 1900);
-      ts = new Date(Date.UTC(yr, parseInt(row['MM'])-1, parseInt(row['DD']),
-                             parseInt(row['hh']), parseInt(row['mm'])));
-    }
-    const wvhtM = parseFloat(row['WVHT']);
-    const dpd   = parseFloat(row['DPD']);
-    const wtmpC = parseFloat(row['WTMP']);
-    const mwd   = parseFloat(row['MWD']);
+    // Timestamp from first row
+    const r0 = rows[0];
+    const yr = parseInt(r0['YY']) + (parseInt(r0['YY']) < 50 ? 2000 : 1900);
+    const ts = new Date(Date.UTC(yr, parseInt(r0['MM'])-1, parseInt(r0['DD']),
+                                 parseInt(r0['hh']), parseInt(r0['mm'])));
+    const wvhtRaw = bestVal('WVHT');
+    const dpdRaw  = bestVal('DPD');
+    const wtmpRaw = bestVal('WTMP');
+    const mwdRaw  = bestVal('MWD');
+    const wvhtM = parseFloat(wvhtRaw);
+    const dpd   = parseFloat(dpdRaw);
+    const wtmpC = parseFloat(wtmpRaw);
+    const mwd   = parseFloat(mwdRaw);
     return {
       timestamp:      ts,
       waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
