@@ -67,7 +67,7 @@
   .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
   .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.68rem; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
+  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.72); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
   @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
   .disclaimer {
     margin-top: 20px;
@@ -104,7 +104,7 @@
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div class="danger-level">
-        <div class="danger-label">National Weather Service Warning</div>
+        <div class="danger-label">National Weather Service Warning — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
         <div class="danger-value level-loading" id="dangerValue">Loading…</div>
       </div>
       <div class="buoy-time">
@@ -193,7 +193,7 @@
   </div>
 
   <footer>
-    Live tidal current data: NOAA CO-OPS · National Weather Service<br>
+    Live tidal current data: NOAA CO-OPS · <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank" style="color:rgba(255,255,255,0.6);text-decoration:underline;">National Weather Service</a><br>
     San Francisco County · National Park Service GGNRA<br>
       <div class="disclaimer">
       This site displays publicly available NOAA buoy data and National Weather Service advisories. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
@@ -259,10 +259,6 @@
     }
     lastData = data;
     const level = calcDangerLevel(data.speedKnots, data.isOutgoing);
-    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `danger-value level-${level}`;
     document.getElementById('buoyTime').textContent = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     if (stale) document.getElementById('staleWarning').classList.add('visible');
     document.getElementById('currentSpeed').textContent = data.speedKnots.toFixed(1);

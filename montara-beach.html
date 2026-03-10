@@ -84,7 +84,7 @@
   .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
   .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.68rem; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
+  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.72); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
   @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
   .disclaimer {
     margin-top: 20px;
@@ -122,7 +122,7 @@
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div class="danger-level">
-        <div class="danger-label">National Weather Service Warning</div>
+        <div class="danger-label">National Weather Service Warning — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
         <div class="danger-value level-loading" id="dangerValue">Loading…</div>
       </div>
       <div class="buoy-time">
@@ -246,7 +246,7 @@
   </div>
 
   <footer>
-    Live data: NOAA Buoy 46012 — Half Moon Bay · National Weather Service<br>
+    Live data: NOAA Buoy 46012 — Half Moon Bay · <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" style="color:rgba(255,255,255,0.6);text-decoration:underline;">National Weather Service</a><br>
     San Mateo County Coast · California State Parks<br>
       <div class="disclaimer">
       This site displays publicly available NOAA buoy data and National Weather Service advisories. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
@@ -350,10 +350,6 @@
     }
     lastData = data;
     const level = calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
-    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `danger-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})
@@ -362,15 +358,15 @@
     if (linkEl) linkEl.href = `https://www.ndbc.noaa.gov/station_page.php?station=${BUOY_ID}`;
     if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
     const hEl = document.getElementById('waveHeight');
-    hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
+    hEl.textContent = (data.waveHeightFt !== null && data.waveHeightFt !== undefined) ? data.waveHeightFt.toFixed(1) : '—';
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
-    if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
+    if (dEl) { dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; dEl.className = 'metric-value'; }
     const pEl = document.getElementById('swellPeriod');
-    pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
+    pEl.textContent = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : '—';
     pEl.className = 'metric-value';
     const tEl = document.getElementById('waterTemp');
-    tEl.textContent = data.waterTempF ? Math.round(data.waterTempF) : 'MM';
+    tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
     tEl.className = 'metric-value';
 ;
     document.getElementById('buoySource').textContent = BUOY_NAME;
