@@ -103,7 +103,7 @@
 
   .beach-type {
     font-size: 0.92rem;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.75);
     font-family: 'Inter', sans-serif;
     letter-spacing: 0.08em;
   }
@@ -238,7 +238,7 @@
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.75);
     margin-bottom: 8px;
   }
 
@@ -493,7 +493,7 @@
     border-top: 1px solid rgba(255,255,255,0.12);
     font-family: 'Inter', sans-serif;
     font-size: 0.92rem;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.75);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
@@ -501,12 +501,29 @@
 
   .metrics-footnote {
     font-size: 0.68rem;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.7);
     line-height: 1.5;
     margin-top: 10px;
     padding-top: 8px;
     border-top: 1px solid rgba(255,255,255,0.08);
   }
+
+  .metric-value.period-danger { color: #e57368 !important; }
+  .swell-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(192,57,43,0.1);
+    border: 1px solid rgba(192,57,43,0.3);
+    border-left: 3px solid #e57368;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .swell-warning-text strong { color: #e57368; }
 </style>
 </head>
 <body>
@@ -520,7 +537,7 @@
 <div class="content">
 
   <header>
-    <a class="back-link" href="sanmateo-coast.html">← San Mateo County Beaches</a>
+    <a class="back-link" href="index.html">← All Beaches</a>
     <div class="county-label">San Mateo County · Half Moon Bay</div>
     <h1>Cowell Ranch<br>State Beach</h1>
     <div class="beach-type">Remote · Rocky Shore · No Lifeguard · No Cell Service · Faces W</div>
@@ -530,7 +547,7 @@
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div class="danger-level">
-        <div class="danger-label">National Weather Service Warning — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
+        <div class="danger-label">Local Conditions — National Weather Service — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
         <div class="danger-value level-loading" id="dangerValue">Loading…</div>
       </div>
       <div class="buoy-time">
@@ -567,19 +584,9 @@
       </div>
     </div>
     <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
-
-    <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
-  </div>
-
-  <!-- BEACH-SPECIFIC HAZARDS -->
-  <div class="info-section">
-    <div class="section-label">Known Hazards — Cowell Ranch</div>
-    <div class="hazard-list">
-      <div class="hazard-item">
-        <div class="hazard-icon">🌊</div>
-        <div>
-          <div class="hazard-title">Long-Period Swell & Set Waves</div>
-          <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore. Fatalities have occurred at this beach.</div>
+  <div class="swell-warning" id="swellWarning">
+    <div class="swell-warning-icon">⚠️</div>
+    <div class="swell-warning-text"><strong>Long-Period Swell & Set Waves</strong><br>Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore. Fatalities have occurred at this beach.</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -662,10 +669,16 @@
         <div class="set-step">
           <div class="step-num">5</div>
           <div class="step-text"><strong>When in doubt, stay back.</strong> If the swell period is above 12 seconds, assume the next set will reach further than the last. At 15+ seconds, stay completely clear of the shore.</div>
-        </div>
-      </div>
-    </div>
+        </div></div>
   </div>
+
+    <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
+  </div>
+
+  <!-- BEACH-SPECIFIC HAZARDS -->
+  <div class="info-section">
+    <div class="section-label">Known Hazards at Cowell Ranch</div>
+    <div class="hazard-list">
 
     <!-- EMERGENCY -->
   <div class="emergency">
@@ -815,7 +828,12 @@
 
     const pEl = document.getElementById('swellPeriod');
     pEl.textContent = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : '—';
-    pEl.className = 'metric-value';
+    if (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined && data.swellPeriodSec >= 15) {
+      pEl.textContent = '!' + Math.round(data.swellPeriodSec);
+      pEl.className = 'metric-value period-danger';
+    } else {
+      pEl.className = 'metric-value';
+    }
 
     const tEl = document.getElementById('waterTemp');
     tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
