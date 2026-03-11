@@ -348,7 +348,8 @@
     });
     // Find best value for each field — first row that isn't MM
     function bestVal(field) {
-      const r = rows.find(r => r[field] && r[field] !== 'MM');
+      const SENTINEL = new Set(['MM','999','9999','99.0','999.0','9999.0']);
+      const r = rows.find(r => r[field] && !SENTINEL.has(r[field]));
       return r ? r[field] : null;
     }
     // Timestamp from first row
@@ -403,12 +404,18 @@
     hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
-    if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
+    if (dEl) { dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; dEl.className = 'metric-value'; }
     const pEl = document.getElementById('swellPeriod');
-    pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
-    pEl.className = 'metric-value';
+    const periodVal = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : null;
+    if (periodVal !== null && periodVal >= 15) {
+      pEl.textContent = '!' + periodVal;
+      pEl.className = 'metric-value period-danger';
+    } else {
+      pEl.textContent = periodVal !== null ? periodVal : '—';
+      pEl.className = 'metric-value';
+    }
     const tEl = document.getElementById('waterTemp');
-    tEl.textContent = data.waterTempF ? Math.round(data.waterTempF) : 'MM';
+    tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
     tEl.className = 'metric-value';
     const period = data.swellPeriodSec || 0;
     [['seg1',6,'active-safe'],['seg2',9,'active-caution'],['seg3',12,'active-warn'],['seg4',15,'active-danger'],['seg5',17,'active-danger']].forEach(([id,thresh,cls]) => {
