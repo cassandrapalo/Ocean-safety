@@ -52,27 +52,7 @@
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.7rem; line-height: 1; color: var(--foam); font-weight: 700; }
   .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: rgba(255,255,255,1.0); margin-top: 4px; }
   .metric-value.loading { color: rgba(255,255,255,0.15); }
-  .period-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
-  .period-bar-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-right: 6px; white-space: nowrap; }
-  .period-segment { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,1.0); transition: background 0.5s; }
-  .period-segment.active-safe { background: var(--safe); } .period-segment.active-caution { background: var(--caution); }
-  .period-segment.active-warn { background: var(--warn); } .period-segment.active-danger { background: var(--danger); }
   .buoy-source { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
-  .override-section { margin-bottom: 28px; }
-  .override-toggle { background: none; border: 1px solid rgba(255,255,255,1.0); color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
-  .override-toggle:hover { border-color: rgba(255,255,255,1.0); color: rgba(255,255,255,1.0); }
-  .override-panel { display: none; margin-top: 14px; background: rgba(255,255,255,1.0); border: 1px solid rgba(255,255,255,1.0); border-radius: 8px; padding: 20px; }
-  .override-panel.open { display: block; }
-  .override-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 12px; }
-  .override-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .override-btn { padding: 8px 16px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
-  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
-  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
-  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
-  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
-  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
-  .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
-  .override-note { font-size: 1.15rem; color: rgba(255,255,255,1.0); font-style: italic; }
   .info-section { margin-bottom: 32px; }
   .section-label { font-size: 1.15rem; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,1.0); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
@@ -111,7 +91,44 @@
     text-align: center;
   }
   .metric-value.period-danger { color: #e57368 !important; font-weight: 700; }
-</style>
+
+  .nws-advisory { margin-top: 4px; }
+  .nws-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
+  .nws-value { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.15; color: #60c080; transition: color 0.5s; }
+  .nws-value.level-extreme { color: #e57368; }
+  .nws-value.level-high { color: #f0a060; }
+  .nws-value.level-moderate { color: #f5d060; }
+  .nws-value.level-low { color: #60c080; }
+  .nws-value.level-loading { color: rgba(255,255,255,0.3); }
+  .nws-link { display: inline-block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: underline; text-underline-offset: 3px; opacity: 0.7; }
+  .nws-link:hover { opacity: 1.0; }
+  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 0; }
+  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
+  .swell-warning-text strong { color: #e57368; }
+  @media (max-width: 600px) {
+    .content { padding: 0 16px 60px; }
+    header { padding: 24px 0 20px; margin-bottom: 24px; }
+    h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+    .conditions-card { padding: 18px 16px; }
+    .conditions-header { flex-direction: column; gap: 12px; }
+    .buoy-time { text-align: left; }
+    .nws-value { font-size: 1.3rem; }
+    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .metric { padding: 12px 8px; }
+    .metric-label { font-size: 8px; }
+    .metric-value { font-size: 2rem; }
+    .metric-unit { font-size: 0.65rem; }
+    .swell-warning { margin-top: 20px; }
+    .info-section { margin-top: 32px; }
+    .hazard-item { padding: 12px; }
+    .hazard-title { font-size: 0.9rem; }
+    .hazard-desc { font-size: 0.88rem; }
+    .rule-text { font-size: 0.92rem; }
+    .step-text { font-size: 0.92rem; }
+    .emergency .number { font-size: 2.2rem; }
+    footer { font-size: 0.78rem; }
+  }</style>
 </head>
 <body>
 <div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
@@ -125,9 +142,10 @@
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
-      <div class="danger-level">
-        <div class="danger-label">Current Danger Level</div>
-        <div class="danger-value level-loading" id="dangerValue">Loading…</div>
+      <div class="nws-advisory">
+        <div class="nws-label">National Weather Service</div>
+        <div class="nws-value level-loading" id="dangerValue">Loading…</div>
+        <a class="nws-link" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank">View NWS Forecast ↗</a>
       </div>
       <div class="buoy-time">
         <span class="time-label">Buoy Reading</span>
@@ -141,29 +159,14 @@
       <div class="metric"><div class="metric-label">Swell Period</div><div class="metric-value loading" id="swellPeriod">—</div><div class="metric-unit">seconds</div></div>
       <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.7rem;">—</div><div class="metric-unit">swell from</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
-    </div>
-    <div class="period-bar">
-      <span class="period-bar-label">Period Risk</span>
-      <div class="period-segment" id="seg1"></div><div class="period-segment" id="seg2"></div>
-      <div class="period-segment" id="seg3"></div><div class="period-segment" id="seg4"></div>
-      <div class="period-segment" id="seg5"></div>
-    </div>
+    </div></div>
     <div class="buoy-source" id="buoySource">NOAA Buoy 46026 — San Francisco Bar</div>
   </div>
+  </div>
 
-  <div class="override-section">
-    <button class="override-toggle" onclick="toggleOverride()">⚙ Manual Override</button>
-    <div class="override-panel" id="overridePanel">
-      <div class="override-label">Set Danger Level Manually</div>
-      <div class="override-buttons">
-        <button class="override-btn extreme" onclick="setOverride('extreme')">Extreme</button>
-        <button class="override-btn high" onclick="setOverride('high')">High</button>
-        <button class="override-btn moderate" onclick="setOverride('moderate')">Moderate</button>
-        <button class="override-btn low" onclick="setOverride('low')">Low</button>
-        <button class="override-btn auto" onclick="setOverride('auto')">↺ Auto</button>
-      </div>
-      <div class="override-note">Override stays active until page reload or reset to Auto.</div>
-    </div>
+  <div class="swell-warning">
+    <div class="swell-warning-icon">⚠️</div>
+    <div class="swell-warning-text"><strong>Long-period swell is dangerous.</strong> Any swell period above 15 seconds means waves are arriving in sets with long quiet intervals — sometimes 20 minutes of calm. During the quiet, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
   </div>
 
   <div class="info-section">
@@ -174,6 +177,7 @@
         <div>
           <div class="hazard-title">Long-Period Swell & Set Waves</div>
           <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
+          <div class="hazard-source">Source: NPS / SF Fire Dept / NOAA — Joint Coastal Safety Advisory (sf-fire.org); NOAA National Weather Service Beach Hazards guidance</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -181,6 +185,7 @@
         <div>
           <div class="hazard-title">Distraction Hazard</div>
           <div class="hazard-desc">Baker Beach has some of the most stunning views in San Francisco — the Golden Gate Bridge directly overhead. People looking up, photographing, or walking toward the north end rocks while distracted are at elevated risk. The view draws people toward the most dangerous section of the beach.</div>
+          <div class="hazard-source">Source: NPS GGNRA — Baker Beach / Presidio (nps.gov/goga)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -188,6 +193,7 @@
         <div>
           <div class="hazard-title">North End Rock Surge</div>
           <div class="hazard-desc">The north end of Baker Beach, closest to the bridge, transitions to exposed rocks with powerful wave surge. This area has claimed lives. Stay on the sandy section of the beach.</div>
+          <div class="hazard-source">Source: NPS — Baker Beach official page (nps.gov/places/000/baker-beach.htm)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -195,6 +201,7 @@
         <div>
           <div class="hazard-title">Tidal Currents Near Gate</div>
           <div class="hazard-desc">The proximity to the Golden Gate means tidal currents are strong, especially at the north end. Anyone swept in here faces both surf and current.</div>
+          <div class="hazard-source">Source: NPS — Baker Beach official page (nps.gov/places/000/baker-beach.htm); NPS GGNRA Beach Safety (nps.gov/goga)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -202,6 +209,7 @@
         <div>
           <div class="hazard-title">Cold Water — Year Round</div>
           <div class="hazard-desc">San Francisco Bay and ocean water is cold year round. Hypothermia can set in quickly. Always swim with a buddy and stay close to shore.</div>
+          <div class="hazard-source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -209,6 +217,7 @@
         <div>
           <div class="hazard-title">No Year-Round Lifeguard Posted</div>
           <div class="hazard-desc">GGNRA lifeguards patrol seasonally. There is no year-round posted lifeguard. Emergency response times on remote beaches may take longer than in urban environments.</div>
+          <div class="hazard-source">Source: NPS GGNRA / CA State Parks — Beach Safety Practices (nps.gov/goga); SF Fire Dept / NPS Joint Coastal Safety Advisory (sf-fire.org)</div>
         </div>
       </div></div>
   </div>
@@ -299,8 +308,6 @@
     else                                                            level = 'low';
     return applyDirectionMod(level, swellDirDeg);
   }
-
-  let overrideLevel = null;
   let lastData = null;
 
   async function fetchBuoyData() {
@@ -408,14 +415,6 @@
       if (period >= thresh) el.classList.add(cls);
     });
     document.getElementById('buoySource').textContent = BUOY_NAME + (overrideLevel ? ' · Manual Override Active' : '');
-  }
-
-  function toggleOverride() { document.getElementById('overridePanel').classList.toggle('open'); }
-  function setOverride(level) {
-    document.querySelectorAll('.override-btn').forEach(b => b.classList.remove('selected'));
-    event.target.classList.add('selected');
-    overrideLevel = level === 'auto' ? null : level;
-    if (lastData) renderConditions(lastData, false);
   }
 
   async function init() {

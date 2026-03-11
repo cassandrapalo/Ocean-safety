@@ -49,20 +49,6 @@
   .buoy-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
   .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
   .tide-direction.outgoing { color: #f0a060; } .tide-direction.incoming { color: #60c080; } .tide-direction.slack { color: #f5d060; }
-  .override-section { margin-bottom: 28px; }
-  .override-toggle { background: none; border: 1px solid rgba(255,255,255,1.0); color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
-  .override-panel { display: none; margin-top: 14px; background: rgba(255,255,255,1.0); border: 1px solid rgba(255,255,255,1.0); border-radius: 8px; padding: 20px; }
-  .override-panel.open { display: block; }
-  .override-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 12px; }
-  .override-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .override-btn { padding: 8px 16px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
-  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
-  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
-  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
-  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
-  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
-  .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
-  .override-note { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-style: italic; }
   .info-section { margin-bottom: 32px; }
   .section-label { font-size: 0.85rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,1.0); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
@@ -92,7 +78,44 @@
     letter-spacing: 0.04em;
     text-align: center;
   }
-</style>
+
+  .nws-advisory { margin-top: 4px; }
+  .nws-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
+  .nws-value { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.15; color: #60c080; transition: color 0.5s; }
+  .nws-value.level-extreme { color: #e57368; }
+  .nws-value.level-high { color: #f0a060; }
+  .nws-value.level-moderate { color: #f5d060; }
+  .nws-value.level-low { color: #60c080; }
+  .nws-value.level-loading { color: rgba(255,255,255,0.3); }
+  .nws-link { display: inline-block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: underline; text-underline-offset: 3px; opacity: 0.7; }
+  .nws-link:hover { opacity: 1.0; }
+  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 0; }
+  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
+  .swell-warning-text strong { color: #e57368; }
+  @media (max-width: 600px) {
+    .content { padding: 0 16px 60px; }
+    header { padding: 24px 0 20px; margin-bottom: 24px; }
+    h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+    .conditions-card { padding: 18px 16px; }
+    .conditions-header { flex-direction: column; gap: 12px; }
+    .buoy-time { text-align: left; }
+    .nws-value { font-size: 1.3rem; }
+    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+    .metric { padding: 12px 8px; }
+    .metric-label { font-size: 8px; }
+    .metric-value { font-size: 2rem; }
+    .metric-unit { font-size: 0.65rem; }
+    .swell-warning { margin-top: 20px; }
+    .info-section { margin-top: 32px; }
+    .hazard-item { padding: 12px; }
+    .hazard-title { font-size: 0.9rem; }
+    .hazard-desc { font-size: 0.88rem; }
+    .rule-text { font-size: 0.92rem; }
+    .step-text { font-size: 0.92rem; }
+    .emergency .number { font-size: 2.2rem; }
+    footer { font-size: 0.78rem; }
+  }</style>
 </head>
 <body>
 <div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
@@ -106,9 +129,10 @@
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
-      <div class="danger-level">
-        <div class="danger-label">Current Danger Level</div>
-        <div class="danger-value level-loading" id="dangerValue">Loading…</div>
+      <div class="nws-advisory">
+        <div class="nws-label">National Weather Service</div>
+        <div class="nws-value level-loading" id="dangerValue">Loading…</div>
+        <a class="nws-link" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank">View NWS Forecast ↗</a>
       </div>
       <div class="buoy-time">
         <span class="time-label">Tidal Data</span>
@@ -129,20 +153,11 @@
     </div>
     <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate (SFB1203)</div>
   </div>
+  </div>
 
-  <div class="override-section">
-    <button class="override-toggle" onclick="toggleOverride()">⚙ Manual Override</button>
-    <div class="override-panel" id="overridePanel">
-      <div class="override-label">Set Danger Level Manually</div>
-      <div class="override-buttons">
-        <button class="override-btn extreme" onclick="setOverride('extreme')">Extreme</button>
-        <button class="override-btn high" onclick="setOverride('high')">High</button>
-        <button class="override-btn moderate" onclick="setOverride('moderate')">Moderate</button>
-        <button class="override-btn low" onclick="setOverride('low')">Low</button>
-        <button class="override-btn auto" onclick="setOverride('auto')">↺ Auto</button>
-      </div>
-      <div class="override-note">Override stays active until page reload or reset to Auto.</div>
-    </div>
+  <div class="swell-warning">
+    <div class="swell-warning-icon">⚠️</div>
+    <div class="swell-warning-text"><strong>Long-period swell is dangerous.</strong> Any swell period above 15 seconds means waves are arriving in sets with long quiet intervals — sometimes 20 minutes of calm. During the quiet, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
   </div>
 
   <div class="info-section">
@@ -153,6 +168,7 @@
         <div>
           <div class="hazard-title">Tidal Currents Past the Breakwater</div>
           <div class="hazard-desc">Aquatic Park cove is protected and popular with open water swimmers. But the moment you swim past the breakwater, you enter the full force of Golden Gate tidal currents — up to 4–5 knots on strong tides. Swimmers have been swept out and unable to return. The current data above shows live conditions at the Gate. On outgoing tide, stay inside the breakwater.</div>
+          <div class="hazard-source">Source: NPS San Francisco Maritime — Aquatic Park Cove (nps.gov/safr); Golden Gate Triathlon Club open water safety guide (ggtc.org)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -160,6 +176,7 @@
         <div>
           <div class="hazard-title">Cold Water Incapacitation</div>
           <div class="hazard-desc">Bay water is cold year round. Even strong, experienced swimmers have been affected by cold water in Aquatic Park. Enter the water slowly. Never swim alone. Know the signs: gasping, inability to control breathing, sudden muscle cramping.</div>
+          <div class="hazard-source">Source: NPS San Francisco Maritime — Aquatic Park Cove (nps.gov/safr); NPS GGNRA Beach Safety (nps.gov/goga)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -167,6 +184,7 @@
         <div>
           <div class="hazard-title">Boat Traffic & Visibility</div>
           <div class="hazard-desc">Aquatic Park has active ferry and recreational boat traffic nearby. In fog — common in summer — swimmers outside the cove are extremely difficult to see from boats.</div>
+          <div class="hazard-source">Source: NPS San Francisco Maritime — Aquatic Park Cove (nps.gov/safr); Pacific Open Water Swim Co. safety guide (pacificswim.co)</div>
         </div>
       </div>
       <div class="hazard-item">
@@ -174,6 +192,7 @@
         <div>
           <div class="hazard-title">Deceptive Calm</div>
           <div class="hazard-desc">The cove looks inviting and safe. This is exactly what makes it dangerous for swimmers who venture past the protected area without understanding the current conditions outside.</div>
+          <div class="hazard-source">Source: NPS San Francisco Maritime — Aquatic Park Cove (nps.gov/safr); Golden Gate Triathlon Club safety guide (ggtc.org)</div>
         </div>
       </div></div>
   </div>
@@ -229,7 +248,6 @@
   const STATION_ID = 'SFB1203';
   const NWS_ZONES = ['CAZ006'];
   const STALE_HOURS = 2;
-  let overrideLevel = null;
   let lastData = null;
 
   function calcDangerLevel(speedKnots, isOutgoing) {
@@ -306,14 +324,6 @@
       if (speed >= thresh) el.classList.add(cls);
     });
     document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate (SFB1203)' + (overrideLevel ? ' · Manual Override Active' : '');
-  }
-
-  function toggleOverride() { document.getElementById('overridePanel').classList.toggle('open'); }
-  function setOverride(level) {
-    document.querySelectorAll('.override-btn').forEach(b => b.classList.remove('selected'));
-    event.target.classList.add('selected');
-    overrideLevel = level === 'auto' ? null : level;
-    if (lastData) renderConditions(lastData, false);
   }
 
   async function init() {
