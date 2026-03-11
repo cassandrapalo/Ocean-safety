@@ -190,14 +190,6 @@
         </div>
       </div>
       <div class="hazard-item">
-        <div class="hazard-icon">💥</div>
-        <div>
-          <div class="hazard-title">Shore Break</div>
-          <div class="hazard-desc">Waves break powerfully onto the beach. The force is sufficient to cause injury and immediately pull people into the water.</div>
-          <div class="hazard-source">Source: NPS GGNRA — Beach Safety Practices (nps.gov/goga); SF Fire Dept / NPS Joint Coastal Safety Advisory (sf-fire.org)</div>
-        </div>
-      </div>
-      <div class="hazard-item">
         <div class="hazard-icon">🌫️</div>
         <div>
           <div class="hazard-title">Cold Water</div>
@@ -373,16 +365,10 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
       ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
-    const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
-    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `nws-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})

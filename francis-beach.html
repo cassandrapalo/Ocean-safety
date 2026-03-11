@@ -369,16 +369,10 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
       ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
-    const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
-    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `nws-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})

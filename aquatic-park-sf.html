@@ -297,7 +297,6 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
       document.getElementById('buoyTime').textContent = '—';
       document.getElementById('currentSpeed').textContent = '—';
       document.getElementById('tideDir').textContent = '—';
@@ -305,11 +304,6 @@
       return;
     }
     lastData = data;
-    const level = overrideLevel || calcDangerLevel(data.speedKnots, data.isOutgoing);
-    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `nws-value level-${level}`;
     document.getElementById('buoyTime').textContent = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     if (stale) document.getElementById('staleWarning').classList.add('visible');
     document.getElementById('currentSpeed').textContent = data.speedKnots.toFixed(1);

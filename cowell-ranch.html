@@ -488,9 +488,8 @@
     .swell-warning { margin-top: 20px; }
     .info-section { margin-top: 32px; }
     .hazard-item { padding: 12px; }
-    .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-top: 6px; line-height: 1.5; }
-
-  .hazard-title { font-size: 0.9rem; }
+    .hazard-source { font-size: 0.68rem; }
+    .hazard-title { font-size: 0.9rem; }
     .hazard-desc { font-size: 0.88rem; }
     .rule-text { font-size: 0.92rem; }
     .step-text { font-size: 0.92rem; }
@@ -783,7 +782,6 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('dangerValue').textContent = 'Data Unavailable';
       document.getElementById('buoyTime').textContent = '—';
       document.getElementById('waveHeight').textContent = '—';
       document.getElementById('swellPeriod').textContent = '—';
@@ -792,16 +790,6 @@
     }
 
     lastData = data;
-    const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
-
-    // Card
-    const card = document.getElementById('conditionsCard');
-    card.className = `conditions-card level-${level}`;
-
-    // Danger value
-    const dv = document.getElementById('dangerValue');
-    dv.textContent = LEVEL_LABELS[level];
-    dv.className = `nws-value level-${level}`;
 
     // Timestamp
     const now = new Date();
