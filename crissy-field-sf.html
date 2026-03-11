@@ -4,7 +4,7 @@
     --danger: #c0392b; --warn: #e67e22; --caution: #f1c40f; --safe: #27ae60; --light: #ffffff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--deep); color: var(--light); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body { background: var(--deep); color: var(--light); font-family: 'Libre Franklin', sans-serif; min-height: 100vh; overflow-x: hidden; }
   .ocean-bg { position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #061829 0%, #0a2540 40%, #0d3a5c 70%, #0a2540 100%); overflow: hidden; }
   .wave-layer { position: absolute; bottom: 0; left: -50%; width: 200%; height: 180px; opacity: 0.12; border-radius: 50% 50% 0 0; animation: swell 8s ease-in-out infinite; }
   .wave-layer:nth-child(1) { background: #1a6b8a; animation-delay: 0s; height: 140px; }
@@ -13,11 +13,11 @@
   @keyframes swell { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-5%) scaleY(1.15); } }
   .content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
   header { padding: 40px 0 28px; border-bottom: 1px solid rgba(255,255,255,1.0); margin-bottom: 36px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
   .back-link:hover { color: rgba(255,255,255,1.0); }
-  .county-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
+  .county-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
   h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--foam); margin-bottom: 6px; }
-  .beach-type { font-size: 0.82rem; color: rgba(255,255,255,1.0); font-family: 'Inter', sans-serif; letter-spacing: 0.08em; }
+  .beach-type { font-size: 0.82rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
   .conditions-card { border-radius: 10px; padding: 28px; margin-bottom: 24px; background: rgba(255,255,255,1.0); border: 1px solid rgba(255,255,255,1.0); transition: background 0.5s, border-color 0.5s; }
   .conditions-card.level-extreme { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.45); }
   .conditions-card.level-high { background: rgba(230,126,34,0.12); border: 1px solid rgba(230,126,34,0.4); }
@@ -25,32 +25,46 @@
   .conditions-card.level-low { background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.35); }
   .conditions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
   .danger-level { flex: 1; }
-  .danger-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
+  .danger-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
   .danger-value { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; transition: color 0.5s; }
   .danger-value.level-extreme { color: #e57368; } .danger-value.level-high { color: #f0a060; }
   .danger-value.level-moderate { color: #f5d060; } .danger-value.level-low { color: #60c080; }
   .danger-value.level-loading { color: rgba(255,255,255,0.3); }
   .buoy-time { text-align: right; }
-  .buoy-time .time-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); display: block; margin-bottom: 4px; }
-  .buoy-time .time-value { font-family: 'Inter', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,1.0); }
-  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'Inter', sans-serif; letter-spacing: 0.05em; }
+  .buoy-time .time-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); display: block; margin-bottom: 4px; }
+  .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: rgba(255,255,255,1.0); }
+  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
   .stale-warning.visible { display: block; }
   .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
   .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
-  .metric-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 8px; }
+  .metric-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 8px; }
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
-  .metric-unit { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,1.0); margin-top: 4px; }
+  .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,1.0); margin-top: 4px; }
   .metric-value.loading { color: rgba(255,255,255,0.15); }
   .current-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
-  .current-bar-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-right: 6px; white-space: nowrap; }
+  .current-bar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-right: 6px; white-space: nowrap; }
   .current-segment { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,1.0); transition: background 0.5s; }
   .current-segment.active-safe { background: var(--safe); } .current-segment.active-caution { background: var(--caution); }
   .current-segment.active-warn { background: var(--warn); } .current-segment.active-danger { background: var(--danger); }
-  .buoy-source { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
-  .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-family: 'Inter', sans-serif; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
+  .buoy-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
+  .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
   .tide-direction.outgoing { color: #f0a060; } .tide-direction.incoming { color: #60c080; } .tide-direction.slack { color: #f5d060; }
+  .override-section { margin-bottom: 28px; }
+  .override-toggle { background: none; border: 1px solid rgba(255,255,255,1.0); color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+  .override-panel { display: none; margin-top: 14px; background: rgba(255,255,255,1.0); border: 1px solid rgba(255,255,255,1.0); border-radius: 8px; padding: 20px; }
+  .override-panel.open { display: block; }
+  .override-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 12px; }
+  .override-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .override-btn { padding: 8px 16px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
+  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
+  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
+  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
+  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
+  .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
+  .override-note { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-style: italic; }
   .info-section { margin-bottom: 32px; }
-  .section-label { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,1.0); }
+  .section-label { font-size: 0.85rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,1.0); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
   .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
   .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
@@ -58,74 +72,26 @@
   .hazard-desc { font-size: 0.95rem; color: rgba(255,255,255,1.0); line-height: 1.5; }
   .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
   .rule-item { display: flex; gap: 14px; align-items: flex-start; }
-  .rule-num { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
+  .rule-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
   .rule-text { font-size: 1rem; color: rgba(255,255,255,1.0); line-height: 1.55; }
   .rule-text strong { color: var(--foam); font-weight: 600; }
   .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
-  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,1.0); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,1.0); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
-  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,1.0); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.68rem; color: rgba(255,255,255,1.0); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,1.0); line-height: 1.8; }
-  @media (max-width: 600px) {
-    .content { padding: 0 16px 60px; }
-    header { padding: 24px 0 20px; margin-bottom: 24px; }
-    h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
-    .conditions-card { padding: 18px 16px; }
-    .conditions-header { flex-direction: column; gap: 12px; }
-    .buoy-time { text-align: left; }
-    .danger-value { font-size: 1.6rem; }
-    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-    .metric { padding: 12px 8px; }
-    .metric-label { font-size: 8px; }
-    .metric-value { font-size: 2rem; }
-    .metric-unit { font-size: 0.65rem; }
-    .hazard-item { padding: 12px; }
-    .hazard-title { font-size: 0.9rem; }
-    .hazard-desc { font-size: 0.88rem; }
-    .rule-text { font-size: 0.92rem; }
-    .step-text { font-size: 0.92rem; }
-    .explainer-intro { font-size: 0.92rem; }
-    .emergency .number { font-size: 2.2rem; }
-    footer { font-size: 0.78rem; }
-    .metrics-footnote { font-size: 0.65rem; }
-    .swell-warning { padding: 12px; }
-  }
+  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,1.0); text-transform: none; font-family: 'Libre Franklin', sans-serif; letter-spacing: normal; }
+  footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,1.0); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,1.0); line-height: 1.8; }
+  @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
   .disclaimer {
     margin-top: 20px;
     padding: 16px 20px;
     border-top: 1px solid rgba(255,255,255,1.0);
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.72rem;
     color: rgba(255,255,255,1.0);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
   }
-
-  .metrics-footnote {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,1.0);
-    line-height: 1.5;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,1.0);
-  }
-
-  .swell-warning {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: rgba(192,57,43,0.1);
-    border: 1px solid rgba(192,57,43,0.3);
-    border-left: 3px solid #e57368;
-    border-radius: 6px;
-    padding: 14px 16px;
-    margin-top: 16px;
-  }
-  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
-  .swell-warning-text strong { color: #e57368; }
-  .metric-value.period-danger { color: #e57368 !important; }
 </style>
 </head>
 <body>
@@ -135,7 +101,7 @@
     <a class="back-link" href="index.html">← All Beaches</a>
     <div class="county-label">San Francisco County · Presidio · Golden Gate</div>
     <h1>Crissy Field</h1>
-    <div class="beach-type">Faces N · Bay Beach · Tidal Currents · Windsport · Cold Water</div>
+    <div class="beach-type">Bay Beach · Tidal Currents · Windsport · Cold Water</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
@@ -163,14 +129,24 @@
     </div>
     <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate (SFB1203)</div>
   </div>
-  </div>
-    <div class="swell-warning" id="swellWarning">
-      <div class="swell-warning-icon">⚠️</div>
-      <div class="swell-warning-text"><strong>Long-Period Swell &amp; Set Waves</strong><br>Read the chart above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals. Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</div>
+
+  <div class="override-section">
+    <button class="override-toggle" onclick="toggleOverride()">⚙ Manual Override</button>
+    <div class="override-panel" id="overridePanel">
+      <div class="override-label">Set Danger Level Manually</div>
+      <div class="override-buttons">
+        <button class="override-btn extreme" onclick="setOverride('extreme')">Extreme</button>
+        <button class="override-btn high" onclick="setOverride('high')">High</button>
+        <button class="override-btn moderate" onclick="setOverride('moderate')">Moderate</button>
+        <button class="override-btn low" onclick="setOverride('low')">Low</button>
+        <button class="override-btn auto" onclick="setOverride('auto')">↺ Auto</button>
+      </div>
+      <div class="override-note">Override stays active until page reload or reset to Auto.</div>
     </div>
+  </div>
 
   <div class="info-section">
-    <div class="section-label">Known Hazards at Crissy Field</div>
+    <div class="section-label">Known Hazards</div>
     <div class="hazard-list">
       <div class="hazard-item">
         <div class="hazard-icon">🌊</div>
@@ -251,7 +227,9 @@
 <script>
   // NOAA CO-OPS tidal current predictions for Golden Gate (station SFB1203)
   const STATION_ID = 'SFB1203';
+  const NWS_ZONES = ['CAZ006'];
   const STALE_HOURS = 2;
+  let overrideLevel = null;
   let lastData = null;
 
   function calcDangerLevel(speedKnots, isOutgoing) {
@@ -330,9 +308,25 @@
     document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate (SFB1203)' + (overrideLevel ? ' · Manual Override Active' : '');
   }
 
-  
+  function toggleOverride() { document.getElementById('overridePanel').classList.toggle('open'); }
+  function setOverride(level) {
+    document.querySelectorAll('.override-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+    overrideLevel = level === 'auto' ? null : level;
+    if (lastData) renderConditions(lastData, false);
+  }
 
-  const NWS_ZONES = ['CAZ006'];
+  async function init() {
+    const data = await fetchTidalData();
+    if (data) { renderConditions(data, false); }
+    else {
+      renderConditions(null, true);
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
+      document.getElementById('staleWarning').classList.add('visible');
+      document.getElementById('dangerValue').textContent = 'Check Conditions';
+      document.getElementById('dangerValue').className = 'danger-value level-high';
+    }
+  }
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -366,7 +360,8 @@
 
   init();
   fetchNWSAdvisory();
+  setInterval(fetchNWSAdvisory, 30 * 60 * 1000);
   setInterval(init, 15 * 60 * 1000);
 </script>
 </body>
-</html><!-- Ethel11-rebuild10 -->
+</html><!-- Ethel10 -->

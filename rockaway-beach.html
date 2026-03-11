@@ -274,6 +274,7 @@
 
 <script>
   const BUOY_ID = '46012';
+  const NWS_ZONES = ['CAZ529', 'CAZ006'];
   const BEACH_FACING = 260;
   const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
   const STALE_HOURS = 3;
@@ -427,7 +428,40 @@
       document.getElementById('dangerValue').className = 'danger-value level-high';
     }
   }
+  async function fetchNWSAdvisory() {
+    const card = document.getElementById('conditionsCard');
+    const dv = document.getElementById('dangerValue');
+    try {
+      const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
+      const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
+      const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const alerts = data.features || [];
+      const PRIORITY = {'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1};
+      const LEVELS = {'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate'};
+      const LABELS = {'High Surf Warning': 'High Surf Warning', 'High Surf Advisory': 'High Surf Advisory', 'Beach Hazards Statement': 'Beach Hazards Statement'};
+      let best = null;
+      alerts.forEach(a => {
+        const ev = a.properties?.event;
+        if (PRIORITY[ev] && (!best || PRIORITY[ev] > PRIORITY[best])) best = ev;
+      });
+      if (!best) {
+        if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-low';
+        if (dv) { dv.textContent = 'No Active Advisory'; dv.className = 'danger-value level-low'; }
+      } else {
+        const lv = LEVELS[best];
+        if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-' + lv;
+        if (dv) { dv.textContent = LABELS[best]; dv.className = 'danger-value level-' + lv; }
+      }
+    } catch(e) {
+      if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'danger-value level-loading'; }
+    }
+  }
+
   init();
+  fetchNWSAdvisory();
+  setInterval(fetchNWSAdvisory, 30 * 60 * 1000);
   setInterval(init, 30 * 60 * 1000);
 </script>
 </body>

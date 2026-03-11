@@ -17,7 +17,7 @@
   body {
     background: var(--deep);
     color: var(--light);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Libre Franklin', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -66,7 +66,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -78,7 +78,7 @@
   .back-link:hover { color: rgba(255,255,255,1.0); }
 
   .county-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.2em;
     color: #7ab8cc;
@@ -97,7 +97,7 @@
   .beach-type {
     font-size: 0.92rem;
     color: rgba(255,255,255,1.0);
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     letter-spacing: 0.08em;
   }
 
@@ -146,7 +146,7 @@
   }
 
   .danger-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -172,7 +172,7 @@
   }
 
   .buoy-time .time-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -182,7 +182,7 @@
   }
 
   .buoy-link {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.92rem;
     color: #7ab8cc;
     text-decoration: none;
@@ -192,7 +192,7 @@
   }
   .buoy-link:hover { text-decoration: underline; }
   .buoy-time .time-value {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.92rem;
     color: rgba(255,255,255,1.0);
   }
@@ -206,7 +206,7 @@
     font-size: 1.15rem;
     color: #f5d060;
     margin-bottom: 16px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     letter-spacing: 0.05em;
   }
   .stale-warning.visible { display: block; }
@@ -227,7 +227,7 @@
   }
 
   .metric-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -243,7 +243,7 @@
   }
 
   .metric-unit {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     color: rgba(255,255,255,1.0);
     margin-top: 4px;
@@ -252,9 +252,15 @@
   .metric-value.loading { color: rgba(255,255,255,0.15); }
 
   /* Period danger indicator */
+  .period-bar {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
 
   .period-bar-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -263,8 +269,21 @@
     white-space: nowrap;
   }
 
+  .period-segment {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,1.0);
+    transition: background 0.5s;
+  }
+
+  .period-segment.active-safe { background: var(--safe); }
+  .period-segment.active-caution { background: var(--caution); }
+  .period-segment.active-warn { background: var(--warn); }
+  .period-segment.active-danger { background: var(--danger); }
+
   .buoy-source {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.1em;
     color: rgba(255,255,255,1.0);
@@ -272,6 +291,84 @@
   }
 
   /* Override panel */
+  .override-section {
+    margin-bottom: 28px;
+  }
+
+  .override-toggle {
+    background: none;
+    border: 1px solid rgba(255,255,255,1.0);
+    color: rgba(255,255,255,1.0);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .override-toggle:hover {
+    border-color: rgba(255,255,255,1.0);
+    color: rgba(255,255,255,1.0);
+  }
+
+  .override-panel {
+    display: none;
+    margin-top: 14px;
+    background: rgba(255,255,255,1.0);
+    border: 1px solid rgba(255,255,255,1.0);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .override-panel.open { display: block; }
+
+  .override-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,1.0);
+    margin-bottom: 12px;
+  }
+
+  .override-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .override-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
+  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
+  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
+  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
+  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
+
+  .override-btn:hover { filter: brightness(1.2); }
+  .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
+
+  .override-note {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,1.0);
+    font-style: italic;
+  }
 
   /* ── BEACH INFO ── */
   .info-section {
@@ -279,7 +376,7 @@
   }
 
   .section-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.2em;
     color: #7ab8cc;
@@ -339,7 +436,7 @@
   }
 
   .rule-num {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     color: rgba(122,184,204,0.5);
     flex-shrink: 0;
@@ -374,7 +471,7 @@
     margin-bottom: 6px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
   }
 
   .emergency .number {
@@ -389,13 +486,13 @@
     font-size: 0.98rem;
     color: rgba(255,255,255,1.0);
     text-transform: none;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Libre Franklin', sans-serif;
     letter-spacing: normal;
   }
 
   footer {
     text-align: center;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.98rem;
     color: rgba(255,255,255,1.0);
     letter-spacing: 0.08em;
@@ -437,7 +534,7 @@
   }
 
   .step-num {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     color: rgba(122,184,204,0.6);
     flex-shrink: 0;
@@ -456,66 +553,24 @@
     font-weight: 600;
   }
 
-  @media (max-width: 600px) {
-    .content { padding: 0 16px 60px; }
-    header { padding: 24px 0 20px; margin-bottom: 24px; }
-    h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
-    .conditions-card { padding: 18px 16px; }
-    .conditions-header { flex-direction: column; gap: 12px; }
+  @media (max-width: 480px) {
+    .metrics { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .metric-value { font-size: 1.7rem; }
+    .conditions-header { flex-direction: column; }
     .buoy-time { text-align: left; }
-    .danger-value { font-size: 1.6rem; }
-    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-    .metric { padding: 12px 8px; }
-    .metric-label { font-size: 8px; }
-    .metric-value { font-size: 2rem; }
-    .metric-unit { font-size: 0.65rem; }
-    .hazard-item { padding: 12px; }
-    .hazard-title { font-size: 0.9rem; }
-    .hazard-desc { font-size: 0.88rem; }
-    .rule-text { font-size: 0.92rem; }
-    .step-text { font-size: 0.92rem; }
-    .explainer-intro { font-size: 0.92rem; }
-    .emergency .number { font-size: 2.2rem; }
-    footer { font-size: 0.78rem; }
-    .metrics-footnote { font-size: 0.65rem; }
-    .swell-warning { padding: 12px; }
   }
   .disclaimer {
     margin-top: 20px;
     padding: 16px 20px;
     border-top: 1px solid rgba(255,255,255,1.0);
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Mono', monospace;
     font-size: 0.92rem;
     color: rgba(255,255,255,1.0);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
   }
-
-  .metrics-footnote {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,1.0);
-    line-height: 1.5;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,1.0);
-  }
-
-  .swell-warning {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    background: rgba(192,57,43,0.1);
-    border: 1px solid rgba(192,57,43,0.3);
-    border-left: 3px solid #e57368;
-    border-radius: 6px;
-    padding: 14px 16px;
-    margin-top: 16px;
-  }
-  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
-  .swell-warning-text strong { color: #e57368; }
-  .metric-value.period-danger { color: #e57368 !important; }
+  .metric-value.period-danger { color: #e57368 !important; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -532,7 +587,7 @@
     <a class="back-link" href="index.html">← All Beaches</a>
     <div class="county-label">San Mateo County · Half Moon Bay</div>
     <h1>Cowell Ranch<br>State Beach</h1>
-    <div class="beach-type">Faces W · Remote · Rocky Shore · No Lifeguard · No Cell Service</div>
+    <div class="beach-type">Remote · Rocky Shore · No Lifeguard · No Cell Service</div>
   </header>
 
   <!-- LIVE CONDITIONS -->
@@ -555,7 +610,7 @@
 
     <div class="metrics">
       <div class="metric">
-        <div class="metric-label">Swell Height*</div>
+        <div class="metric-label">Wave Height</div>
         <div class="metric-value loading" id="waveHeight">—</div>
         <div class="metric-unit">feet</div>
       </div>
@@ -575,16 +630,48 @@
         <div class="metric-unit">°F</div>
       </div>
     </div>
-    <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
+
+    <div class="period-bar">
+      <span class="period-bar-label">Period Risk</span>
+      <div class="period-segment" id="seg1"></div>
+      <div class="period-segment" id="seg2"></div>
+      <div class="period-segment" id="seg3"></div>
+      <div class="period-segment" id="seg4"></div>
+      <div class="period-segment" id="seg5"></div>
+    </div>
 
     <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
   </div>
+
+  <!-- OVERRIDE -->
+  <div class="override-section">
+    <button class="override-toggle" onclick="toggleOverride()" id="overrideToggle">
+      ⚙ Manual Override
+    </button>
+    <div class="override-panel" id="overridePanel">
+      <div class="override-label">Set Danger Level Manually</div>
+      <div class="override-buttons">
+        <button class="override-btn extreme" onclick="setOverride('extreme')">Extreme</button>
+        <button class="override-btn high" onclick="setOverride('high')">High</button>
+        <button class="override-btn moderate" onclick="setOverride('moderate')">Moderate</button>
+        <button class="override-btn low" onclick="setOverride('low')">Low</button>
+        <button class="override-btn auto" onclick="setOverride('auto')">↺ Auto</button>
+      </div>
+      <div class="override-note">Override stays active until page reload or reset to Auto.</div>
+    </div>
   </div>
 
   <!-- BEACH-SPECIFIC HAZARDS -->
   <div class="info-section">
     <div class="section-label">Known Hazards — Cowell Ranch</div>
     <div class="hazard-list">
+      <div class="hazard-item">
+        <div class="hazard-icon">🌊</div>
+        <div>
+          <div class="hazard-title">Long-Period Swell & Set Waves</div>
+          <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives. Fatalities have occurred at this beach.</div>
+        </div>
+      </div>
       <div class="hazard-item">
         <div class="hazard-icon">🪨</div>
         <div>
@@ -644,7 +731,7 @@
   <div class="info-section">
     <div class="section-label">How to Read Sets</div>
     <div class="swell-explainer">
-      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</p>
+      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
       <div class="set-steps">
         <div class="set-step">
           <div class="step-num">1</div>
@@ -692,6 +779,7 @@
 <script>
   // ── CONFIG ──────────────────────────────────────────────
   const BUOY_ID = '46012';
+  const NWS_ZONES = ['CAZ529', 'CAZ006'];
   const BEACH_FACING = 280;
   const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
   const STALE_HOURS = 3; // warn if data older than this
@@ -718,7 +806,8 @@
     return applyDirectionMod(level, swellDirDeg);
   }
 
-  // ── STATE ──────────────────────────────────────────────── // null = auto
+  // ── STATE ────────────────────────────────────────────────
+  let overrideLevel = null; // null = auto
   let lastData = null;
 
   // ── NOAA FETCH ───────────────────────────────────────────
@@ -797,6 +886,14 @@
     lastData = data;
     const level = overrideLevel || calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
 
+    // Card
+    const card = document.getElementById('conditionsCard');
+    card.className = `conditions-card level-${level}`;
+
+    // Danger value
+    const dv = document.getElementById('dangerValue');
+    dv.textContent = LEVEL_LABELS[level];
+    dv.className = `danger-value level-${level}`;
 
     // Timestamp
     const now = new Date();
@@ -814,17 +911,18 @@
 
     // Metrics
     const hEl = document.getElementById('waveHeight');
-    hEl.textContent = (data.waveHeightFt !== null && data.waveHeightFt !== undefined) ? data.waveHeightFt.toFixed(1) : '—';
+    hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
     if (dEl) { dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; dEl.className = 'metric-value'; }
 
     const pEl = document.getElementById('swellPeriod');
-    pEl.textContent = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : '—';
-    if (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined && data.swellPeriodSec >= 15) {
-      pEl.textContent = '!' + Math.round(data.swellPeriodSec);
+    const periodVal = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : null;
+    if (periodVal !== null && periodVal >= 15) {
+      pEl.textContent = '!' + periodVal;
       pEl.className = 'metric-value period-danger';
     } else {
+      pEl.textContent = periodVal !== null ? periodVal : '—';
       pEl.className = 'metric-value';
     }
 
@@ -834,13 +932,38 @@
 
     // Period bar
     const period = data.swellPeriodSec || 0;
+    const segments = [
+      { id: 'seg1', threshold: 6,  cls: 'active-safe' },
+      { id: 'seg2', threshold: 9,  cls: 'active-caution' },
+      { id: 'seg3', threshold: 12, cls: 'active-warn' },
+      { id: 'seg4', threshold: 15, cls: 'active-danger' },
+      { id: 'seg5', threshold: 17, cls: 'active-danger' },
+    ];
+    segments.forEach((s, i) => {
+      const el = document.getElementById(s.id);
+      el.className = 'period-segment';
+      if (period >= s.threshold) el.classList.add(s.cls);
+    });
+
     document.getElementById('buoySource').textContent = BUOY_NAME + (overrideLevel ? ' · Manual Override Active' : '');
   }
 
   // ── OVERRIDE ─────────────────────────────────────────────
-  
+  function toggleOverride() {
+    document.getElementById('overridePanel').classList.toggle('open');
+  }
 
-  
+  function setOverride(level) {
+    document.querySelectorAll('.override-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    if (level === 'auto') {
+      overrideLevel = null;
+    } else {
+      overrideLevel = level;
+    }
+    if (lastData) renderConditions(lastData, false);
+  }
 
   // ── INIT ─────────────────────────────────────────────────
   function degToCompass(deg) {
@@ -863,14 +986,42 @@
     }
   }
 
-  init();
+  async function fetchNWSAdvisory() {
+    const card = document.getElementById('conditionsCard');
+    const dv = document.getElementById('dangerValue');
+    try {
+      const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
+      const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
+      const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const alerts = data.features || [];
+      const PRIORITY = {'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1};
+      const LEVELS = {'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate'};
+      const LABELS = {'High Surf Warning': 'High Surf Warning', 'High Surf Advisory': 'High Surf Advisory', 'Beach Hazards Statement': 'Beach Hazards Statement'};
+      let best = null;
+      alerts.forEach(a => {
+        const ev = a.properties?.event;
+        if (PRIORITY[ev] && (!best || PRIORITY[ev] > PRIORITY[best])) best = ev;
+      });
+      if (!best) {
+        if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-low';
+        if (dv) { dv.textContent = 'No Active Advisory'; dv.className = 'danger-value level-low'; }
+      } else {
+        const lv = LEVELS[best];
+        if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-' + lv;
+        if (dv) { dv.textContent = LABELS[best]; dv.className = 'danger-value level-' + lv; }
+      }
+    } catch(e) {
+      if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'danger-value level-loading'; }
+    }
+  }
 
-  // Refresh every 30 minutes
+  init();
+  fetchNWSAdvisory();
   setInterval(fetchNWSAdvisory, 30 * 60 * 1000);
   setInterval(init, 30 * 60 * 1000);
 </script>
 
 </body>
 </html>
-
-<!-- Ethel11-rebuild -->
