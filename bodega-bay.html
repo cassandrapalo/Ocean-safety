@@ -54,7 +54,7 @@
   .metric-value.loading { color: rgba(255,255,255,0.15); }
   .buoy-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
   .info-section { margin-bottom: 32px; }
-  .section-label { font-size: 0.85rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,1.0); }
+  .section-label { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--foam); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
   .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
   .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
@@ -262,6 +262,7 @@
         <div class="set-step"><div class="step-num">3</div><div class="step-text"><strong>Watch for at least 15 minutes.</strong> You need to see multiple sets before you understand the rhythm. One quiet stretch means nothing.</div></div>
         <div class="set-step"><div class="step-num">4</div><div class="step-text"><strong>The largest wave in a set is not always the first.</strong> Sets build in size. The final wave is frequently the biggest.</div></div>
         <div class="set-step"><div class="step-num">5</div><div class="step-text"><strong>When in doubt, stay back.</strong> At 15+ seconds period, stay completely clear of the shore and any rocks.</div></div>
+        <div class="set-step"><div class="step-num">6</div><div class="step-text"><strong>Long-period swells create &#8220;sneaker waves&#8221; &#8212; also called sleeper waves.</strong> The long quiet between sets creates a false sense of security. People approach the water. A set arrives. They have no warning and no time to retreat. These deaths are predictable and preventable. Know before you go.</div></div>
       </div>
     </div>
   </div>
@@ -276,7 +277,7 @@
   <footer>
     Live data: NOAA Buoy 46013 — Bodega Bay<br>
     Sonoma County Coast · California State Parks<br>
-    Danger levels auto-calculated from swell height and period
+
       <div class="disclaimer">
       This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
     </div>
@@ -384,7 +385,7 @@
     document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
     const dv = document.getElementById('dangerValue');
     dv.textContent = LEVEL_LABELS[level];
-    dv.className = `danger-value level-${level}`;
+    dv.className = `nws-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})
@@ -410,11 +411,6 @@
     tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
     tEl.className = 'metric-value';
     const period = data.swellPeriodSec || 0;
-    [['seg1',6,'active-safe'],['seg2',9,'active-caution'],['seg3',12,'active-warn'],['seg4',15,'active-danger'],['seg5',17,'active-danger']].forEach(([id,thresh,cls]) => {
-      const el = document.getElementById(id);
-      el.className = 'period-segment';
-      if (period >= thresh) el.classList.add(cls);
-    });
     document.getElementById('buoySource').textContent = BUOY_NAME + (overrideLevel ? ' · Manual Override Active' : '');
   }
 
