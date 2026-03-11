@@ -59,7 +59,22 @@
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
   .metric-unit { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.85); margin-top: 4px; }
   .metric-value.loading { color: rgba(255,255,255,0.15); } .period-segment.active-caution { background: var(--caution); } .period-segment.active-danger { background: var(--danger); }
-  .buoy-source { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); text-align: right; } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
+  .buoy-source { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); text-align: right; }
+  .override-section { margin-bottom: 28px; }
+  .override-toggle { background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+  .override-toggle:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.65); }
+  .override-panel { display: none; margin-top: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; }
+  .override-panel.open { display: block; }
+  .override-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+  .override-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .override-btn { padding: 8px 16px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+  .override-btn.extreme { background: rgba(192,57,43,0.2); color: #e57368; border-color: rgba(192,57,43,0.4); }
+  .override-btn.high { background: rgba(230,126,34,0.2); color: #f0a060; border-color: rgba(230,126,34,0.4); }
+  .override-btn.moderate { background: rgba(241,196,15,0.15); color: #f5d060; border-color: rgba(241,196,15,0.3); }
+  .override-btn.low { background: rgba(39,174,96,0.15); color: #60c080; border-color: rgba(39,174,96,0.3); }
+  .override-btn.auto { background: rgba(122,184,204,0.12); color: #7ab8cc; border-color: rgba(122,184,204,0.3); }
+  .override-btn:hover { filter: brightness(1.2); } .override-btn.selected { filter: brightness(1.3); box-shadow: 0 0 0 2px currentColor; }
+  .override-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-style: italic; }
   .info-section { margin-bottom: 32px; }
   .section-label { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
@@ -81,9 +96,9 @@
   .step-text { font-size: 1rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
   .step-text strong { color: var(--foam); font-weight: 600; }
   .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
-  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
   .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
-  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.7); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
+  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-transform: none; font-family: 'Inter', sans-serif; letter-spacing: normal; }
   footer { text-align: center; font-family: 'Inter', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.72); letter-spacing: 0.05em; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.18); line-height: 2; }
   @media (max-width: 600px) {
     .content { padding: 0 16px 60px; }
@@ -107,14 +122,15 @@
     .emergency .number { font-size: 2.2rem; }
     footer { font-size: 0.78rem; }
     .metrics-footnote { font-size: 0.65rem; }
-  }
+    .swell-warning { padding: 12px; }
+  } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
   .disclaimer {
     margin-top: 20px;
     padding: 16px 20px;
     border-top: 1px solid rgba(255,255,255,0.12);
     font-family: 'Inter', sans-serif;
     font-size: 0.72rem;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.5);
     line-height: 1.7;
     letter-spacing: 0.04em;
     text-align: center;
@@ -129,7 +145,6 @@
     border-top: 1px solid rgba(255,255,255,0.08);
   }
 
-  .metric-value.period-danger { color: #e57368 !important; }
   .swell-warning {
     display: flex;
     align-items: flex-start;
@@ -140,11 +155,12 @@
     border-radius: 6px;
     padding: 14px 16px;
     margin-top: 16px;
-    margin-bottom: 4px;
+    margin-bottom: 16px;
   }
   .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,0.88); line-height: 1.6; }
   .swell-warning-text strong { color: #e57368; }
+  .metric-value.period-danger { color: #e57368 !important; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -160,7 +176,7 @@
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div class="danger-level">
-        <div class="danger-label">Local Conditions — National Weather Service — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ112" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
+        <div class="danger-label">Local Conditions — National Weather Service Warning — <a href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ112" target="_blank" style="color:inherit;text-decoration:underline;opacity:0.8;">View Forecast</a></div>
         <div class="danger-value level-loading" id="dangerValue">Loading…</div>
       </div>
       <div class="buoy-time">
@@ -176,12 +192,17 @@
       <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.6rem;">—</div><div class="metric-unit">swell from</div></div>
       <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
     </div>
-    <div class="metrics-footnote">*Many conditions factor into the size of breaking waves. This buoy information is taken in the open ocean and does not reflect shoreline conditions.</div>
+    <div class="buoy-source" id="buoySource">NOAA Buoy 46013 — Bodega Bay</div>
+  </div>
+
   <div class="swell-warning" id="swellWarning">
     <div class="swell-warning-icon">⚠️</div>
-    <div class="swell-warning-text"><strong>Long-Period Swell & Set Waves</strong><br>Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</div>
-        </div>
-      </div>
+    <div class="swell-warning-text"><strong>Long-Period Swell &amp; Set Waves</strong><br>Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! Do not approach the water's edge during a quiet stretch — that calm is when energy is building offshore.</div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-label">Known Hazards at Bodega Bay</div>
+    <div class="hazard-list">
       <div class="hazard-item">
         <div class="hazard-icon">🦭</div>
         <div>
@@ -258,55 +279,12 @@
         <div class="set-step"><div class="step-num">2</div><div class="step-text"><strong>Time the quiet intervals.</strong> Count the seconds — or minutes — between large waves. This is your set interval.</div></div>
         <div class="set-step"><div class="step-num">3</div><div class="step-text"><strong>Watch for at least 15 minutes.</strong> You need to see multiple sets before you understand the rhythm. One quiet stretch means nothing.</div></div>
         <div class="set-step"><div class="step-num">4</div><div class="step-text"><strong>The largest wave in a set is not always the first.</strong> Sets build in size. The final wave is frequently the biggest.</div></div>
-        <div class="set-step"><div class="step-num">5</div><div class="step-text"><strong>When in doubt, stay back.</strong> At 15+ seconds period, stay completely clear of the shore and any rocks.</div></div></div>
+        <div class="set-step"><div class="step-num">5</div><div class="step-text"><strong>When in doubt, stay back.</strong> At 15+ seconds period, stay completely clear of the shore and any rocks.</div></div>
+      </div>
+    </div>
   </div>
 
-    <div class="buoy-source" id="buoySource">NOAA Buoy 46013 — Bodega Bay</div>
-  </div>
-
-  <div class="info-section">
-    <div class="section-label">Known Hazards at Bodega Bay</div>
-    <div class="hazard-list">
-
-    
-      <div class="hazard-item">
-              <div class="hazard-icon">🦭</div>
-              <div>
-                <div class="hazard-title">Low-Lying Point — Waves Sweep the Land</div>
-                <div class="hazard-desc">The rocky shoreline at Bodega Head and the jetty at the harbor entrance are wave-swept on any swell. On long-period swell days, waves surge unpredictably across low rocky outcroppings. Stay off all rocks near the water.</div>
-              </div>
-            </div>
-            <div class="hazard-item">
-              <div class="hazard-icon">🚷</div>
-              <div>
-                <div class="hazard-title">No Unauthorized Access to Point</div>
-                <div class="hazard-desc">The point itself is closed to unguided visitors during elephant seal season. Boundary signs exist for your safety — not just for the seals.</div>
-              </div>
-            </div>
-            
-            <div class="hazard-item">
-              <div class="hazard-icon">⚡</div>
-              <div>
-                <div class="hazard-title">Rip Currents</div>
-                <div class="hazard-desc">Rip currents are not always visible. They can appear as calmer, clearer water with less white water than the surf on either side — which can make them look like a better place to swim. They are not. They are mini rivers where water channels its way back out to sea. If you see a break in the surf line with calmer water, stay out.</div>
-              </div>
-            </div>
-            <div class="hazard-item">
-              <div class="hazard-icon">🌡️</div>
-              <div>
-                <div class="hazard-title">Cold Water — Year Round</div>
-                <div class="hazard-desc">Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</div>
-              </div>
-            </div>
-            <div class="hazard-item">
-              <div class="hazard-icon">🚫</div>
-              <div>
-                <div class="hazard-title">No Year-Round Lifeguard Posted</div>
-                <div class="hazard-desc">CA State Parks lifeguards patrol state beaches. There is no year-round posted lifeguard. Emergency response times on remote beaches may take longer than in urban environments.</div>
-              </div>
-            </div>
-
-<div class="emergency">
+    <div class="emergency">
     <p>Ocean Emergency</p>
     <span class="number">911</span>
     <p class="sub">CA State Parks Emergency · (800) 952-5580</p>
@@ -347,7 +325,6 @@
     else                                                                     level = 'low';
     return applyDirectionMod(level, swellDirDeg);
   }
-
   let lastData = null;
 
   async function fetchBuoyData() {
@@ -378,8 +355,7 @@
     });
     // Find best value for each field — first row that isn't MM
     function bestVal(field) {
-      const SENTINEL = new Set(['MM','999','9999','99.0','999.0','9999.0']);
-      const r = rows.find(r => r[field] && !SENTINEL.has(r[field]));
+      const r = rows.find(r => r[field] && r[field] !== 'MM');
       return r ? r[field] : null;
     }
     // Timestamp from first row
@@ -414,11 +390,15 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-        ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
+            ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
     const level = calcDangerLevel(data.waveHeightFt || 0, data.swellPeriodSec || 0, data.swellDirDeg);
+    document.getElementById('conditionsCard').className = `conditions-card level-${level}`;
+    const dv = document.getElementById('dangerValue');
+    dv.textContent = LEVEL_LABELS[level];
+    dv.className = `danger-value level-${level}`;
     const ageHours = (new Date() - data.timestamp) / 3600000;
     const tsEl = document.getElementById('buoyTime');
     tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})
@@ -427,27 +407,28 @@
     if (linkEl) linkEl.href = `https://www.ndbc.noaa.gov/station_page.php?station=${BUOY_ID}`;
     if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
     const hEl = document.getElementById('waveHeight');
-    hEl.textContent = (data.waveHeightFt !== null && data.waveHeightFt !== undefined) ? data.waveHeightFt.toFixed(1) : '—';
+    hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
     const dEl = document.getElementById('swellDir');
-    if (dEl) { dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; dEl.className = 'metric-value'; }
+    if (dEl) { dEl.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM'; dEl.className = 'metric-value'; }
     const pEl = document.getElementById('swellPeriod');
-    pEl.textContent = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : '—';
-    if (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined && data.swellPeriodSec >= 15) {
-      pEl.textContent = '!' + Math.round(data.swellPeriodSec);
-      pEl.className = 'metric-value period-danger';
-    } else {
-      pEl.className = 'metric-value';
-    }
+    pEl.textContent = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : 'MM';
+    pEl.className = 'metric-value';
     const tEl = document.getElementById('waterTemp');
-    tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
+    tEl.textContent = data.waterTempF ? Math.round(data.waterTempF) : 'MM';
     tEl.className = 'metric-value';
-;
+    const period = data.swellPeriodSec || 0;
+    [['seg1',6,'active-safe'],['seg2',9,'active-caution'],['seg3',12,'active-warn'],['seg4',15,'active-danger'],['seg5',17,'active-danger']].forEach(([id,thresh,cls]) => {
+      const el = document.getElementById(id);
+      el.className = 'period-segment';
+      if (period >= thresh) el.classList.add(cls);
+    });
     document.getElementById('buoySource').textContent = BUOY_NAME;
   }
 
-
+  // NWS advisory fetch
   const NWS_ZONES = ['CAZ112'];
+
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -455,7 +436,7 @@
       const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
       const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
       const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
-      if (!res.ok) throw new Error();
+      if (!res.ok) throw new Error('NWS fetch failed');
       const data = await res.json();
       const alerts = data.features || [];
       if (!alerts.length) {
@@ -465,11 +446,15 @@
       }
       const priority = { 'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1 };
       alerts.sort((a, b) => (priority[b.properties.event] || 0) - (priority[a.properties.event] || 0));
-      const a0 = alerts[0].properties;
-      const level = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' }[a0.event] || 'moderate';
+      const alert = alerts[0].properties;
+      const levelMap = { 'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate' };
+      const level = levelMap[alert.event] || 'moderate';
       if (card) card.className = 'conditions-card level-' + level;
-      if (dv) { dv.textContent = a0.event; dv.className = 'danger-value level-' + level; }
-    } catch(e) { if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; } }
+      if (dv) { dv.textContent = alert.event; dv.className = 'danger-value level-' + level; }
+    } catch(e) {
+      console.warn('NWS fetch failed:', e);
+      if (dv) { dv.textContent = 'N/A'; dv.className = 'danger-value level-loading'; }
+    }
   }
 
   async function init() {
@@ -479,7 +464,7 @@
       renderConditions(null, true);
       document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
-        }
+                }
   }
   init();
   fetchNWSAdvisory();
