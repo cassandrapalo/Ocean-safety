@@ -103,7 +103,7 @@
   .nws-value.level-loading { color: rgba(255,255,255,0.3); }
   .nws-link { display: inline-block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: underline; text-underline-offset: 3px; opacity: 0.7; }
   .nws-link:hover { opacity: 1.0; }
-  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 0; }
+  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 36px; }
   .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
   .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
   .swell-warning-text strong { color: #e57368; }
@@ -125,7 +125,7 @@
     .hazard-item { padding: 12px; }
     .hazard-title { font-size: 0.9rem; }
     .hazard-desc { font-size: 0.88rem; }
-    .hazard-source { font-size: 0.65rem; }
+    .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-top: 6px; line-height: 1.5; }
     .rule-text { font-size: 0.92rem; }
     .step-text { font-size: 0.92rem; }
     .emergency .number { font-size: 2.2rem; }
@@ -304,6 +304,7 @@
     return applyDirectionMod(level, swellDirDeg);
   }
   let lastData = null;
+  let overrideLevel = null;
 
   async function fetchBuoyData() {
     try {
@@ -415,7 +416,7 @@
       document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
       document.getElementById('dangerValue').textContent = 'Check Conditions';
-      document.getElementById('dangerValue').className = 'danger-value level-high';
+      document.getElementById('dangerValue').className = 'nws-value level-high';
     }
   }
   async function fetchNWSAdvisory() {
@@ -438,14 +439,14 @@
       });
       if (!best) {
         if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-low';
-        if (dv) { dv.textContent = 'No Active Advisory'; dv.className = 'danger-value level-low'; }
+        if (dv) { dv.textContent = 'No Active Advisory'; dv.className = 'nws-value level-low'; }
       } else {
         const lv = LEVELS[best];
         if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-' + lv;
-        if (dv) { dv.textContent = LABELS[best]; dv.className = 'danger-value level-' + lv; }
+        if (dv) { dv.textContent = LABELS[best]; dv.className = 'nws-value level-' + lv; }
       }
     } catch(e) {
-      if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'danger-value level-loading'; }
+      if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'nws-value level-loading'; }
     }
   }
 
