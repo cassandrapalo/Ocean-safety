@@ -113,7 +113,7 @@
 
   .site-footer { margin-top:34px; padding-top:16px; border-top:2px solid var(--ink); }
   .footer-line { font-family:'Roboto Mono',monospace; font-size:16px; line-height:1.6; color:var(--ink); margin-top:12px; }
-  .footer-nav { display:flex; gap:18px; margin-top:12px; }
+  .footer-nav { display:flex; flex-wrap:wrap; gap:14px 18px; margin-top:12px; }
   .footer-nav a { font-family:'Roboto Mono',monospace; font-size:16px; color:var(--ink); }
 
   .prose p { font-size:var(--body); line-height:1.6; }
@@ -133,7 +133,6 @@
 
   /* Narrow phones. Single-property rules only. */
   @media (max-width: 380px) {
-    .menu-brand { display:none; }
     .menu-links { width:100%; }
     .menu-links { justify-content:space-between; }
     .buoy-stat-val { font-size:24px; }
@@ -146,7 +145,6 @@
   <div class="menubar-inner">
     <a class="menu-brand" href="index.html">oceansafety.info</a>
     <div class="menu-links">
-      <a href="index.html">Home</a>
       <a href="beaches.html" class="current">Beaches</a>
       <a href="about.html">About</a>
     </div>
@@ -184,7 +182,7 @@
         <p>This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
       </div>
     </div>
-    <div class="footer-nav"><a href="index.html">Home</a><a href="beaches.html">Beaches</a><a href="about.html">About</a></div>
+    <div class="footer-nav"><a href="beaches.html">Beaches</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
     <div class="footer-line">oceansafety.info</div>
   </div>
 

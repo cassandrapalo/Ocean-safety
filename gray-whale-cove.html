@@ -92,6 +92,8 @@
   .contact-line { display:block; font-size:23px; font-weight:700; line-height:1.3; color:var(--hazard); text-decoration:underline; text-underline-offset:4px; margin-top:6px; padding:4px 0; }
 
   footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--rule); }
+  .footer-nav { display:flex; flex-wrap:wrap; gap:14px 18px; margin-top:12px; }
+  .footer-nav a { font-family:'Roboto Mono',monospace; font-size:16px; color:var(--ink); }
   .footer-line { font-family:'Roboto Mono',monospace; font-size:16px; line-height:1.6; color:var(--ink); margin-top:12px; }
 
   /* Wider screens only. Single-property rules inside media blocks. */
@@ -108,7 +110,6 @@
 
   /* Narrow phones. Single-property rules only. */
   @media (max-width: 380px) {
-    .menu-brand { display:none; }
     .menu-links { width:100%; }
     .menu-links { justify-content:space-between; }
     .metric.hero .metric-value { font-size:58px; }
@@ -122,7 +123,6 @@
   <div class="menubar-inner">
     <a class="menu-brand" href="index.html">oceansafety.info</a>
     <div class="menu-links">
-      <a href="index.html">Home</a>
       <a href="beaches.html">Beaches</a>
       <a href="about.html">About</a>
     </div>
@@ -135,13 +135,13 @@
 
   <header>
     <h1>Gray Whale Cove State Beach</h1>
-    <div class="beach-type">Cove Beach · Isolated · No Cell Service · No Lifeguard</div>
+    <div class="beach-type">Sandy & Rocky · No Lifeguard · Rip Currents</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div>
-        <div class="nws-label">National Weather Service · CAZ529 · CAZ006</div>
+        <div class="nws-label">National Weather Service · CAZ529 · CAZ006 · CAZ006</div>
         <a class="nws-value level-loading" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" rel="noopener">Loading…</a>
       </div>
       <a class="buoy-corner" id="buoyLink" href="https://www.ndbc.noaa.gov/station_page.php?station=46012" target="_blank" rel="noopener"><span>Buoy</span>46012 ↗</a>
@@ -156,9 +156,9 @@
         <div class="metric-unit">seconds</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Wave Height</div>
+        <div class="metric-label">Swell Height</div>
         <div class="metric-value" id="waveHeight">—</div>
-        <div class="metric-unit">feet</div>
+        <div class="metric-unit">feet at the buoy</div>
         <a class="true-swell" href="https://www.ndbc.noaa.gov/station_page.php?station=46012" target="_blank" rel="noopener">True swell ↗</a>
       </div>
       <div class="metric">
@@ -180,11 +180,12 @@
     </div>
     <div class="bubble" id="bubble-readings">
       <p><span class="term">Dominant period.</span> The wave period carrying the most energy, which is the time for two successive crests to pass a fixed point. It is always either the swell period or the wind wave period. It is not the time between sets.</p>
-      <p><span class="term">Wave height.</span> The average height of the highest one third of all waves over a twenty minute sample. Buoy readings are combined seas, meaning swell and locally generated wind waves together. Tap True swell for NOAA's separated swell figures.</p>
+      <p><span class="term">Swell height.</span> Measured at the buoy, miles offshore, in open water. NOAA reports it as the average height of the highest one third of the waves over a twenty minute sample, so many waves are smaller and some are larger. The figure combines swell with locally generated wind waves. Tap True swell for NOAA's separated swell figures.</p>
+      <p><span class="term">This is not the height of the wave that reaches you.</span> Waves grow as they move into shallow water, and how far the water runs up the beach depends on the slope of that particular beach. Research on the Oregon coast measured run-up elevations ranging from 26 to 61 percent of the offshore wave height along a single beach on a single day, varying with the slope of the sand. On steep shores, run-up can far exceed the offshore figure.</p>
       <p><span class="term">Swell direction.</span> The direction the waves at the dominant period are coming from, not the direction they are heading.</p>
       <p><span class="term">Wind.</span> The direction the wind is coming from, with speed averaged over an eight minute period.</p>
       <p><span class="term">Air and water.</span> Measured at the buoy, offshore. Not the temperature on the sand.</p>
-      <p class="source">Definitions: NOAA National Data Buoy Center — Measurement Descriptions and Units; Glossary of Terms for Wave Information</p>
+      <p class="source">Definitions: NOAA National Data Buoy Center — Measurement Descriptions and Units. Run-up: Ruggiero, Holman and Beach (2004), Wave run-up on a high-energy dissipative beach, Journal of Geophysical Research.</p>
     </div>
   </div>
 
@@ -313,7 +314,6 @@
       </div>
     </div>
     </div>
-    </div>
   </div>
 
   <div class="info-section">
@@ -385,7 +385,6 @@
       </div>
     </div>
     </div>
-    </div>
   </div>
 
   <footer>
@@ -399,6 +398,7 @@
         <p>This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
       </div>
     </div>
+    <div class="footer-nav"><a href="beaches.html">Beaches</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
     <div class="footer-line">oceansafety.info</div>
   </footer>
 
