@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#D9DFE3">
-<title>Ocean Safety — Northern California Coast</title>
+<title>About — Ocean Safety</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
@@ -117,6 +117,13 @@
   .footer-nav a { font-family:'Roboto Mono',monospace; font-size:16px; color:var(--ink); }
 
   .prose p { font-size:var(--body); line-height:1.6; }
+  .fn { font-family:'Roboto Mono',monospace; font-size:14px; font-weight:500; color:var(--signal); text-decoration:none; vertical-align:super; line-height:0; padding:0 3px; }
+  .notes { list-style:none; counter-reset:note; }
+  .notes li { display:flex; gap:11px; font-size:17px; line-height:1.5; padding:12px 0; border-bottom:1px solid var(--rule); }
+  .notes li:last-child { border-bottom:none; }
+  .notes .n { font-family:'Roboto Mono',monospace; font-size:16px; font-weight:500; color:var(--signal); flex:0 0 auto; }
+  .notes a { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  .backlink { font-family:'Roboto Mono',monospace; font-size:14px; color:var(--signal); text-decoration:none; }
   .prose p + p { margin-top:14px; }
 
   /* Wider screens only. Single-property rules inside media blocks. */
@@ -146,111 +153,79 @@
   <div class="menubar-inner">
     <a class="menu-brand" href="index.html">oceansafety.info</a>
     <div class="menu-links">
-      <a href="index.html" class="current">Home</a>
+      <a href="index.html">Home</a>
       <a href="beaches.html">Beaches</a>
-      <a href="about.html">About</a>
+      <a href="about.html" class="current">About</a>
     </div>
   </div>
 </div>
 
 <div class="content">
 
-  <h1>Some accidents are preventable.</h1>
+  <h1>About</h1>
   <div class="hero-rule"></div>
   <div class="kbyg">Know before you go</div>
 
-  <div class="searchwrap">
-    <div class="search-label">Find your beach</div>
-    <div class="searchbox">
-      <span class="search-glyph">⌕</span>
-      <input id="beachSearch" type="text" placeholder="Beach name" autocomplete="off" spellcheck="false" aria-label="Search beaches by name">
+  <div class="section">
+    <div class="section-head"><div class="section-label">Why This Exists</div></div>
+    <div class="prose">
+      <p>Each year, in Northern California, someone loses their life to a &#8220;sneaker wave.&#8221;<a class="fn" id="ref1" href="#note1" aria-label="Footnote 1">1</a> The wave may have snuck up on that person, but it came from thousands of miles away and the swell that brought it was tracked for days before it arrived.</p>
+      <p>We believe that, armed with good information about conditions, beach goers can make good decisions while enjoying the magnificence of the California Coast.</p>
     </div>
-    <div class="results" id="searchResults"></div>
   </div>
 
   <div class="section">
-    <div class="section-head"><div class="section-label">Live Conditions</div><div class="section-count">Every 30 min</div></div>
-    <div class="buoy-card" id="card-46012">
-      <div class="buoy-card-head">
-        <div class="buoy-card-label">Half Moon Bay · San Mateo Coast</div>
-        <a class="buoy-card-link" href="https://www.ndbc.noaa.gov/station_page.php?station=46012" target="_blank" rel="noopener">46012 ↗</a>
-      </div>
-      <div class="buoy-stats">
-        <div>
-          <div class="buoy-stat-label">Period</div>
-          <div class="buoy-stat-val" id="b46012-period">—</div>
-          <div class="buoy-stat-unit">seconds</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Height</div>
-          <div class="buoy-stat-val" id="b46012-height">—</div>
-          <div class="buoy-stat-unit">feet</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Direction</div>
-          <div class="buoy-stat-val" id="b46012-dir">—</div>
-          <div class="buoy-stat-unit">swell from</div>
-        </div>
-      </div>
-    </div>
-    <div class="buoy-card" id="card-46026">
-      <div class="buoy-card-head">
-        <div class="buoy-card-label">SF Bar · San Francisco Coast</div>
-        <a class="buoy-card-link" href="https://www.ndbc.noaa.gov/station_page.php?station=46026" target="_blank" rel="noopener">46026 ↗</a>
-      </div>
-      <div class="buoy-stats">
-        <div>
-          <div class="buoy-stat-label">Period</div>
-          <div class="buoy-stat-val" id="b46026-period">—</div>
-          <div class="buoy-stat-unit">seconds</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Height</div>
-          <div class="buoy-stat-val" id="b46026-height">—</div>
-          <div class="buoy-stat-unit">feet</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Direction</div>
-          <div class="buoy-stat-val" id="b46026-dir">—</div>
-          <div class="buoy-stat-unit">swell from</div>
-        </div>
-      </div>
-    </div>
-    <div class="buoy-card" id="card-46013">
-      <div class="buoy-card-head">
-        <div class="buoy-card-label">Bodega Bay · Marin and Sonoma Coast</div>
-        <a class="buoy-card-link" href="https://www.ndbc.noaa.gov/station_page.php?station=46013" target="_blank" rel="noopener">46013 ↗</a>
-      </div>
-      <div class="buoy-stats">
-        <div>
-          <div class="buoy-stat-label">Period</div>
-          <div class="buoy-stat-val" id="b46013-period">—</div>
-          <div class="buoy-stat-unit">seconds</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Height</div>
-          <div class="buoy-stat-val" id="b46013-height">—</div>
-          <div class="buoy-stat-unit">feet</div>
-        </div>
-        <div>
-          <div class="buoy-stat-label">Direction</div>
-          <div class="buoy-stat-val" id="b46013-dir">—</div>
-          <div class="buoy-stat-unit">swell from</div>
-        </div>
-      </div>
-    </div>
+    <div class="section-head"><div class="section-label">Where the Data Comes From</div></div>
+
     <div class="item">
       <div class="head-row">
-        <div class="item-title">What these readings mean</div>
-        <button class="i" data-bubble="readings" aria-expanded="false">i</button>
+        <div class="item-title">NOAA buoy readings</div>
+        <button class="i" data-bubble="d1" aria-expanded="false">i</button>
       </div>
-      <div class="bubble" id="bubble-readings">
-        <p><span class="term">Period.</span> The wave period carrying the most energy, which is the time for two successive crests to pass a fixed point. It is not the time between sets.</p>
-        <p><span class="term">Height.</span> The average height of the highest one third of all waves over a twenty minute sample. Buoy readings combine swell and locally generated wind waves.</p>
-        <p><span class="term">Direction.</span> The direction the waves at the dominant period are coming from, not the direction they are heading.</p>
-        <p class="term">Source: NOAA National Data Buoy Center</p>
+      <div class="bubble" id="bubble-d1">
+        <p>Wave height, period, direction, water temperature, air temperature and wind are read from three NOAA National Data Buoy Center stations: 46012 Half Moon Bay, 46026 San Francisco Bar, and 46013 Bodega Bay. Readings refresh every thirty minutes.</p>
+        <p>Buoy readings are taken offshore. Conditions at the water can differ from what the buoy reports.</p>
       </div>
     </div>
+
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title">National Weather Service advisories</div>
+        <button class="i" data-bubble="d2" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-d2">
+        <p>The advisory shown on each beach page is read from the National Weather Service active alerts feed for that stretch of coast: CAZ529 San Mateo, CAZ006 San Francisco, CAZ507 Marin, CAZ112 Sonoma. This site displays the advisory as issued and does not calculate it.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title">Hazard information</div>
+        <button class="i" data-bubble="d3" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-d3">
+        <p>Hazards listed on each beach page are drawn from California State Parks Ocean Safety, the National Park Service, the joint NPS, SF Fire Department and NOAA coastal safety advisory, and National Weather Service beach hazards guidance. Each hazard card carries its own source.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><div class="section-label">Sources</div></div>
+    <ul class="notes">
+      <li id="note1">
+        <span class="n">1</span>
+        <span>García-Medina, G., Özkan-Haller, H.T., Ruggiero, P., Holman, R.A., and Nicolini, T. (2018). Analysis and catalogue of sneaker waves in the US Pacific Northwest between 2005 and 2017. <em>Natural Hazards</em>, 94(2). The study attributed 29 fatalities to sneaker waves over those twelve years, 15 in Oregon and 14 in northern California. <a href="https://ideas.repec.org/a/spr/nathaz/v94y2018i2d10.1007_s11069-018-3403-z.html" target="_blank" rel="noopener">Citation record ↗</a> · doi:10.1007/s11069-018-3403-z <a class="backlink" href="#ref1">↩ back</a></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="emergency-bar">
+    <div class="e-label">Ocean Emergency</div>
+    <a class="e-number" href="tel:911">911</a>
+    <span class="contact-who">CA State Parks Emergency</span>
+    <a class="contact-line" href="tel:+18009525580">(800) 952-5580</a>
+    <span class="contact-who">USCG San Francisco</span>
+    <a class="contact-line" href="tel:+14153993547">(415) 399-3547</a>
   </div>
 
   <div class="section">
@@ -282,88 +257,7 @@
 
 </div>
 
-<script src="beaches.js"></script>
 <script>
-  async function fetchBuoy(buoyId) {
-    try {
-      const res = await fetch('https://dry-shadow-6fc8.cassandrapalo.workers.dev/?station=' + buoyId, { cache: 'no-cache' });
-      if (!res.ok) throw new Error();
-      const text = await res.text();
-      if (text && text.includes('WVHT')) return parseNOAA(text);
-    } catch(e) { console.error('Fetch failed', e); }
-    return null;
-  }
-
-  function parseNOAA(text) {
-    const allLines = text.trim().split('\n');
-    const headerLine = allLines.find(l => l.startsWith('#YY'));
-    if (!headerLine) return null;
-    const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
-    const dataLines = allLines.filter(l => !l.startsWith('#'));
-    if (!dataLines.length) return null;
-    const rows = dataLines.slice(0, 20).map(line => {
-      const vals = line.trim().split(/[ \t]+/);
-      const r = {};
-      headers.forEach((h, i) => { r[h] = vals[i]; });
-      return r;
-    });
-    function bestVal(field) {
-      const SENTINEL = new Set(['MM','999','9999','99.0','999.0','9999.0']);
-      const r = rows.find(r => r[field] && !SENTINEL.has(r[field]));
-      return r ? r[field] : null;
-    }
-    const wvhtM = parseFloat(bestVal('WVHT'));
-    const dpd   = parseFloat(bestVal('DPD'));
-    const mwd   = parseFloat(bestVal('MWD'));
-    return {
-      waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
-      swellPeriodSec: isNaN(dpd)   ? null : dpd,
-      swellDirDeg:    isNaN(mwd)   ? null : mwd,
-    };
-  }
-
-  function degToCompass(deg) {
-    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
-    return dirs[Math.round(deg / 22.5) % 16];
-  }
-
-  function updateBanner(buoyId, data) {
-    if (!data) return;
-    const h = document.getElementById('b' + buoyId + '-height');
-    const p = document.getElementById('b' + buoyId + '-period');
-    const d = document.getElementById('b' + buoyId + '-dir');
-    const card = document.getElementById('card-' + buoyId);
-    if (h) h.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
-    if (p) {
-      const val = data.swellPeriodSec ? Math.round(data.swellPeriodSec) : null;
-      p.textContent = val !== null ? val : 'MM';
-      p.className = (val !== null && val >= 15) ? 'buoy-stat-val period-danger' : 'buoy-stat-val';
-      if (card && val !== null && val >= 15) card.classList.add('hot');
-    }
-    if (d) d.textContent = data.swellDirDeg ? degToCompass(data.swellDirDeg) : 'MM';
-  }
-
-  async function init() {
-    const [d12, d26, d13] = await Promise.all([fetchBuoy('46012'), fetchBuoy('46026'), fetchBuoy('46013')]);
-    updateBanner('46012', d12);
-    updateBanner('46026', d26);
-    updateBanner('46013', d13);
-  }
-
-  const fold = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  const searchInput = document.getElementById('beachSearch');
-  const searchResults = document.getElementById('searchResults');
-  searchInput.addEventListener('input', () => {
-    const term = fold(searchInput.value.trim());
-    if (!term) { searchResults.innerHTML = ''; return; }
-    const hits = BEACHES.filter(b =>
-      fold(b.name).includes(term) || fold(b.type).includes(term) || fold(b.county).includes(term)
-    ).slice(0, 6);
-    searchResults.innerHTML = hits.length
-      ? hits.map(b => `<a class="result" href="${b.file}"><span class="result-name">${b.name}</span><span class="result-meta">${b.type}</span></a>`).join('')
-      : '<div class="result-none">No beach by that name. See the full list on the Beaches page.</div>';
-  });
-
   document.querySelectorAll('.i').forEach(btn => {
     btn.addEventListener('click', () => {
       const panel = document.getElementById('bubble-' + btn.dataset.bubble);
@@ -396,8 +290,6 @@
     }
   });
 
-  init();
-  setInterval(init, 30 * 60 * 1000);
 </script>
 </body>
 </html>

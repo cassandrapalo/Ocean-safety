@@ -1,252 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D9DFE3">
+<title>Crissy Field — Ocean Safety</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ocean: #0a2540; --deep: #061829; --wave: #1a6b8a; --foam: #e8f4f8;
-    --danger: #c0392b; --warn: #e67e22; --caution: #f1c40f; --safe: #27ae60; --light: #ffffff;
+    --ground:#D9DFE3; --panel:#FBFCFD; --well:#EAEEF1; --rule:#8E9AA3;
+    --ink:#101418; --hazard:#8E1717;
+    --signal:#123F52;
+    --body:18px; --h1:30px; --hero:64px; --metric:32px; --sec:21px;
+    --lab:14px; --track:.12em;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--deep); color: var(--light); font-family: 'Libre Franklin', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  .ocean-bg { position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #061829 0%, #0a2540 40%, #0d3a5c 70%, #0a2540 100%); overflow: hidden; }
-  .wave-layer { position: absolute; bottom: 0; left: -50%; width: 200%; height: 180px; opacity: 0.12; border-radius: 50% 50% 0 0; animation: swell 8s ease-in-out infinite; }
-  .wave-layer:nth-child(1) { background: #1a6b8a; animation-delay: 0s; height: 140px; }
-  .wave-layer:nth-child(2) { background: #2589a8; animation-delay: -3s; height: 100px; opacity: 0.08; }
-  .wave-layer:nth-child(3) { background: #3aa0c0; animation-delay: -5s; height: 80px; opacity: 0.06; }
-  @keyframes swell { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-5%) scaleY(1.15); } }
-  .content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
-  header { padding: 40px 0 28px; border-bottom: 1px solid rgba(255,255,255,1.0); margin-bottom: 36px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
-  .back-link:hover { color: rgba(255,255,255,1.0); }
-  .county-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
-  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--foam); margin-bottom: 6px; }
-  .beach-type { font-size: 0.82rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
-  .conditions-card { border-radius: 10px; padding: 28px; margin-bottom: 24px; background: rgba(255,255,255,1.0); border: 1px solid rgba(255,255,255,1.0); transition: background 0.5s, border-color 0.5s; }
-  .conditions-card.level-extreme { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.45); }
-  .conditions-card.level-high { background: rgba(230,126,34,0.12); border: 1px solid rgba(230,126,34,0.4); }
-  .conditions-card.level-moderate { background: rgba(241,196,15,0.1); border: 1px solid rgba(241,196,15,0.35); }
-  .conditions-card.level-low { background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.35); }
-  .conditions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-  .danger-level { flex: 1; }
-  .danger-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
-  .danger-value { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; transition: color 0.5s; }
-  .danger-value.level-extreme { color: #e57368; } .danger-value.level-high { color: #f0a060; }
-  .danger-value.level-moderate { color: #f5d060; } .danger-value.level-low { color: #60c080; }
-  .danger-value.level-loading { color: rgba(255,255,255,0.3); }
-  .buoy-time { text-align: right; }
-  .buoy-time .time-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); display: block; margin-bottom: 4px; }
-  .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: rgba(255,255,255,1.0); }
-  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
-  .stale-warning.visible { display: block; }
-  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-  .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
-  .metric-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 8px; }
-  .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--foam); font-weight: 700; }
-  .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,1.0); margin-top: 4px; }
-  .metric-value.loading { color: rgba(255,255,255,0.15); }
-  .current-bar { display: flex; gap: 3px; margin-bottom: 16px; align-items: center; }
-  .current-bar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-right: 6px; white-space: nowrap; }
-  .current-segment { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,1.0); transition: background 0.5s; }
-  .current-segment.active-safe { background: var(--safe); } .current-segment.active-caution { background: var(--caution); }
-  .current-segment.active-warn { background: var(--warn); } .current-segment.active-danger { background: var(--danger); }
-  .buoy-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
-  .tide-direction { font-size: 0.75rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; text-align: center; margin-top: 8px; letter-spacing: 0.08em; }
-  .tide-direction.outgoing { color: #f0a060; } .tide-direction.incoming { color: #60c080; } .tide-direction.slack { color: #f5d060; }
-  .info-section { margin-bottom: 32px; }
-  .section-label { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--foam); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-  .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
-  .hazard-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-  .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-top: 6px; line-height: 1.5; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  .menubar { border-bottom:2px solid var(--ink); background:var(--ground); position:sticky; top:0; z-index:5; }
+  .menubar-inner { max-width:680px; margin:0 auto; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .menu-brand { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; }
+  .menu-links { display:flex; gap:16px; }
+  .menu-links a { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; padding:8px 0; }
+  body { background:var(--ground); color:var(--ink); font-family:'Public Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  .content { max-width:680px; margin:0 auto; padding:20px 14px 56px; }
+  a { color:var(--ink); }
 
-  .hazard-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
-  .hazard-desc { font-size: 0.95rem; color: rgba(255,255,255,1.0); line-height: 1.5; }
-  .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
-  .rule-item { display: flex; gap: 14px; align-items: flex-start; }
-  .rule-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .rule-text { font-size: 1rem; color: rgba(255,255,255,1.0); line-height: 1.55; }
-  .rule-text strong { color: var(--foam); font-weight: 600; }
-  .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
-  .emergency p { font-size: 0.75rem; color: rgba(255,255,255,1.0); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
-  .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: #e57368; display: block; margin-bottom: 6px; }
-  .emergency .sub { font-size: 0.78rem; color: rgba(255,255,255,1.0); text-transform: none; font-family: 'Libre Franklin', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,1.0); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,1.0); line-height: 1.8; }
-  @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.5rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
-  .disclaimer {
-    margin-top: 20px;
-    padding: 16px 20px;
-    border-top: 1px solid rgba(255,255,255,1.0);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,1.0);
-    line-height: 1.7;
-    letter-spacing: 0.04em;
-    text-align: center;
+  .back-link { display:inline-block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; margin-bottom:22px; padding:6px 0; }
+  .county-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); }
+  h1 { font-weight:800; font-size:var(--h1); line-height:1.04; letter-spacing:-.02em; margin:6px 0 10px; }
+  .beach-type { font-size:var(--body); font-weight:600; color:var(--ink); line-height:1.45; }
+
+  .i { width:32px; height:32px; flex:0 0 32px; border-radius:50%; border:2px solid var(--ink); background:transparent; color:var(--ink); font-family:'Roboto Mono',monospace; font-size:14px; font-weight:500; line-height:1; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:0; }
+  .i[aria-expanded="true"] { background:var(--ink); color:var(--panel); }
+  .bubble { display:none; margin-top:9px; background:var(--well); border:1px solid var(--rule); border-left:3px solid var(--signal); border-radius:2px; padding:14px; }
+  .bubble.open { display:block; }
+  .bubble p { font-size:var(--body); line-height:1.55; }
+  .bubble p + p { margin-top:10px; }
+  .bubble .term { font-weight:700; }
+  .bubble .source { font-size:16px; line-height:1.5; margin-top:11px; padding-top:10px; border-top:1px solid var(--rule); }
+  .head-row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+
+  .conditions-card { margin-top:26px; background:var(--panel); border:1px solid var(--rule); border-left:5px solid var(--signal); border-radius:2px; padding:18px 16px; }
+  .conditions-card.level-extreme { --signal:#8E1717; }
+  .conditions-card.level-high    { --signal:#B03A14; }
+  .conditions-card.level-moderate{ --signal:#7A4E00; }
+  .conditions-card.level-low     { --signal:#123F52; }
+  .conditions-card.level-loading { --signal:#3E4A52; }
+  .conditions-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:8px 12px; }
+  .nws-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:7px; }
+  .nws-value { font-weight:800; font-size:26px; line-height:1.05; letter-spacing:-.02em; color:var(--signal); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; display:inline-block; }
+  .buoy-corner { font-family:'Roboto Mono',monospace; font-size:16px; font-weight:500; color:var(--ink); text-decoration:none; text-align:right; white-space:nowrap; line-height:1.4; }
+  .buoy-corner span { font-size:var(--lab); display:block; letter-spacing:var(--track); text-transform:uppercase; }
+
+  .stale-warning { display:none; margin-top:13px; background:#F5EAD6; border:1px solid #8A6A1E; border-radius:2px; padding:11px 12px; font-size:16px; line-height:1.5; color:var(--ink); }
+  .stale-warning.visible { display:block; }
+
+  .metrics { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px; }
+  .metric { background:var(--well); border:1px solid var(--rule); border-radius:2px; padding:14px 10px; text-align:center; }
+  .metric.hero { grid-column:1 / -1; border-color:var(--signal); border-width:2px; }
+  .metric-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:7px; }
+  .metric-value { font-weight:700; font-size:var(--metric); line-height:1; font-variant-numeric:tabular-nums; }
+  .metric.hero .metric-value { font-size:var(--hero); color:var(--signal); }
+  .metric-value.period-danger { color:#B03A14; }
+  .metric-unit { font-family:'Roboto Mono',monospace; font-size:var(--lab); color:var(--ink); margin-top:5px; }
+  .true-swell { display:inline-block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; color:#B03A14; text-decoration:underline; text-underline-offset:3px; margin-top:7px; }
+
+  .strip { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule); }
+  .s-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:4px; }
+  .s-value { font-family:'Roboto Mono',monospace; font-size:20px; color:var(--ink); white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+  .card-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule); }
+  .buoy-source { font-family:'Roboto Mono',monospace; font-size:var(--lab); color:var(--ink); line-height:1.45; }
+
+  .info-section { margin-top:38px; }
+  .section-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; background:none; border:none; border-bottom:2px solid var(--ink); padding:0 0 10px; margin-bottom:14px; cursor:pointer; text-align:left; color:var(--ink); font-family:'Public Sans',sans-serif; }
+  .section-toggle .label { font-weight:800; font-size:clamp(18px, 5.2vw, var(--sec)); line-height:1.2; letter-spacing:-.02em; }
+  .section-toggle .sign { font-family:'Roboto Mono',monospace; font-size:24px; font-weight:500; line-height:1; flex:0 0 auto; }
+  .section-body { display:none; }
+  .section-body.open { display:block; }
+  .section-label { font-weight:800; font-size:clamp(18px, 5.2vw, var(--sec)); line-height:1.2; letter-spacing:-.02em; padding-bottom:10px; border-bottom:2px solid var(--ink); margin-bottom:14px; }
+  .item { background:var(--panel); border:1px solid var(--rule); border-radius:2px; padding:14px 13px; margin-bottom:8px; }
+  .item.hazard { border-left:4px solid var(--hazard); }
+  .item-title { font-weight:700; font-size:19px; line-height:1.35; min-width:0; }
+  .item-num { font-family:'Roboto Mono',monospace; font-size:16px; margin-right:9px; }
+
+  .emergency { margin-top:32px; background:var(--panel); border:2px solid var(--hazard); border-radius:2px; padding:20px 16px; text-align:center; }
+  .emergency .e-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); }
+  .emergency .number { display:block; font-weight:800; font-size:54px; line-height:1; letter-spacing:-.02em; color:var(--hazard); text-decoration:none; margin:10px 0 6px; }
+  .contact-who { display:block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-top:16px; }
+  .contact-line { display:block; font-size:23px; font-weight:700; line-height:1.3; color:var(--hazard); text-decoration:underline; text-underline-offset:4px; margin-top:6px; padding:4px 0; }
+
+  footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--rule); }
+  .footer-line { font-family:'Roboto Mono',monospace; font-size:16px; line-height:1.6; color:var(--ink); margin-top:12px; }
+
+  /* Wider screens only. Single-property rules inside media blocks. */
+  @media (min-width: 700px) {
+    .content { padding-left:18px; }
+    .content { padding-right:18px; }
+    .menubar-inner { padding-left:18px; }
+    .menubar-inner { padding-right:18px; }
+    h1 { font-size:36px; }
+    .metric.hero .metric-value { font-size:76px; }
+    .emergency .number { font-size:64px; }
+    .contact-line { font-size:26px; }
   }
 
-  .nws-advisory { margin-top: 4px; }
-  .nws-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
-  .nws-value { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.15; color: #60c080; transition: color 0.5s; }
-  .nws-value.level-extreme { color: #e57368; }
-  .nws-value.level-high { color: #f0a060; }
-  .nws-value.level-moderate { color: #f5d060; }
-  .nws-value.level-low { color: #60c080; }
-  .nws-value.level-loading { color: rgba(255,255,255,0.3); }
-  .nws-link { display: inline-block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: underline; text-underline-offset: 3px; opacity: 0.7; }
-  .nws-link:hover { opacity: 1.0; }
-  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 36px; }
-  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
-  .swell-warning-text strong { color: #e57368; }
-  @media (max-width: 600px) {
-    .content { padding: 0 16px 60px; }
-    header { padding: 24px 0 20px; margin-bottom: 24px; }
-    h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-    .conditions-card { padding: 18px 16px; }
-    .conditions-header { flex-direction: column; gap: 12px; }
-    .buoy-time { text-align: left; }
-    .nws-value { font-size: 1.3rem; }
-    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-    .metric { padding: 12px 8px; }
-    .metric-label { font-size: 8px; }
-    .metric-value { font-size: 2rem; }
-    .metric-unit { font-size: 0.65rem; }
-    .swell-warning { margin-top: 20px; }
-    .info-section { margin-top: 32px; }
-    .hazard-item { padding: 12px; }
-    .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-top: 6px; line-height: 1.5; }
-
-  .hazard-title { font-size: 0.9rem; }
-    .hazard-desc { font-size: 0.88rem; }
-    .rule-text { font-size: 0.92rem; }
-    .step-text { font-size: 0.92rem; }
-    .emergency .number { font-size: 2.2rem; }
-    footer { font-size: 0.78rem; }
-  }</style>
+  /* Narrow phones. Single-property rules only. */
+  @media (max-width: 380px) {
+    .menu-brand { display:none; }
+    .menu-links { width:100%; }
+    .menu-links { justify-content:space-between; }
+    .metric.hero .metric-value { font-size:58px; }
+    .nws-value { font-size:24px; }
+    .s-value { font-size:18px; }
+  }
+</style>
 </head>
 <body>
-<div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
+<div class="menubar">
+  <div class="menubar-inner">
+    <a class="menu-brand" href="index.html">oceansafety.info</a>
+    <div class="menu-links">
+      <a href="index.html">Home</a>
+      <a href="beaches.html">Beaches</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</div>
+
 <div class="content">
+
+  <a class="back-link" href="beaches.html">← All Beaches</a>
+
   <header>
-    <a class="back-link" href="index.html">← All Beaches</a>
-    <div class="county-label">San Francisco County · Presidio · Golden Gate</div>
     <h1>Crissy Field</h1>
     <div class="beach-type">Bay Beach · Tidal Currents · Windsport · Cold Water</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
-      <div class="nws-advisory">
-        <div class="nws-label">National Weather Service</div>
-        <div class="nws-value level-loading" id="dangerValue">Loading…</div>
-        <a class="nws-link" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank">View NWS Forecast ↗</a>
+      <div>
+        <div class="nws-label">National Weather Service · CAZ006</div>
+        <a class="nws-value level-loading" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank" rel="noopener">Loading…</a>
       </div>
-      <div class="buoy-time">
-        <span class="time-label">Tidal Data</span>
-        <span class="time-value" id="buoyTime">—</span>
-      </div>
+      <a class="buoy-corner" id="buoyLink" href="https://tidesandcurrents.noaa.gov/noaacurrents/Predictions?id=SFB1203" target="_blank" rel="noopener"><span>Station</span>SFB1203 ↗</a>
     </div>
+
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
+
     <div class="metrics">
-      <div class="metric"><div class="metric-label">Current Speed</div><div class="metric-value loading" id="currentSpeed">—</div><div class="metric-unit">knots</div></div>
-      <div class="metric"><div class="metric-label">Tide Direction</div><div class="metric-value loading" id="tideDir" style="font-size:1.1rem;padding-top:8px;">—</div><div class="metric-unit">at Gate</div></div>
-      <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
+      <div class="metric hero">
+        <div class="metric-label">Current Speed</div>
+        <div class="metric-value" id="currentSpeed">—</div>
+        <div class="metric-unit">knots</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Tide Direction</div>
+        <div class="metric-value" id="tideDir" style="font-size:26px">—</div>
+        <div class="metric-unit">at the Gate</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Water Temp</div>
+        <div class="metric-value" id="waterTemp">—</div>
+        <div class="metric-unit">°F</div>
+      </div>
     </div>
-    <div class="current-bar">
-      <span class="current-bar-label">Current Risk</span>
-      <div class="current-segment" id="seg1"></div><div class="current-segment" id="seg2"></div>
-      <div class="current-segment" id="seg3"></div><div class="current-segment" id="seg4"></div>
-      <div class="current-segment" id="seg5"></div>
-    </div>
-    <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate (SFB1203)</div>
-  </div>
 
-  <div class="swell-warning">
-    <div class="swell-warning-icon">⚠️</div>
-    <div class="swell-warning-text"><strong>Long-period swell is dangerous.</strong> Any swell period above 15 seconds means waves are arriving in sets with long quiet intervals — sometimes 20 minutes of calm. During the quiet, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
+    <div class="card-foot">
+      <div class="buoy-source" id="buoySource">NOAA Tidal Currents · Golden Gate</div>
+      <button class="i" data-bubble="readings" aria-expanded="false" aria-label="What these readings mean">i</button>
+    </div>
+    <div class="bubble" id="bubble-readings">
+      <p><span class="term">Current speed.</span> How fast the water is moving through the Golden Gate, in knots, from NOAA tidal current predictions for station SFB1203. One knot is roughly 1.15 miles per hour. A strong swimmer moves at about two knots.</p>
+      <p><span class="term">Ebb.</span> The tide is running out, toward the ocean. An ebb carries a swimmer away from shore and out through the Gate.</p>
+      <p><span class="term">Flood.</span> The tide is running in, from the ocean into the Bay.</p>
+      <p><span class="term">Slack.</span> The short window between ebb and flood when the current is near zero.</p>
+      <p><span class="term">Water temp.</span> Bay water runs cold year round.</p>
+      <p class="source">Source: NOAA Center for Operational Oceanographic Products and Services, tidal current predictions</p>
+    </div>
   </div>
 
   <div class="info-section">
-    <div class="section-label">Known Hazards</div>
-    <div class="hazard-list">
-      <div class="hazard-item">
-        <div class="hazard-icon">🌊</div>
-        <div>
-          <div class="hazard-title">Golden Gate Tidal Currents</div>
-          <div class="hazard-desc">Crissy Field sits directly inside the Golden Gate. Tidal currents here run up to 4–5 knots on strong tides — faster than any person can swim. The current above shows real-time conditions. Outgoing (ebb) tide is the most dangerous for swimmers.</div>
-          <div class="hazard-source">Source: NPS GGNRA — Crissy Field / Golden Gate (nps.gov/goga); Pacific Open Water Swim Co. safety guide (pacificswim.co)</div>
-        </div>
+    <div class="section-label">Known Hazards at Crissy Field</div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Golden Gate Tidal Currents</div>
+        <button class="i" data-bubble="h1" aria-expanded="false">i</button>
       </div>
-      <div class="hazard-item">
-        <div class="hazard-icon">🌬️</div>
-        <div>
-          <div class="hazard-title">Wind & Chop</div>
-          <div class="hazard-desc">The Crissy Field area is one of the windiest in San Francisco. Choppy bay conditions combined with cold water make swimming here hazardous for anyone not accustomed to open bay conditions.</div>
-          <div class="hazard-source">Source: NPS GGNRA — Crissy Field / Golden Gate (nps.gov/goga)</div>
-        </div>
+      <div class="bubble" id="bubble-h1">
+        <p>Crissy Field sits directly inside the Golden Gate. Tidal currents here run up to 4–5 knots on strong tides — faster than any person can swim. The current above shows real-time conditions. Outgoing (ebb) tide is the most dangerous for swimmers.</p>
+        <p class="source">Source: NPS GGNRA — Crissy Field / Golden Gate (nps.gov/goga); Pacific Open Water Swim Co. safety guide (pacificswim.co)</p>
       </div>
-      <div class="hazard-item">
-        <div class="hazard-icon">🌡️</div>
-        <div>
-          <div class="hazard-title">Cold Water — Year Round</div>
-          <div class="hazard-desc">San Francisco Bay and ocean water is cold year round. Hypothermia can set in quickly. Always swim with a buddy and stay close to shore.</div>
-          <div class="hazard-source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</div>
-        </div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Wind & Chop</div>
+        <button class="i" data-bubble="h2" aria-expanded="false">i</button>
       </div>
-      <div class="hazard-item">
-        <div class="hazard-icon">⛵</div>
-        <div>
-          <div class="hazard-title">Boat Traffic</div>
-          <div class="hazard-desc">Crissy Field is an active area for windsurfers, kiteboarders, and recreational boats. Swimmers in the water are difficult to see, especially in fog or chop.</div>
-          <div class="hazard-source">Source: NPS GGNRA — Crissy Field (nps.gov/goga)</div>
-        </div>
-      </div></div>
+      <div class="bubble" id="bubble-h2">
+        <p>The Crissy Field area is one of the windiest in San Francisco. Choppy bay conditions combined with cold water make swimming here hazardous for anyone not accustomed to open bay conditions.</p>
+        <p class="source">Source: NPS GGNRA — Crissy Field / Golden Gate (nps.gov/goga)</p>
+      </div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Cold Water — Year Round</div>
+        <button class="i" data-bubble="h3" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-h3">
+        <p>San Francisco Bay and ocean water is cold year round. Hypothermia can set in quickly. Always swim with a buddy and stay close to shore.</p>
+        <p class="source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</p>
+      </div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Boat Traffic</div>
+        <button class="i" data-bubble="h4" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-h4">
+        <p>Crissy Field is an active area for windsurfers, kiteboarders, and recreational boats. Swimmers in the water are difficult to see, especially in fog or chop.</p>
+        <p class="source">Source: NPS GGNRA — Crissy Field (nps.gov/goga)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <div class="e-label">Ocean Emergency</div>
+    <a class="number" href="tel:911">911</a>
+    <span class="contact-who">GGNRA Dispatch</span>
+    <a class="contact-line" href="tel:+14155615505">(415) 561-5505</a>
+    <span class="contact-who">USCG San Francisco</span>
+    <a class="contact-line" href="tel:+14153993547">(415) 399-3547</a>
   </div>
 
   <div class="info-section">
-    <div class="section-label">Before You Enter the Water</div>
-    <div class="rules-list">
-      <div class="rule-item">
-        <div class="rule-num">01</div>
-        <div class="rule-text"><strong>Check the tide before you swim.</strong> Outgoing tides push water hard through the Golden Gate. Swimming against a 3-4 knot current is impossible for most people. Always swim on an incoming or slack tide.</div>
+    <button class="section-toggle" data-section="rules" aria-expanded="false">
+      <span class="label">Before You Go Near the Water</span><span class="sign">+</span>
+    </button>
+    <div class="section-body" id="section-rules">
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">01</span>Check the tide before you swim.</div>
+        <button class="i" data-bubble="r1" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">02</div>
-        <div class="rule-text"><strong>Stay inside the breakwater.</strong> The Aquatic Park cove is protected. The moment you swim past the breakwater you enter open bay current. Many swimmers have been swept out and could not return.</div>
+      <div class="bubble" id="bubble-r1">
+        <p>Outgoing tides push water hard through the Golden Gate. Swimming against a 3-4 knot current is impossible for most people. Always swim on an incoming or slack tide.</p>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">03</div>
-        <div class="rule-text"><strong>Never swim alone.</strong> Cold water incapacitation can happen fast. Always have someone watching from shore who knows where you are.</div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">02</span>Stay inside the breakwater.</div>
+        <button class="i" data-bubble="r2" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">04</div>
-        <div class="rule-text"><strong>Know the signs of cold shock.</strong> Hypothermia can set in quickly. Enter slowly and acclimate before swimming.</div>
+      <div class="bubble" id="bubble-r2">
+        <p>The Aquatic Park cove is protected. The moment you swim past the breakwater you enter open bay current. Many swimmers have been swept out and could not return.</p>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">05</div>
-        <div class="rule-text"><strong>Watch for boat traffic.</strong> In fog or low visibility, boat traffic in the bay is a serious hazard for swimmers who venture outside the protected cove.</div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">03</span>Never swim alone.</div>
+        <button class="i" data-bubble="r3" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">06</div>
-        <div class="rule-text"><strong>If swept out: float, signal, conserve.</strong> Do not fight the current. Float on your back, signal for help, and wait for rescue. The current will not pull you under — it will carry you. Stay calm.</div>
-      </div></div>
-  </div>
-
-    <div class="emergency">
-    <p>Ocean Emergency</p>
-    <span class="number">911</span>
-    <p class="sub">GGNRA Dispatch · (415) 561-5505</p>
-    <p class="sub" style="margin-top:4px;">USCG San Francisco · (415) 399-3547</p>
+      <div class="bubble" id="bubble-r3">
+        <p>Cold water incapacitation can happen fast. Always have someone watching from shore who knows where you are.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">04</span>Know the signs of cold shock.</div>
+        <button class="i" data-bubble="r4" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r4">
+        <p>Hypothermia can set in quickly. Enter slowly and acclimate before swimming.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">05</span>Watch for boat traffic.</div>
+        <button class="i" data-bubble="r5" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r5">
+        <p>In fog or low visibility, boat traffic in the bay is a serious hazard for swimmers who venture outside the protected cove.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">06</span>If swept out: float, signal, conserve.</div>
+        <button class="i" data-bubble="r6" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r6">
+        <p>Do not fight the current. Float on your back, signal for help, and wait for rescue. The current will not pull you under — it will carry you. Stay calm.</p>
+      </div>
+    </div>
+    </div>
+    </div>
   </div>
 
   <footer>
-    Live tidal current data: NOAA CO-OPS · Golden Gate Station SFB1203<br>
-    San Francisco County · National Park Service GGNRA<br>
-      <div class="disclaimer">
-      This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title">About this data</div>
+        <button class="i" data-bubble="about" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-about">
+        <p>Live data: NOAA tidal current predictions, Golden Gate station SFB1203. NWS zone CAZ006.</p>
+        <p>This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
+      </div>
     </div>
+    <div class="footer-line">oceansafety.info</div>
   </footer>
+
 </div>
 
 <script>
-  // NOAA CO-OPS tidal current predictions for Golden Gate (station SFB1203)
+  // NOAA CO-OPS tidal current predictions for the Golden Gate
   const STATION_ID = 'SFB1203';
   const NWS_ZONES = ['CAZ006'];
   const STALE_HOURS = 2;
@@ -274,7 +342,6 @@
     if (!json || !json.current_predictions || !json.current_predictions.cp) return null;
     const predictions = json.current_predictions.cp;
     const now = new Date();
-    // Find the two predictions surrounding now
     let prev = null, next = null;
     for (const p of predictions) {
       const t = new Date(p.Time);
@@ -288,39 +355,25 @@
       timestamp: new Date(prev.Time),
       speedKnots: speed,
       isOutgoing: isOutgoing,
-      direction: isOutgoing ? 'Outgoing (Ebb)' : 'Incoming (Flood)',
-      waterTempF: 56, // Bay water is consistently cold year round
+      waterTempF: 56
     };
   }
 
-  const LEVEL_LABELS = { extreme: 'Extreme Risk', high: 'High Risk', moderate: 'Moderate Risk', low: 'Lower Risk' };
-
   function renderConditions(data, stale) {
     if (!data) {
-      document.getElementById('buoyTime').textContent = '—';
-      document.getElementById('currentSpeed').textContent = '—';
-      document.getElementById('tideDir').textContent = '—';
-      document.getElementById('waterTemp').textContent = '—';
+      ['currentSpeed','tideDir','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
-    document.getElementById('buoyTime').textContent = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    if (stale) document.getElementById('staleWarning').classList.add('visible');
+    const ageHours = (new Date() - data.timestamp) / 3600000;
+    if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
+
     document.getElementById('currentSpeed').textContent = data.speedKnots.toFixed(1);
-    document.getElementById('currentSpeed').className = 'metric-value';
-    const dirEl = document.getElementById('tideDir');
-    dirEl.textContent = data.isOutgoing ? '↓ Ebb' : '↑ Flood';
-    dirEl.className = `metric-value ${data.isOutgoing ? 'level-high' : 'level-low'}`;
-    dirEl.style.fontSize = '1.3rem';
+    document.getElementById('tideDir').textContent = data.isOutgoing ? 'Ebb' : 'Flood';
     document.getElementById('waterTemp').textContent = Math.round(data.waterTempF);
-    document.getElementById('waterTemp').className = 'metric-value';
-    const speed = data.speedKnots;
-    [['seg1',1.0,'active-safe'],['seg2',1.5,'active-caution'],['seg3',2.5,'active-warn'],['seg4',3.5,'active-danger'],['seg5',4.5,'active-danger']].forEach(([id,thresh,cls]) => {
-      const el = document.getElementById(id);
-      el.className = 'current-segment';
-      if (speed >= thresh) el.classList.add(cls);
-    });
-    document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate (SFB1203)' + (overrideLevel ? ' · Manual Override Active' : '');
+
+    const stamp = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('buoySource').textContent = 'NOAA Tidal Currents · Golden Gate · ' + stamp;
   }
 
   async function init() {
@@ -328,12 +381,13 @@
     if (data) { renderConditions(data, false); }
     else {
       renderConditions(null, true);
-      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://tidesandcurrents.noaa.gov/noaacurrents/Predictions?id=SFB1203" target="_blank">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
       document.getElementById('dangerValue').textContent = 'Check Conditions';
       document.getElementById('dangerValue').className = 'nws-value level-high';
     }
   }
+
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -346,7 +400,6 @@
       const alerts = data.features || [];
       const PRIORITY = {'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1};
       const LEVELS = {'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate'};
-      const LABELS = {'High Surf Warning': 'High Surf Warning', 'High Surf Advisory': 'High Surf Advisory', 'Beach Hazards Statement': 'Beach Hazards Statement'};
       let best = null;
       alerts.forEach(a => {
         const ev = a.properties?.event;
@@ -358,17 +411,36 @@
       } else {
         const lv = LEVELS[best];
         if (card) card.className = card.className.replace(/level-\S+/, '') + ' level-' + lv;
-        if (dv) { dv.textContent = LABELS[best]; dv.className = 'nws-value level-' + lv; }
+        if (dv) { dv.textContent = best; dv.className = 'nws-value level-' + lv; }
       }
     } catch(e) {
       if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'nws-value level-loading'; }
     }
   }
 
+  // collapsible sections
+  document.querySelectorAll('.section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = document.getElementById('section-' + btn.dataset.section);
+      const open = body.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.sign').textContent = open ? '−' : '+';
+    });
+  });
+
+  // info bubbles
+  document.querySelectorAll('.i').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById('bubble-' + btn.dataset.bubble);
+      const open = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
   init();
   fetchNWSAdvisory();
   setInterval(fetchNWSAdvisory, 30 * 60 * 1000);
-  setInterval(init, 15 * 60 * 1000);
+  setInterval(init, 30 * 60 * 1000);
 </script>
 </body>
-</html><!-- Ethel10 -->
+</html>

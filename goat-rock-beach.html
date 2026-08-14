@@ -1,279 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D9DFE3">
+<title>Goat Rock Beach — Ocean Safety</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ocean: #0a2540; --deep: #061829; --wave: #1a6b8a; --foam: #e8f4f8;
-    --danger: #c0392b; --warn: #e67e22; --caution: #f1c40f; --safe: #27ae60; --light: #ffffff;
+    --ground:#D9DFE3; --panel:#FBFCFD; --well:#EAEEF1; --rule:#8E9AA3;
+    --ink:#101418; --hazard:#8E1717;
+    --signal:#123F52;
+    --body:18px; --h1:30px; --hero:64px; --metric:32px; --sec:21px;
+    --lab:14px; --track:.12em;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--deep); color: var(--light); font-family: 'Libre Franklin', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  .ocean-bg { position: fixed; inset: 0; z-index: 0; background: linear-gradient(180deg, #061829 0%, #0a2540 40%, #0d3a5c 70%, #0a2540 100%); overflow: hidden; }
-  .wave-layer { position: absolute; bottom: 0; left: -50%; width: 200%; height: 180px; opacity: 0.12; border-radius: 50% 50% 0 0; animation: swell 8s ease-in-out infinite; }
-  .wave-layer:nth-child(1) { background: #1a6b8a; animation-delay: 0s; height: 140px; }
-  .wave-layer:nth-child(2) { background: #2589a8; animation-delay: -3s; height: 100px; opacity: 0.08; }
-  .wave-layer:nth-child(3) { background: #3aa0c0; animation-delay: -5s; height: 80px; opacity: 0.06; }
-  @keyframes swell { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-5%) scaleY(1.15); } }
-  .content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
-  header { padding: 40px 0 28px; border-bottom: 1px solid rgba(255,255,255,1.0); margin-bottom: 36px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
-  .back-link:hover { color: rgba(255,255,255,1.0); }
-  .county-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #7ab8cc; text-transform: uppercase; margin-bottom: 10px; }
-  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: var(--foam); margin-bottom: 6px; }
-  .beach-type { font-size: 0.92rem; color: rgba(255,255,255,1.0); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
-  .conditions-card { border-radius: 10px; padding: 28px; margin-bottom: 24px; position: relative; overflow: hidden; transition: background 0.5s, border-color 0.5s; }
-  .conditions-card.level-extreme { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.45); }
-  .conditions-card.level-high { background: rgba(230,126,34,0.12); border: 1px solid rgba(230,126,34,0.4); }
-  .conditions-card.level-moderate { background: rgba(241,196,15,0.1); border: 1px solid rgba(241,196,15,0.35); }
-  .conditions-card.level-low { background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.35); }
-  .conditions-card.level-loading { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
-  .conditions-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-  .danger-level { flex: 1; }
-  .danger-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
-  .danger-value { font-family: 'DM Serif Display', serif; font-size: 2.1rem; line-height: 1; transition: color 0.5s; }
-  .danger-value.level-extreme { color: #e57368; } .danger-value.level-high { color: #f0a060; }
-  .danger-value.level-moderate { color: #f5d060; } .danger-value.level-low { color: #60c080; }
-  .danger-value.level-loading { color: rgba(255,255,255,0.3); }
-  .buoy-time { text-align: right; }
-  .buoy-time .time-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); display: block; margin-bottom: 4px; }
-  .buoy-link {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.92rem;
-    color: #7ab8cc;
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    display: block;
-    margin-top: 3px;
-  }
-  .buoy-link:hover { text-decoration: underline; }
-  .buoy-time .time-value { font-family: 'DM Mono', monospace; font-size: 0.92rem; color: rgba(255,255,255,1.0); }
-  .stale-warning { display: none; background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); border-radius: 4px; padding: 8px 12px; font-size: 1.15rem; color: #f5d060; margin-bottom: 16px; font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
-  .stale-warning.visible { display: block; }
-  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-  .metric { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 14px 12px; text-align: center; }
-  .metric-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 8px; }
-  .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.7rem; line-height: 1; color: var(--foam); font-weight: 700; }
-  .metric-unit { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: rgba(255,255,255,1.0); margin-top: 4px; }
-  .metric-value.loading { color: rgba(255,255,255,0.15); }
-  .buoy-source { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: rgba(255,255,255,1.0); text-align: right; }
-  .info-section { margin-bottom: 32px; }
-  .section-label { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--foam); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); }
-  .hazard-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-  .hazard-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; padding: 14px 16px; }
-  .hazard-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
-  .hazard-title { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #e57368; margin-bottom: 3px; }
-  .hazard-desc { font-size: 1.15rem; color: rgba(255,255,255,1.0); line-height: 1.5; }
-  .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.38); letter-spacing: 0.04em; margin-top: 5px; }
-  .rules-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
-  .rule-item { display: flex; gap: 14px; align-items: flex-start; }
-  .rule-num { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: rgba(122,184,204,0.5); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .rule-text { font-size: 1.1rem; color: rgba(255,255,255,1.0); line-height: 1.55; }
-  .rule-text strong { color: var(--foam); font-weight: 600; }
-  .swell-explainer { background: rgba(26,107,138,0.1); border: 1px solid rgba(26,107,138,0.25); border-radius: 8px; padding: 24px; }
-  .explainer-intro { font-size: 1.1rem; color: rgba(255,255,255,1.0); line-height: 1.7; margin-bottom: 20px; }
-  .explainer-intro em { color: #7ab8cc; font-style: italic; }
-  .set-steps { display: flex; flex-direction: column; gap: 12px; }
-  .set-step { display: flex; gap: 14px; align-items: flex-start; }
-  .step-num { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: rgba(122,184,204,0.6); flex-shrink: 0; padding-top: 2px; width: 20px; }
-  .step-text { font-size: 1.1rem; color: rgba(255,255,255,1.0); line-height: 1.55; }
-  .step-text strong { color: var(--foam); font-weight: 600; }
-  .emergency { text-align: center; padding: 32px; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; margin-bottom: 32px; }
-  .emergency p { font-size: 1.15rem; color: rgba(255,255,255,1.0); margin-bottom: 6px; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
-  .emergency .number { font-family: 'DM Serif Display', serif; font-size: 2.9rem; color: #e57368; display: block; margin-bottom: 6px; }
-  .emergency .sub { font-size: 0.98rem; color: rgba(255,255,255,1.0); text-transform: none; font-family: 'Libre Franklin', sans-serif; letter-spacing: normal; }
-  footer { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.98rem; color: rgba(255,255,255,1.0); letter-spacing: 0.08em; padding-top: 28px; border-top: 1px solid rgba(255,255,255,1.0); line-height: 1.8; }
-  @media (max-width: 480px) { .metrics { gap: 8px; } .metric-value { font-size: 1.7rem; } .conditions-header { flex-direction: column; } .buoy-time { text-align: left; } }
-  .disclaimer {
-    margin-top: 20px;
-    padding: 16px 20px;
-    border-top: 1px solid rgba(255,255,255,1.0);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.92rem;
-    color: rgba(255,255,255,1.0);
-    line-height: 1.7;
-    letter-spacing: 0.04em;
-    text-align: center;
-  }
-  .metric-value.period-danger { color: #e57368 !important; font-weight: 700; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  .menubar { border-bottom:2px solid var(--ink); background:var(--ground); position:sticky; top:0; z-index:5; }
+  .menubar-inner { max-width:680px; margin:0 auto; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .menu-brand { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; }
+  .menu-links { display:flex; gap:16px; }
+  .menu-links a { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; padding:8px 0; }
+  body { background:var(--ground); color:var(--ink); font-family:'Public Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  .content { max-width:680px; margin:0 auto; padding:20px 14px 56px; }
+  a { color:var(--ink); }
 
-  .nws-advisory { margin-top: 4px; }
-  .nws-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,1.0); margin-bottom: 6px; }
-  .nws-value { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.15; color: #60c080; transition: color 0.5s; }
-  .nws-value.level-extreme { color: #e57368; }
-  .nws-value.level-high { color: #f0a060; }
-  .nws-value.level-moderate { color: #f5d060; }
-  .nws-value.level-low { color: #60c080; }
-  .nws-value.level-loading { color: rgba(255,255,255,0.3); }
-  .nws-link { display: inline-block; margin-top: 8px; font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,1.0); text-decoration: underline; text-underline-offset: 3px; opacity: 0.7; }
-  .nws-link:hover { opacity: 1.0; }
-  .swell-warning { display: flex; align-items: flex-start; gap: 12px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); border-left: 3px solid #e57368; border-radius: 6px; padding: 14px 16px; margin-top: 28px; margin-bottom: 36px; }
-  .swell-warning-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .swell-warning-text { font-size: 0.9rem; color: rgba(255,255,255,1.0); line-height: 1.6; }
-  .swell-warning-text strong { color: #e57368; }
-  @media (max-width: 600px) {
-    .content { padding: 0 16px 60px; }
-    header { padding: 24px 0 20px; margin-bottom: 24px; }
-    h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-    .conditions-card { padding: 18px 16px; }
-    .conditions-header { flex-direction: column; gap: 12px; }
-    .buoy-time { text-align: left; }
-    .nws-value { font-size: 1.3rem; }
-    .metrics { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
-    .metric { padding: 12px 8px; }
-    .metric-label { font-size: 8px; }
-    .metric-value { font-size: 2rem; }
-    .metric-unit { font-size: 0.65rem; }
-    .swell-warning { margin-top: 20px; }
-    .info-section { margin-top: 32px; }
-    .hazard-item { padding: 12px; }
-    .hazard-title { font-size: 0.9rem; }
-    .hazard-desc { font-size: 0.88rem; }
-    .hazard-source { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; margin-top: 6px; line-height: 1.5; }
-    .rule-text { font-size: 0.92rem; }
-    .step-text { font-size: 0.92rem; }
-    .emergency .number { font-size: 2.2rem; }
-    footer { font-size: 0.78rem; }
-  }</style>
+  .back-link { display:inline-block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); text-decoration:none; margin-bottom:22px; padding:6px 0; }
+  .county-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); }
+  h1 { font-weight:800; font-size:var(--h1); line-height:1.04; letter-spacing:-.02em; margin:6px 0 10px; }
+  .beach-type { font-size:var(--body); font-weight:600; color:var(--ink); line-height:1.45; }
+
+  .i { width:32px; height:32px; flex:0 0 32px; border-radius:50%; border:2px solid var(--ink); background:transparent; color:var(--ink); font-family:'Roboto Mono',monospace; font-size:14px; font-weight:500; line-height:1; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:0; }
+  .i[aria-expanded="true"] { background:var(--ink); color:var(--panel); }
+  .bubble { display:none; margin-top:9px; background:var(--well); border:1px solid var(--rule); border-left:3px solid var(--signal); border-radius:2px; padding:14px; }
+  .bubble.open { display:block; }
+  .bubble p { font-size:var(--body); line-height:1.55; }
+  .bubble p + p { margin-top:10px; }
+  .bubble .term { font-weight:700; }
+  .bubble .source { font-size:16px; line-height:1.5; margin-top:11px; padding-top:10px; border-top:1px solid var(--rule); }
+  .head-row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+
+  .conditions-card { margin-top:26px; background:var(--panel); border:1px solid var(--rule); border-left:5px solid var(--signal); border-radius:2px; padding:18px 16px; }
+  .conditions-card.level-extreme { --signal:#8E1717; }
+  .conditions-card.level-high    { --signal:#B03A14; }
+  .conditions-card.level-moderate{ --signal:#7A4E00; }
+  .conditions-card.level-low     { --signal:#123F52; }
+  .conditions-card.level-loading { --signal:#3E4A52; }
+  .conditions-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:8px 12px; }
+  .nws-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:7px; }
+  .nws-value { font-weight:800; font-size:26px; line-height:1.05; letter-spacing:-.02em; color:var(--signal); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; display:inline-block; }
+  .buoy-corner { font-family:'Roboto Mono',monospace; font-size:16px; font-weight:500; color:var(--ink); text-decoration:none; text-align:right; white-space:nowrap; line-height:1.4; }
+  .buoy-corner span { font-size:var(--lab); display:block; letter-spacing:var(--track); text-transform:uppercase; }
+
+  .stale-warning { display:none; margin-top:13px; background:#F5EAD6; border:1px solid #8A6A1E; border-radius:2px; padding:11px 12px; font-size:16px; line-height:1.5; color:var(--ink); }
+  .stale-warning.visible { display:block; }
+
+  .metrics { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px; }
+  .metric { background:var(--well); border:1px solid var(--rule); border-radius:2px; padding:14px 10px; text-align:center; }
+  .metric.hero { grid-column:1 / -1; border-color:var(--signal); border-width:2px; }
+  .metric-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:7px; }
+  .metric-value { font-weight:700; font-size:var(--metric); line-height:1; font-variant-numeric:tabular-nums; }
+  .metric.hero .metric-value { font-size:var(--hero); color:var(--signal); }
+  .metric-value.period-danger { color:#B03A14; }
+  .metric-unit { font-family:'Roboto Mono',monospace; font-size:var(--lab); color:var(--ink); margin-top:5px; }
+  .true-swell { display:inline-block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; color:#B03A14; text-decoration:underline; text-underline-offset:3px; margin-top:7px; }
+
+  .strip { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule); }
+  .s-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-bottom:4px; }
+  .s-value { font-family:'Roboto Mono',monospace; font-size:20px; color:var(--ink); white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+  .card-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule); }
+  .buoy-source { font-family:'Roboto Mono',monospace; font-size:var(--lab); color:var(--ink); line-height:1.45; }
+
+  .info-section { margin-top:38px; }
+  .section-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; background:none; border:none; border-bottom:2px solid var(--ink); padding:0 0 10px; margin-bottom:14px; cursor:pointer; text-align:left; color:var(--ink); font-family:'Public Sans',sans-serif; }
+  .section-toggle .label { font-weight:800; font-size:clamp(18px, 5.2vw, var(--sec)); line-height:1.2; letter-spacing:-.02em; }
+  .section-toggle .sign { font-family:'Roboto Mono',monospace; font-size:24px; font-weight:500; line-height:1; flex:0 0 auto; }
+  .section-body { display:none; }
+  .section-body.open { display:block; }
+  .section-label { font-weight:800; font-size:clamp(18px, 5.2vw, var(--sec)); line-height:1.2; letter-spacing:-.02em; padding-bottom:10px; border-bottom:2px solid var(--ink); margin-bottom:14px; }
+  .item { background:var(--panel); border:1px solid var(--rule); border-radius:2px; padding:14px 13px; margin-bottom:8px; }
+  .item.hazard { border-left:4px solid var(--hazard); }
+  .item-title { font-weight:700; font-size:19px; line-height:1.35; min-width:0; }
+  .item-num { font-family:'Roboto Mono',monospace; font-size:16px; margin-right:9px; }
+
+  .emergency { margin-top:32px; background:var(--panel); border:2px solid var(--hazard); border-radius:2px; padding:20px 16px; text-align:center; }
+  .emergency .e-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); }
+  .emergency .number { display:block; font-weight:800; font-size:54px; line-height:1; letter-spacing:-.02em; color:var(--hazard); text-decoration:none; margin:10px 0 6px; }
+  .contact-who { display:block; font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; color:var(--ink); margin-top:16px; }
+  .contact-line { display:block; font-size:23px; font-weight:700; line-height:1.3; color:var(--hazard); text-decoration:underline; text-underline-offset:4px; margin-top:6px; padding:4px 0; }
+
+  footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--rule); }
+  .footer-line { font-family:'Roboto Mono',monospace; font-size:16px; line-height:1.6; color:var(--ink); margin-top:12px; }
+
+  /* Wider screens only. Single-property rules inside media blocks. */
+  @media (min-width: 700px) {
+    .content { padding-left:18px; }
+    .content { padding-right:18px; }
+    .menubar-inner { padding-left:18px; }
+    .menubar-inner { padding-right:18px; }
+    h1 { font-size:36px; }
+    .metric.hero .metric-value { font-size:76px; }
+    .emergency .number { font-size:64px; }
+    .contact-line { font-size:26px; }
+  }
+
+  /* Narrow phones. Single-property rules only. */
+  @media (max-width: 380px) {
+    .menu-brand { display:none; }
+    .menu-links { width:100%; }
+    .menu-links { justify-content:space-between; }
+    .metric.hero .metric-value { font-size:58px; }
+    .nws-value { font-size:24px; }
+    .s-value { font-size:18px; }
+  }
+</style>
 </head>
 <body>
-<div class="ocean-bg"><div class="wave-layer"></div><div class="wave-layer"></div><div class="wave-layer"></div></div>
+<div class="menubar">
+  <div class="menubar-inner">
+    <a class="menu-brand" href="index.html">oceansafety.info</a>
+    <div class="menu-links">
+      <a href="index.html">Home</a>
+      <a href="beaches.html">Beaches</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</div>
+
 <div class="content">
+
+  <a class="back-link" href="beaches.html">← All Beaches</a>
+
   <header>
-    <a class="back-link" href="index.html">← All Beaches</a>
-    <div class="county-label">Sonoma County · Jenner</div>
     <h1>Goat Rock Beach</h1>
     <div class="beach-type">Rocky Headland · Russian River Mouth · Sonoma County · No Lifeguard</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
-      <div class="nws-advisory">
-        <div class="nws-label">National Weather Service</div>
-        <div class="nws-value level-loading" id="dangerValue">Loading…</div>
-        <a class="nws-link" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ112" target="_blank">View NWS Forecast ↗</a>
+      <div>
+        <div class="nws-label">National Weather Service · CAZ112</div>
+        <a class="nws-value level-loading" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ112" target="_blank" rel="noopener">Loading…</a>
       </div>
-      <div class="buoy-time">
-        <span class="time-label">Buoy Reading</span>
-        <span class="time-value" id="buoyTime">—</span>
-        <a class="buoy-link" id="buoyLink" href="#" target="_blank">View Buoy ↗</a>
-      </div>
+      <a class="buoy-corner" id="buoyLink" href="https://www.ndbc.noaa.gov/station_page.php?station=46013" target="_blank" rel="noopener"><span>Buoy</span>46012 ↗</a>
     </div>
+
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
+
     <div class="metrics">
-      <div class="metric"><div class="metric-label">Wave Height</div><div class="metric-value loading" id="waveHeight">—</div><div class="metric-unit">feet</div></div>
-      <div class="metric"><div class="metric-label">Swell Period</div><div class="metric-value loading" id="swellPeriod">—</div><div class="metric-unit">seconds</div></div>
-      <div class="metric"><div class="metric-label">Direction</div><div class="metric-value loading" id="swellDir" style="font-size:1.7rem;">—</div><div class="metric-unit">swell from</div></div>
-      <div class="metric"><div class="metric-label">Water Temp</div><div class="metric-value loading" id="waterTemp">—</div><div class="metric-unit">°F</div></div>
+      <div class="metric hero">
+        <div class="metric-label">Dominant Period</div>
+        <div class="metric-value" id="swellPeriod">—</div>
+        <div class="metric-unit">seconds</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Wave Height</div>
+        <div class="metric-value" id="waveHeight">—</div>
+        <div class="metric-unit">feet</div>
+        <a class="true-swell" href="https://www.ndbc.noaa.gov/station_page.php?station=46013" target="_blank" rel="noopener">True swell ↗</a>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Swell Direction</div>
+        <div class="metric-value" id="swellDir">—</div>
+        <div class="metric-unit">swell from</div>
+      </div>
     </div>
-    <div class="buoy-source" id="buoySource">NOAA Buoy 46013 — Bodega Bay</div>
-  </div>
 
-  <div class="swell-warning">
-    <div class="swell-warning-icon">⚠️</div>
-    <div class="swell-warning-text"><strong>Long-period swell is dangerous.</strong> Any swell period above 15 seconds means waves are arriving in sets with long quiet intervals — sometimes 20 minutes of calm. During the quiet, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
-  </div>
+    <div class="strip">
+      <div><div class="s-label">Air</div><div class="s-value" id="airTemp">—</div></div>
+      <div><div class="s-label">Water</div><div class="s-value" id="waterTemp">—</div></div>
+      <div><div class="s-label">Wind</div><div class="s-value" id="windReading">—</div></div>
+    </div>
 
-  <div class="info-section">
-    <div class="section-label">Known Hazards</div>
-    <div class="hazard-list">
-      <div class="hazard-item">
-        <div class="hazard-icon">🌊</div>
-        <div>
-          <div class="hazard-title">Long-Period Swell & Set Waves</div>
-          <div class="hazard-desc">Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
-          <div class="hazard-source">Source: NPS / SF Fire Dept / NOAA — Joint Coastal Safety Advisory (sf-fire.org); NOAA National Weather Service Beach Hazards guidance</div>
-        </div>
-      </div>
-            <div class="hazard-item">
-        <div class="hazard-icon">🌀</div>
-        <div>
-          <div class="hazard-title">Russian River Mouth — Dangerous Currents</div>
-          <div class="hazard-desc">Where the Russian River meets the ocean, powerful and unpredictable currents form. Combined with heavy Sonoma Coast surf, these conditions make entering the water extremely dangerous. The park gate periodically closes when ocean conditions are hazardous. Stay well above the highest water mark. Never turn your back on the ocean.</div>
-          <div class="hazard-source">Source: California State Parks — Sonoma Coast State Park (parks.ca.gov)</div>
-        </div>
-      </div>
-            <div class="hazard-item">
-        <div class="hazard-icon">🦭</div>
-        <div>
-          <div class="hazard-title">Harbor Seal Colony — Keep Your Distance</div>
-          <div class="hazard-desc">Goat Rock Beach is home to a harbor seal colony. From March through June, pups are born defenseless — a solitary pup on the beach has not been abandoned; its mother is feeding offshore. Approaching seals is dangerous: they bite. Stay at least 300 feet from the colony. Dogs are not permitted on Goat Rock Beach.</div>
-          <div class="hazard-source">Source: California State Parks — Sonoma Coast State Park brochure and park page (parks.ca.gov)</div>
-        </div>
-      </div>
-      <div class="hazard-item">
-        <div class="hazard-icon">🌡️</div>
-        <div>
-          <div class="hazard-title">Cold Water — Year Round</div>
-          <div class="hazard-desc">Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</div>
-          <div class="hazard-source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</div>
-        </div>
-      </div>
-      <div class="hazard-item">
-        <div class="hazard-icon">🚫</div>
-        <div>
-          <div class="hazard-title">No Year-Round Lifeguard Posted</div>
-          <div class="hazard-desc">CA State Parks lifeguards patrol state beaches. There is no year-round posted lifeguard. Emergency response times on remote beaches may take longer than in urban environments.</div>
-          <div class="hazard-source">Source: NPS GGNRA / CA State Parks — Beach Safety Practices (nps.gov/goga); SF Fire Dept / NPS Joint Coastal Safety Advisory (sf-fire.org)</div>
-        </div>
-      </div></div>
+    <div class="card-foot">
+      <div class="buoy-source" id="buoySource">NOAA Buoy 46013 — Bodega Bay</div>
+      <button class="i" data-bubble="readings" aria-expanded="false" aria-label="What these readings mean">i</button>
+    </div>
+    <div class="bubble" id="bubble-readings">
+      <p><span class="term">Dominant period.</span> The wave period carrying the most energy, which is the time for two successive crests to pass a fixed point. It is always either the swell period or the wind wave period. It is not the time between sets.</p>
+      <p><span class="term">Wave height.</span> The average height of the highest one third of all waves over a twenty minute sample. Buoy readings are combined seas, meaning swell and locally generated wind waves together. Tap True swell for NOAA's separated swell figures.</p>
+      <p><span class="term">Swell direction.</span> The direction the waves at the dominant period are coming from, not the direction they are heading.</p>
+      <p><span class="term">Wind.</span> The direction the wind is coming from, with speed averaged over an eight minute period.</p>
+      <p><span class="term">Air and water.</span> Measured at the buoy, offshore. Not the temperature on the sand.</p>
+      <p class="source">Definitions: NOAA National Data Buoy Center — Measurement Descriptions and Units; Glossary of Terms for Wave Information</p>
+    </div>
   </div>
 
   <div class="info-section">
-    <div class="section-label">Before You Go Near the Water</div>
-    <div class="rules-list">
-      <div class="rule-item">
-        <div class="rule-num">01</div>
-        <div class="rule-text"><strong>Read the swell period before you approach the water.</strong> The number in the chart above is your warning. A period of 15+ seconds means sets are arriving with long, quiet intervals between them — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</div>
+    <div class="section-label">Known Hazards at Goat Rock</div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Long-Period Swell & Set Waves</div>
+        <button class="i" data-bubble="h1" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">02</div>
-        <div class="rule-text"><strong>Watch the ocean.</strong> Stay on dry sand. Do not approach wet sand or the water's edge until you have watched the ocean and learned the rhythm of the sets.</div>
+      <div class="bubble" id="bubble-h1">
+        <p>Read the table above. Any swell period above 15 seconds means danger. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
+        <p class="source">Source: NPS / SF Fire Dept / NOAA — Joint Coastal Safety Advisory (sf-fire.org); NOAA National Weather Service Beach Hazards guidance</p>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">03</div>
-        <div class="rule-text"><strong>Wet rocks or sand mark where the ocean has already been.</strong> If the rocks or sand are wet, a wave reached them recently. Stay above the wet line — always.</div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Russian River Mouth — Dangerous Currents</div>
+        <button class="i" data-bubble="h2" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">04</div>
-        <div class="rule-text"><strong>A long wait between waves is a warning.</strong> During long period swells, stay vigilant. The ocean may appear completely calm between sets. Do not be fooled. If it has been calm for several minutes, stay back. Do not walk toward the water.</div>
+      <div class="bubble" id="bubble-h2">
+        <p>Where the Russian River meets the ocean, powerful and unpredictable currents form. Combined with heavy Sonoma Coast surf, these conditions make entering the water extremely dangerous. The park gate periodically closes when ocean conditions are hazardous. Stay well above the highest water mark. Never turn your back on the ocean.</p>
+        <p class="source">Source: California State Parks — Sonoma Coast State Park (parks.ca.gov)</p>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">05</div>
-        <div class="rule-text"><strong>Keep dogs on leash.</strong> Keep dogs on leash and away from the water's edge.</div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Harbor Seal Colony — Keep Your Distance</div>
+        <button class="i" data-bubble="h3" aria-expanded="false">i</button>
       </div>
-      <div class="rule-item">
-        <div class="rule-num">06</div>
-        <div class="rule-text"><strong>Tell someone your plans.</strong> Leave your destination and expected return time with someone before you go.</div>
-      </div></div>
-  </div>
-
-  <div class="info-section">
-    <div class="section-label">How to Read Sets</div>
-    <div class="swell-explainer">
-      <p class="explainer-intro">Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
-      <div class="set-steps">
-        <div class="set-step"><div class="step-num">1</div><div class="step-text"><strong>Find a high vantage point above the water line.</strong> Do not approach the shore first. Watch from above.</div></div>
-        <div class="set-step"><div class="step-num">2</div><div class="step-text"><strong>Time the quiet intervals.</strong> Count the seconds — or minutes — between large waves. This is your set interval.</div></div>
-        <div class="set-step"><div class="step-num">3</div><div class="step-text"><strong>Watch for at least 15 minutes.</strong> You need to see multiple sets before you understand the rhythm. One quiet stretch means nothing.</div></div>
-        <div class="set-step"><div class="step-num">4</div><div class="step-text"><strong>The largest wave in a set is not always the first.</strong> Sets build in size. The final wave is frequently the biggest.</div></div>
-        <div class="set-step"><div class="step-num">5</div><div class="step-text"><strong>When in doubt, stay back.</strong> At 15+ seconds period, stay completely clear of the shore and any rocks.</div></div>
-        <div class="set-step"><div class="step-num">6</div><div class="step-text"><strong>Long-period swells create &#8220;sneaker waves,&#8221; sometimes called &#8220;sleeper waves,&#8221;</strong> because they produce sets of waves separated by long periods of relative calm. That calm can create a false sense of security — people approach the shore and are not anticipating the next set when it arrives, leaving no time to retreat. These circumstances are predictable and deaths from being swept in are preventable.</div></div>
+      <div class="bubble" id="bubble-h3">
+        <p>Goat Rock Beach is home to a harbor seal colony. From March through June, pups are born defenseless — a solitary pup on the beach has not been abandoned; its mother is feeding offshore. Approaching seals is dangerous: they bite. Stay at least 300 feet from the colony. Dogs are not permitted on Goat Rock Beach.</p>
+        <p class="source">Source: California State Parks — Sonoma Coast State Park brochure and park page (parks.ca.gov)</p>
+      </div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">Cold Water — Year Round</div>
+        <button class="i" data-bubble="h4" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-h4">
+        <p>Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</p>
+        <p class="source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</p>
+      </div>
+    </div>
+    <div class="item hazard">
+      <div class="head-row">
+        <div class="item-title">No Year-Round Lifeguard Posted</div>
+        <button class="i" data-bubble="h5" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-h5">
+        <p>CA State Parks lifeguards patrol state beaches. There is no year-round posted lifeguard. Emergency response times on remote beaches may take longer than in urban environments.</p>
+        <p class="source">Source: NPS GGNRA / CA State Parks — Beach Safety Practices (nps.gov/goga); SF Fire Dept / NPS Joint Coastal Safety Advisory (sf-fire.org)</p>
       </div>
     </div>
   </div>
 
-    <div class="emergency">
-    <p>Ocean Emergency</p>
-    <span class="number">911</span>
-    <p class="sub">CA State Parks Emergency · (800) 952-5580</p>
-    <p class="sub" style="margin-top:4px;">Sonoma County Sheriff · (707) 565-2121</p>
+  <div class="emergency">
+    <div class="e-label">Ocean Emergency</div>
+    <a class="number" href="tel:911">911</a>
+    <span class="contact-who">CA State Parks Emergency</span>
+    <a class="contact-line" href="tel:+18009525580">(800) 952-5580</a>
+    <span class="contact-who">Sonoma County Sheriff</span>
+    <a class="contact-line" href="tel:+17075652121">(707) 565-2121</a>
+  </div>
+
+  <div class="info-section">
+    <button class="section-toggle" data-section="rules" aria-expanded="false">
+      <span class="label">Before You Go Near the Water</span><span class="sign">+</span>
+    </button>
+    <div class="section-body" id="section-rules">
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">01</span>Read the swell period before you approach the water.</div>
+        <button class="i" data-bubble="r1" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r1">
+        <p>The number in the chart above is your warning. A period of 15+ seconds means sets are arriving with long, quiet intervals between them — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">02</span>Watch the ocean.</div>
+        <button class="i" data-bubble="r2" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r2">
+        <p>Stay on dry sand. Do not approach wet sand or the water's edge until you have watched the ocean and learned the rhythm of the sets.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">03</span>Wet rocks or sand mark where the ocean has already been.</div>
+        <button class="i" data-bubble="r3" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r3">
+        <p>If the rocks or sand are wet, a wave reached them recently. Stay above the wet line — always.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">04</span>A long wait between waves is a warning.</div>
+        <button class="i" data-bubble="r4" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r4">
+        <p>During long period swells, stay vigilant. The ocean may appear completely calm between sets. Do not be fooled. If it has been calm for several minutes, stay back. Do not walk toward the water.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">05</span>Keep dogs on leash.</div>
+        <button class="i" data-bubble="r5" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r5">
+        <p>Keep dogs on leash and away from the water's edge.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">06</span>Tell someone your plans.</div>
+        <button class="i" data-bubble="r6" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-r6">
+        <p>Leave your destination and expected return time with someone before you go.</p>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <button class="section-toggle" data-section="sets" aria-expanded="false">
+      <span class="label">How to Read Sets</span><span class="sign">+</span>
+    </button>
+    <div class="section-body" id="section-sets">
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title">Long-period swell travels in sets.</div>
+        <button class="i" data-bubble="s0" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s0">
+        <p>Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. At 15+ seconds, those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">1</span>Find a high vantage point above the water line.</div>
+        <button class="i" data-bubble="s1" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s1">
+        <p>Do not approach the shore first. Watch from above.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">2</span>Time the quiet intervals.</div>
+        <button class="i" data-bubble="s2" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s2">
+        <p>Count the seconds — or minutes — between large waves. This is your set interval.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">3</span>Watch for at least 15 minutes.</div>
+        <button class="i" data-bubble="s3" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s3">
+        <p>You need to see multiple sets before you understand the rhythm. One quiet stretch means nothing.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">4</span>The largest wave in a set is not always the first.</div>
+        <button class="i" data-bubble="s4" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s4">
+        <p>Sets build in size. The final wave is frequently the biggest.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">5</span>When in doubt, stay back.</div>
+        <button class="i" data-bubble="s5" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s5">
+        <p>At 15+ seconds period, stay completely clear of the shore and any rocks.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title"><span class="item-num">6</span>Long-period swells create &#8220;sneaker waves,&#8221; sometimes called &#8220;sleeper waves,&#8221;</div>
+        <button class="i" data-bubble="s6" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-s6">
+        <p>because they produce sets of waves separated by long periods of relative calm. That calm can create a false sense of security — people approach the shore and are not anticipating the next set when it arrives, leaving no time to retreat. These circumstances are predictable and deaths from being swept in are preventable.</p>
+      </div>
+    </div>
+    </div>
+    </div>
   </div>
 
   <footer>
-    Live data: NOAA Buoy 46013 — Bodega Bay<br>
-    Sonoma County Coast · California State Parks<br>
-
-      <div class="disclaimer">
-      This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.
+    <div class="item">
+      <div class="head-row">
+        <div class="item-title">About this data</div>
+        <button class="i" data-bubble="about" aria-expanded="false">i</button>
+      </div>
+      <div class="bubble" id="bubble-about">
+        <p>Live data: NOAA Buoy 46013 — Bodega Bay. NWS zone CAZ112.</p>
+        <p>This tool displays publicly available NOAA buoy data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
+      </div>
     </div>
+    <div class="footer-line">oceansafety.info</div>
   </footer>
+
 </div>
 
 <script>
@@ -294,14 +420,15 @@
   }
 
   function calcDangerLevel(heightFt, periodSec, swellDirDeg) {
-    // Surge beach — height is primary hazard
+    // Break beach, standard — period is primary hazard
     let level;
-    if (heightFt >= 10 || (heightFt >= 7 && periodSec >= 15)) level = 'extreme';
-    else if (heightFt >= 7 || (heightFt >= 5 && periodSec >= 12))  level = 'high';
-    else if (heightFt >= 4 || periodSec >= 12)                     level = 'moderate';
-    else                                                            level = 'low';
+    if (periodSec >= 20 || (heightFt >= 10 && periodSec >= 16))             level = 'extreme';
+    else if (periodSec >= 15 || (heightFt >= 8 && periodSec >= 12) || heightFt >= 10) level = 'high';
+    else if (periodSec >= 12)                                                level = 'moderate';
+    else                                                                     level = 'low';
     return applyDirectionMod(level, swellDirDeg);
   }
+
   let lastData = null;
   let overrideLevel = null;
 
@@ -324,38 +451,37 @@
     const headers = headerLine.replace(/^#/, '').trim().split(/[ \t]+/);
     const dataLines = allLines.filter(l => !l.startsWith('#'));
     if (!dataLines.length) return null;
-    // Parse all rows into objects
     const rows = dataLines.slice(0, 20).map(line => {
       const vals = line.trim().split(/[ \t]+/);
       const r = {};
       headers.forEach((h, i) => { r[h] = vals[i]; });
       return r;
     });
-    // Find best value for each field — first row that isn't MM
     function bestVal(field) {
       const SENTINEL = new Set(['MM','999','9999','99.0','999.0','9999.0']);
       const r = rows.find(r => r[field] && !SENTINEL.has(r[field]));
       return r ? r[field] : null;
     }
-    // Timestamp from first row
     const r0 = rows[0];
     const yr = parseInt(r0['YY']) + (parseInt(r0['YY']) < 50 ? 2000 : 1900);
     const ts = new Date(Date.UTC(yr, parseInt(r0['MM'])-1, parseInt(r0['DD']),
                                  parseInt(r0['hh']), parseInt(r0['mm'])));
-    const wvhtRaw = bestVal('WVHT');
-    const dpdRaw  = bestVal('DPD');
-    const wtmpRaw = bestVal('WTMP');
-    const mwdRaw  = bestVal('MWD');
-    const wvhtM = parseFloat(wvhtRaw);
-    const dpd   = parseFloat(dpdRaw);
-    const wtmpC = parseFloat(wtmpRaw);
-    const mwd   = parseFloat(mwdRaw);
+    const wvhtM = parseFloat(bestVal('WVHT'));
+    const dpd   = parseFloat(bestVal('DPD'));
+    const wtmpC = parseFloat(bestVal('WTMP'));
+    const mwd   = parseFloat(bestVal('MWD'));
+    const atmpC = parseFloat(bestVal('ATMP'));
+    const wdir  = parseFloat(bestVal('WDIR'));
+    const wspd  = parseFloat(bestVal('WSPD'));
     return {
       timestamp:      ts,
       waveHeightFt:   isNaN(wvhtM) ? null : wvhtM * 3.28084,
       swellPeriodSec: isNaN(dpd)   ? null : dpd,
       waterTempF:     isNaN(wtmpC) ? null : wtmpC * 9/5 + 32,
       swellDirDeg:    isNaN(mwd)   ? null : mwd,
+      airTempF:       isNaN(atmpC) ? null : atmpC * 9/5 + 32,
+      windDirDeg:     isNaN(wdir)  ? null : wdir,
+      windSpeedKt:    isNaN(wspd)  ? null : wspd * 1.94384
     };
   }
 
@@ -369,36 +495,48 @@
 
   function renderConditions(data, stale) {
     if (!data) {
-      ['buoyTime','waveHeight','swellPeriod','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
+      ['waveHeight','swellPeriod','swellDir','airTemp','waterTemp','windReading'].forEach(id => document.getElementById(id).textContent = '—');
       return;
     }
     lastData = data;
     const ageHours = (new Date() - data.timestamp) / 3600000;
-    const tsEl = document.getElementById('buoyTime');
-    tsEl.textContent = data.timestamp.toLocaleDateString('en-US', {month:'short', day:'numeric'})
-      + ' ' + data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
     const linkEl = document.getElementById('buoyLink');
     if (linkEl) linkEl.href = `https://www.ndbc.noaa.gov/station_page.php?station=${BUOY_ID}`;
     if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
+
     const hEl = document.getElementById('waveHeight');
     hEl.textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
     hEl.className = 'metric-value';
+
     const dEl = document.getElementById('swellDir');
-    if (dEl) { dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—'; dEl.className = 'metric-value'; }
+    if (dEl) {
+      dEl.textContent = (data.swellDirDeg !== null && data.swellDirDeg !== undefined) ? degToCompass(data.swellDirDeg) : '—';
+      dEl.className = 'metric-value';
+    }
+
     const pEl = document.getElementById('swellPeriod');
     const periodVal = (data.swellPeriodSec !== null && data.swellPeriodSec !== undefined) ? Math.round(data.swellPeriodSec) : null;
-    if (periodVal !== null && periodVal >= 15) {
-      pEl.textContent = '!' + periodVal;
-      pEl.className = 'metric-value period-danger';
+    pEl.textContent = periodVal !== null ? periodVal : '—';
+    pEl.className = (periodVal !== null && periodVal >= 15) ? 'metric-value period-danger' : 'metric-value';
+
+    const aEl = document.getElementById('airTemp');
+    aEl.textContent = (data.airTempF !== null && data.airTempF !== undefined) ? Math.round(data.airTempF) + '°F' : '—';
+
+    const wEl = document.getElementById('waterTemp');
+    wEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) + '°F' : '—';
+
+    const windEl = document.getElementById('windReading');
+    if (data.windSpeedKt !== null && data.windSpeedKt !== undefined) {
+      const dir = (data.windDirDeg !== null && data.windDirDeg !== undefined) ? degToCompass(data.windDirDeg) + ' ' : '';
+      windEl.textContent = dir + Math.round(data.windSpeedKt) + ' kt';
     } else {
-      pEl.textContent = periodVal !== null ? periodVal : '—';
-      pEl.className = 'metric-value';
+      windEl.textContent = '—';
     }
-    const tEl = document.getElementById('waterTemp');
-    tEl.textContent = (data.waterTempF !== null && data.waterTempF !== undefined) ? Math.round(data.waterTempF) : '—';
-    tEl.className = 'metric-value';
-    const period = data.swellPeriodSec || 0;
-    document.getElementById('buoySource').textContent = BUOY_NAME + (overrideLevel ? ' · Manual Override Active' : '');
+
+    const stamp = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('buoySource').textContent =
+      BUOY_NAME + ' · ' + stamp + (overrideLevel ? ' · Manual Override Active' : '');
   }
 
   async function init() {
@@ -406,12 +544,13 @@
     if (data) { renderConditions(data, false); }
     else {
       renderConditions(null, true);
-      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" style="color:#f5d060">Check NOAA directly →</a>';
+      document.getElementById('staleWarning').innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank">Check NOAA directly →</a>';
       document.getElementById('staleWarning').classList.add('visible');
       document.getElementById('dangerValue').textContent = 'Check Conditions';
       document.getElementById('dangerValue').className = 'nws-value level-high';
     }
   }
+
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
@@ -442,6 +581,25 @@
       if (dv) { dv.textContent = 'Advisory unavailable'; dv.className = 'nws-value level-loading'; }
     }
   }
+
+  // collapsible sections
+  document.querySelectorAll('.section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = document.getElementById('section-' + btn.dataset.section);
+      const open = body.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.sign').textContent = open ? '−' : '+';
+    });
+  });
+
+  // info bubbles
+  document.querySelectorAll('.i').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById('bubble-' + btn.dataset.bubble);
+      const open = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
 
   init();
   fetchNWSAdvisory();
