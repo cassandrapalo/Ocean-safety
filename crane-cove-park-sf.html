@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#11504D">
-<title>Thornton State Beach — Ocean Safety</title>
+<title>Crane Cove Park — Ocean Safety</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
@@ -193,46 +193,23 @@
   <a class="back-link" href="beaches.html">← All Beaches</a>
 
   <header>
-    <div class="county-label">San Mateo County · Daly City</div>
-    <h1>Thornton State Beach</h1>
-    <div class="beach-type">Daly City · Bluffs · Faces W · Seasonal Lifeguard Trucks</div>
+    <div class="county-label">San Francisco County · Dogpatch / Central Waterfront</div>
+    <h1>Crane Cove Park</h1>
+    <div class="beach-type">Dogpatch · Shoreline · Faces E · No Lifeguard</div>
   </header>
 
   <div class="conditions-card level-loading" id="conditionsCard">
     <div class="conditions-header">
       <div>
         <div class="nws-label">National Weather Service</div>
-        <a class="nws-value" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ529" target="_blank" rel="noopener">Loading…</a>
+        <a class="nws-value" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ006" target="_blank" rel="noopener">Loading…</a>
       </div>
-      <a class="buoy-corner" id="buoyLink" href="https://www.ndbc.noaa.gov/station_page.php?station=46012" target="_blank" rel="noopener"><span>Buoy</span>46012 ↗</a>
+      <a class="buoy-corner" id="buoyLink" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=9414290" target="_blank" rel="noopener"><span>Tides</span>9414290 ↗</a>
     </div>
 
     <div class="stale-warning" id="staleWarning">⚠ Data may be stale — showing last known reading. Conditions may have changed.</div>
 
     <div class="metrics">
-      <div class="metric hero">
-        <div class="metric-label">Dominant Period</div>
-        <div class="period-cap">Seconds between crests</div>
-        <svg class="period-wave" id="periodWave" viewBox="0 -2 160 60" role="img" aria-label="An arrow spanning one wave crest to the next">
-          <path class="w" d="M0,21 L2,19.1 L4,17.3 L6,15.7 L8,14.2 L10,12.9 L12,11.9 L14,11.1 L16,10.5 L18,10.1 L20,10 L22,10.1 L24,10.5 L26,11.1 L28,11.9 L30,12.9 L32,14.2 L34,15.7 L36,17.3 L38,19.1 L40,21 L42,23.1 L44,25.2 L46,27.4 L48,29.7 L50,32 L52,34.3 L54,36.6 L56,38.8 L58,40.9 L60,43 L62,44.9 L64,46.7 L66,48.3 L68,49.8 L70,51.1 L72,52.1 L74,52.9 L76,53.5 L78,53.9 L80,54 L82,53.9 L84,53.5 L86,52.9 L88,52.1 L90,51.1 L92,49.8 L94,48.3 L96,46.7 L98,44.9 L100,43 L102,40.9 L104,38.8 L106,36.6 L108,34.3 L110,32 L112,29.7 L114,27.4 L116,25.2 L118,23.1 L120,21 L122,19.1 L124,17.3 L126,15.7 L128,14.2 L130,12.9 L132,11.9 L134,11.1 L136,10.5 L138,10.1 L140,10 L142,10.1 L144,10.5 L146,11.1 L148,11.9 L150,12.9 L152,14.2 L154,15.7 L156,17.3 L158,19.1 L160,21"></path>
-          <line class="a" x1="25" y1="3" x2="135" y2="3"></line>
-          <path class="h" d="M20,3 L27,-0.5 L27,6.5 Z"></path>
-          <path class="h" d="M140,3 L133,-0.5 L133,6.5 Z"></path>
-        </svg>
-        <div class="metric-value" id="swellPeriod">—</div>
-        <div class="metric-unit">seconds</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Swell Height</div>
-        <div class="metric-value" id="waveHeight">—</div>
-        <div class="metric-unit">feet at the buoy</div>
-        <a class="true-swell" href="https://www.ndbc.noaa.gov/station_page.php?station=46012" target="_blank" rel="noopener">True swell ↗</a>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Swell Direction</div>
-        <div class="metric-value" id="swellDir">—</div>
-        <div class="metric-unit">swell from</div>
-      </div>
       <div class="metric wide wind-row">
         <svg class="compass" viewBox="0 0 52 52" width="52" height="52" aria-hidden="true">
           <circle class="ring" cx="26" cy="26" r="23"></circle>
@@ -240,7 +217,7 @@
           <g class="arrow" id="windArrow" transform="rotate(0 26 26)" style="display:none"><line x1="26" y1="42" x2="26" y2="13"></line><path d="M26,9 L21,18 L31,18 Z"></path></g>
         </svg>
         <div class="wind-main">
-          <div class="metric-label">Wind from · buoy</div>
+          <div class="metric-label">Wind from · buoy 46026</div>
           <div><span class="wind-val" id="windVal">—</span> <span class="wind-sub" id="windSub"></span></div>
         </div>
         <span class="chip" id="windRel" hidden></span>
@@ -248,105 +225,64 @@
       <div class="metric wide tide-row">
         <div class="tide-head">
           <div class="metric-label">Tides today · feet</div>
-          <a class="tide-link" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=9414275" target="_blank" rel="noopener">9414275 Ocean Beach, outer coast ↗</a>
+          <a class="tide-link" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=9414290" target="_blank" rel="noopener">9414290 San Francisco (Golden Gate) ↗</a>
         </div>
         <div class="tide-chart" id="tideChart"><div class="tide-none">Loading tide predictions…</div></div>
       </div>
     </div>
 
-    <div class="strip">
-      <div><div class="s-label">Air</div><div class="s-value" id="airTemp">—</div></div>
-      <div><div class="s-label">Water</div><div class="s-value" id="waterTemp">—</div></div>
-    </div>
-
     <div class="card-foot">
-      <div class="buoy-source" id="buoySource">NOAA Buoy 46012 — Half Moon Bay</div>
+      <div class="buoy-source" id="buoySource">Sheltered bay shore · wind from NOAA Buoy 46026</div>
       <button class="i" data-bubble="readings" aria-expanded="false" aria-label="What these readings mean">i</button>
     </div>
     <div class="bubble" id="bubble-readings">
-      <p><span class="term">Dominant period.</span> The wave period carrying the most energy, which is the time for two successive crests to pass a fixed point. It is always either the swell period or the wind wave period. It is not the time between sets.</p>
-      <p><span class="term">Swell height.</span> Measured at the buoy, miles offshore, in open water. NOAA reports it as the average height of the highest one third of the waves over a twenty minute sample, so many waves are smaller and some are larger. The figure combines swell with locally generated wind waves. Tap True swell for NOAA's separated swell figures.</p>
-      <p><span class="term">This is not the height of the wave that reaches you.</span> Waves grow as they move into shallow water, and how far the water runs up the beach depends on the slope of that particular beach. Research on the Oregon coast measured run-up elevations ranging from 26 to 61 percent of the offshore wave height along a single beach on a single day, varying with the slope of the sand. On steep shores, run-up can far exceed the offshore figure.</p>
-      <p><span class="term">Swell direction.</span> The direction the waves at the dominant period are coming from, not the direction they are heading.</p>
-      <p><span class="term">Wind.</span> The direction the wind is coming from at the buoy, offshore, with speed averaged over an eight minute period and the highest gust in that time, in miles per hour. This beach faces W. Onshore means the wind is blowing from the water toward this beach, offshore means it is blowing from the land out to sea, and cross-shore means it is blowing along the beach.</p>
-      <p><span class="term">Tides.</span> NOAA's predicted high and low tides for station 9414275, Ocean Beach, outer coast, in feet above mean lower low water. These are predictions, not measurements. Wind and swell can push water higher than predicted.</p>
-      <p><span class="term">Air and water.</span> Measured at the buoy, offshore. Not the temperature on the sand.</p>
-      <p class="source">Definitions: NOAA National Data Buoy Center — Measurement Descriptions and Units. Tides: NOAA CO-OPS tide predictions. Run-up: Ruggiero, Holman and Beach (2004), Wave run-up on a high-energy dissipative beach, Journal of Geophysical Research.</p>
+      <p><span class="term">Why no swell numbers.</span> This shore is sheltered inside the bay, so offshore swell readings do not describe the water here. The card shows wind and tide instead.</p>
+      <p><span class="term">Wind.</span> The direction the wind is coming from, measured at NOAA Buoy 46026 offshore, with speed averaged over an eight minute period and the highest gust in that time, in miles per hour. Wind on the bay can differ from the buoy. This shore faces E. Onshore means the wind is blowing from the water toward this shore, offshore means it is blowing from the land out over the water.</p>
+      <p><span class="term">Tides.</span> NOAA's predicted high and low tides for station 9414290, San Francisco (Golden Gate), in feet above mean lower low water. These are predictions, not measurements.</p>
+      <p class="source">Sources: NOAA National Data Buoy Center; NOAA CO-OPS tide predictions.</p>
     </div>
   </div>
 
   <div class="info-section">
-    <div class="section-label">Known Hazards at Thornton</div>
+    <div class="section-label">Known Hazards at Crane Cove</div>
     <div class="item hazard">
       <div class="head-row">
-        <div class="item-title">Long-Period Swell & Set Waves</div>
+        <div class="item-title">Seawall &amp; Riprap</div>
         <button class="i" data-bubble="h1" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-h1">
-        <p>Read the conditions card above. Waves travel in sets separated by long, quiet intervals — sometimes as long as 20 minutes of calm. On long period days, stay aware! During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
-        <p class="source">Source: NPS / SF Fire Dept / NOAA — Joint Coastal Safety Advisory (sf-fire.org); NOAA National Weather Service Beach Hazards guidance</p>
+        <p>Swimming prohibited by the Port: jagged armor stone and submerged industrial remnants.</p>
+        <p class="source">Source: <a href="https://www.sfport.com/node/6938" target="_blank" rel="noopener">sfport.com</a> · <a href="https://www.sfpuc.gov/programs/ocean-and-beach-monitoring" target="_blank" rel="noopener">sfpuc.gov</a></p>
       </div>
     </div>
     <div class="item hazard">
       <div class="head-row">
-        <div class="item-title">Active Cliff Erosion</div>
+        <div class="item-title">Boat Traffic &amp; Wakes</div>
         <button class="i" data-bubble="h2" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-h2">
-        <p>The bluffs above Thornton Beach are actively eroding and collapse without warning. Stay clear of the cliff face at all times. Do not stand beneath or near the bluffs. Fatalities have occurred at this beach.</p>
-        <p class="source">Source: California State Parks — Thornton State Beach (parks.ca.gov)</p>
+        <p>Adjacent active shipyard and tugboat turbulence. Planned ferry terminal (2027).</p>
+        <p class="source">Source: <a href="https://www.sfport.com/node/6938" target="_blank" rel="noopener">sfport.com</a> · <a href="https://www.sfpuc.gov/programs/ocean-and-beach-monitoring" target="_blank" rel="noopener">sfpuc.gov</a></p>
       </div>
     </div>
     <div class="item hazard">
       <div class="head-row">
-        <div class="item-title">Rock & Debris on Beach</div>
+        <div class="item-title">Water Quality</div>
         <button class="i" data-bubble="h3" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-h3">
-        <p>Fallen rock and eroded material create unstable surfaces. Combined with wave surge, footing near the water is dangerous.</p>
-        <p class="source">Source: California State Parks — Thornton State Beach (parks.ca.gov)</p>
+        <p>Combined sewer outfall near Mariposa St discharges during storms.</p>
+        <p class="source">Source: <a href="https://www.sfport.com/node/6938" target="_blank" rel="noopener">sfport.com</a> · <a href="https://www.sfpuc.gov/programs/ocean-and-beach-monitoring" target="_blank" rel="noopener">sfpuc.gov</a></p>
       </div>
     </div>
     <div class="item hazard">
       <div class="head-row">
-        <div class="item-title">Cold Water — Year Round</div>
+        <div class="item-title">No Lifeguards</div>
         <button class="i" data-bubble="h4" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-h4">
-        <p>Pacific water along this coast runs cold year round. Hypothermia can set in quickly.</p>
-        <p class="source">Source: California State Parks — Ocean Safety (parks.ca.gov/OceanSafety); NOAA / NPS GGNRA Joint Coastal Safety Advisory</p>
-      </div>
-    </div>
-    <div class="item hazard">
-      <div class="head-row">
-        <div class="item-title">Rip Currents</div>
-        <button class="i" data-bubble="h5" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-h5">
-        <p>Rip currents pull water away from shore. They can look like calmer, darker water with fewer breaking waves, which can make them look like a better place to swim. If caught in one, swim parallel to shore.</p>
-        <p>Fully exposed to NW groundswell, so expect sneaker waves and rip currents.</p>
-        <p class="source">Source: <a href="https://en.wikipedia.org/wiki/Thornton_State_Beach" target="_blank" rel="noopener">en.wikipedia.org</a> · <a href="https://localnewsmatters.org/2026/02/24/illegal-fence-thornton-state-beach-access-comes-down/" target="_blank" rel="noopener">localnewsmatters.org</a></p>
-      </div>
-    </div>
-    <div class="item hazard">
-      <div class="head-row">
-        <div class="item-title">Remote Location</div>
-        <button class="i" data-bubble="h6" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-h6">
-        <p>This beach is remote. Cell service may be limited and help can take a long time to arrive. Tell someone your plans.</p>
-        <p>Remote, with limited emergency vehicle access.</p>
-        <p class="source">Source: <a href="https://en.wikipedia.org/wiki/Thornton_State_Beach" target="_blank" rel="noopener">en.wikipedia.org</a> · <a href="https://localnewsmatters.org/2026/02/24/illegal-fence-thornton-state-beach-access-comes-down/" target="_blank" rel="noopener">localnewsmatters.org</a></p>
-      </div>
-    </div>
-    <div class="item hazard">
-      <div class="head-row">
-        <div class="item-title">Seasonal Lifeguard Patrols, No Tower</div>
-        <button class="i" data-bubble="h7" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-h7">
-        <p>State Parks San Mateo Sector seasonal roving lifeguard patrol in trucks (covers all state beaches on the San Mateo coast). No fixed tower here.</p>
-        <p class="source">Source: <a href="https://parks.ca.gov/?page_id=24009" target="_blank" rel="noopener">parks.ca.gov</a> · <a href="https://castateparks.wordpress.com/2024/08/30/adventure-of-the-month-keeping-coast-and-visitors-safe-at-half-moon-bay-state-beach/" target="_blank" rel="noopener">castateparks</a></p>
+        <p>No lifeguards; swimming prohibited (wading only to nearest buoy line).</p>
+        <p class="source">Managed by Port of San Francisco</p>
       </div>
     </div>
   </div>
@@ -354,10 +290,6 @@
   <div class="emergency">
     <div class="e-label">Ocean Emergency</div>
     <a class="number" href="tel:911">911</a>
-    <span class="contact-who">Daly City Fire</span>
-    <a class="contact-line" href="tel:+16509918100">(650) 991-8100</a>
-    <span class="contact-who">CA State Parks Emergency</span>
-    <a class="contact-line" href="tel:+18009525580">(800) 952-5580</a>
     <span class="contact-who">USCG San Francisco</span>
     <a class="contact-line" href="tel:+14153993547">(415) 399-3547</a>
   </div>
@@ -369,136 +301,47 @@
     <div class="section-body" id="section-rules">
     <div class="item">
       <div class="head-row">
-        <div class="item-title"><span class="item-num">01</span>Read the swell period before you approach the water.</div>
+        <div class="item-title"><span class="item-num">01</span>Check the tide.</div>
         <button class="i" data-bubble="r1" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-r1">
-        <p>The dominant period in the card above is your warning. Longer periods mean sets arrive with long, quiet intervals between them — sometimes up to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
+        <p>The tide chart in the card above shows today's highs and lows. Bay water moves with the tide, and an outgoing tide pulls water toward the open ocean.</p>
       </div>
     </div>
     <div class="item">
       <div class="head-row">
-        <div class="item-title"><span class="item-num">02</span>Watch the ocean.</div>
+        <div class="item-title"><span class="item-num">02</span>Bay water is cold year round.</div>
         <button class="i" data-bubble="r2" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-r2">
-        <p>Stay on dry sand. Do not approach wet sand or the water's edge until you have watched the ocean and learned the rhythm of the sets.</p>
+        <p>Cold water shock can take your breath away within the first minute. Enter slowly, and do not swim alone.</p>
       </div>
     </div>
     <div class="item">
       <div class="head-row">
-        <div class="item-title"><span class="item-num">03</span>Wet rocks or sand mark where the ocean has already been.</div>
+        <div class="item-title"><span class="item-num">03</span>Watch for boats and wakes.</div>
         <button class="i" data-bubble="r3" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-r3">
-        <p>If the rocks or sand are wet, a wave reached them recently. Stay above the wet line — always.</p>
+        <p>Boat wakes can reach the shore long after a vessel has passed.</p>
       </div>
     </div>
     <div class="item">
       <div class="head-row">
-        <div class="item-title"><span class="item-num">04</span>A long wait between waves is a warning.</div>
+        <div class="item-title"><span class="item-num">04</span>Keep dogs on leash.</div>
         <button class="i" data-bubble="r4" aria-expanded="false" aria-label="More information">i</button>
       </div>
       <div class="bubble" id="bubble-r4">
-        <p>During long period swells, stay vigilant. The ocean may appear completely calm between sets. Do not be fooled. If it has been calm for several minutes, stay back. Do not walk toward the water.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">05</span>Check the tide.</div>
-        <button class="i" data-bubble="r5" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-r5">
-        <p>A higher tide lets waves run farther up the beach and closer to the base of bluffs and rocks. The tide chart in the card above shows today's highs and lows.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">06</span>Keep dogs on leash.</div>
-        <button class="i" data-bubble="r6" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-r6">
         <p>Keep dogs on leash and away from the water's edge.</p>
       </div>
     </div>
     <div class="item">
       <div class="head-row">
-        <div class="item-title"><span class="item-num">07</span>Tell someone your plans.</div>
-        <button class="i" data-bubble="r7" aria-expanded="false" aria-label="More information">i</button>
+        <div class="item-title"><span class="item-num">05</span>Tell someone your plans.</div>
+        <button class="i" data-bubble="r5" aria-expanded="false" aria-label="More information">i</button>
       </div>
-      <div class="bubble" id="bubble-r7">
+      <div class="bubble" id="bubble-r5">
         <p>Leave your destination and expected return time with someone before you go.</p>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="info-section">
-    <button class="section-toggle" data-section="sets" aria-expanded="false">
-      <span class="label">How to Read Sets</span><span class="sign">+</span>
-    </button>
-    <div class="section-body" id="section-sets">
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title">Long-period swell travels in sets.</div>
-        <button class="i" data-bubble="s0" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s0">
-        <p>Long-period swell doesn't produce a steady stream of waves. It travels in <em>sets</em> — groups of larger waves separated by long, quiet intervals. Those intervals can stretch to 20 minutes of calm. During the quiet periods between sets, energy is building offshore. People who walk to the water's edge during the lull are swept in when a set arrives.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">1</span>Find a high vantage point above the water line.</div>
-        <button class="i" data-bubble="s1" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s1">
-        <p>Do not approach the shore first. Watch from above.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">2</span>Time the quiet intervals.</div>
-        <button class="i" data-bubble="s2" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s2">
-        <p>Count the seconds — or minutes — between large waves. This is your set interval.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">3</span>Watch for at least 15 minutes.</div>
-        <button class="i" data-bubble="s3" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s3">
-        <p>You need to see multiple sets before you understand the rhythm. One quiet stretch means nothing.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">4</span>The largest wave in a set is not always the first.</div>
-        <button class="i" data-bubble="s4" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s4">
-        <p>Sets build in size. The final wave is frequently the biggest.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">5</span>When in doubt, stay back.</div>
-        <button class="i" data-bubble="s5" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s5">
-        <p>On long-period days, stay completely clear of the shore and any rocks.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="head-row">
-        <div class="item-title"><span class="item-num">6</span>Long-period swells create &#8220;sneaker waves,&#8221; sometimes called &#8220;sleeper waves,&#8221;</div>
-        <button class="i" data-bubble="s6" aria-expanded="false" aria-label="More information">i</button>
-      </div>
-      <div class="bubble" id="bubble-s6">
-        <p>because they produce sets of waves separated by long periods of relative calm. That calm can create a false sense of security — people approach the shore and are not anticipating the next set when it arrives, leaving no time to retreat. These circumstances are predictable and deaths from being swept in are preventable.</p>
       </div>
     </div>
     </div>
@@ -511,7 +354,7 @@
         <button class="i" data-bubble="about" aria-expanded="false" aria-label="About this data">i</button>
       </div>
       <div class="bubble" id="bubble-about">
-        <p>Live data: NOAA Buoy 46012 — Half Moon Bay. Tides: NOAA station 9414275, Ocean Beach, outer coast. NWS zone CAZ529 · CAZ006.</p>
+        <p>Wind: NOAA Buoy 46026 — San Francisco Bar. Tides: NOAA station 9414290, San Francisco (Golden Gate). NWS zone CAZ006.</p>
         <p>This tool displays publicly available NOAA buoy and tide data. It is provided for informational purposes only and does not constitute safety advice. Data may be delayed, incomplete, or inaccurate. Conditions at the water can differ from buoy readings. This tool does not account for all hazards. Use your own judgment. When in doubt, stay out.</p>
       </div>
     </div>
@@ -522,11 +365,11 @@
 </div>
 
 <script>
-  const BUOY_ID = '46012';
-  const BUOY_NAME = 'NOAA Buoy 46012 — Half Moon Bay';
-  const TIDE_ID = '9414275';
-  const NWS_ZONES = ["CAZ529", "CAZ006"];
-  const BEACH_FACING = 270;
+  const BUOY_ID = '46026';
+  const BUOY_NAME = 'NOAA Buoy 46026 — San Francisco Bar';
+  const TIDE_ID = '9414290';
+  const NWS_ZONES = ["CAZ006"];
+  const BEACH_FACING = 90;
   const STALE_HOURS = 3;
   const HAS_CURRENT = false;
 
@@ -745,37 +588,31 @@
     });
   });
 
-  function renderConditions(data, stale) {
-    if (!data) {
-      ['waveHeight','swellPeriod','swellDir','airTemp','waterTemp'].forEach(id => document.getElementById(id).textContent = '—');
-      renderWind(null);
-      return;
-    }
-    const ageHours = (new Date() - data.timestamp) / 3600000;
-    if (stale || ageHours > STALE_HOURS) document.getElementById('staleWarning').classList.add('visible');
-    document.getElementById('waveHeight').textContent = data.waveHeightFt ? data.waveHeightFt.toFixed(1) : 'MM';
-    document.getElementById('swellDir').textContent = data.swellDirDeg !== null ? degToCompass(data.swellDirDeg) : '—';
-    const pEl = document.getElementById('swellPeriod');
-    const periodVal = data.swellPeriodSec !== null ? Math.round(data.swellPeriodSec) : null;
-    pEl.textContent = periodVal !== null ? periodVal : '—';
-    const danger = periodVal !== null && periodVal >= 15;
-    pEl.className = danger ? 'metric-value period-danger' : 'metric-value';
-    document.getElementById('periodWave').classList.toggle('danger', danger);
-    document.getElementById('airTemp').textContent = data.airTempF !== null ? Math.round(data.airTempF) + '°F' : '—';
-    document.getElementById('waterTemp').textContent = data.waterTempF !== null ? Math.round(data.waterTempF) + '°F' : '—';
-    renderWind(data);
-    const stamp = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    document.getElementById('buoySource').textContent = BUOY_NAME + ' · ' + stamp;
+  async function fetchCurrent() {
+    try {
+      const res = await fetch(WORKER + '?coops=SFB1203', { cache: 'no-cache' });
+      if (!res.ok) throw new Error();
+      const json = await res.json();
+      if (!json || !json.current_predictions || !json.current_predictions.cp) return null;
+      const now = new Date(); let prev = null;
+      for (const p of json.current_predictions.cp) { if (new Date(p.Time) <= now) prev = p; }
+      if (!prev) return null;
+      const v = parseFloat(prev.Velocity_Major || prev.Speed || 0);
+      return { speedKnots: Math.abs(v), isOutgoing: (prev.Type === 'ebb' || v < 0) };
+    } catch(e) { return null; }
   }
 
   async function init() {
     const data = await fetchBuoyData();
-    if (data) { renderConditions(data, false); }
-    else {
-      renderConditions(null, true);
-      const w = document.getElementById('staleWarning');
-      w.innerHTML = '⚠ Live data unavailable. <a href="https://www.ndbc.noaa.gov/station_page.php?station=' + BUOY_ID + '" target="_blank" rel="noopener">Check NOAA directly →</a>';
-      w.classList.add('visible');
+    renderWind(data);
+    if (data) {
+      const stamp = data.timestamp.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      document.getElementById('buoySource').textContent = 'Sheltered bay shore · wind from NOAA Buoy ' + BUOY_ID + ' · ' + stamp;
+    }
+    if (HAS_CURRENT) {
+      const c = await fetchCurrent();
+      document.getElementById('currentSpeed').textContent = c ? c.speedKnots.toFixed(1) : '—';
+      document.getElementById('tideDir').textContent = c ? (c.isOutgoing ? 'Ebb · running out to sea' : 'Flood · running into the Bay') : '—';
     }
   }
 
