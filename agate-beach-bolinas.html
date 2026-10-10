@@ -49,6 +49,7 @@
   .conditions-card.level-loading { --signal:#3E4A52; --pill:#E9EEF0; }
   .conditions-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:8px 12px; }
   .nws-label { font-family:'Roboto Mono',monospace; font-size:var(--lab); font-weight:500; letter-spacing:var(--track); text-transform:uppercase; margin-bottom:8px; }
+  .nws-what { font-size:16px; line-height:1.45; margin-top:9px; max-width:44ch; }
   .nws-value { display:inline-block; font-weight:800; font-size:22px; line-height:1.15; letter-spacing:-.01em; color:var(--signal); background:var(--pill); border-radius:999px; padding:7px 14px; text-decoration:none; }
   .buoy-corner { font-family:'Roboto Mono',monospace; font-size:16px; font-weight:500; color:var(--ink); text-decoration:none; text-align:right; white-space:nowrap; line-height:1.4; }
   .buoy-corner span { font-size:var(--lab); display:block; letter-spacing:var(--track); text-transform:uppercase; }
@@ -203,6 +204,7 @@
       <div>
         <div class="nws-label">National Weather Service</div>
         <a class="nws-value" id="dangerValue" href="https://forecast.weather.gov/MapClick.php?zoneid=CAZ507" target="_blank" rel="noopener">Loading…</a>
+        <p class="nws-what" id="nwsWhat" hidden></p>
       </div>
       <a class="buoy-corner" id="buoyLink" href="https://www.ndbc.noaa.gov/station_page.php?station=46026" target="_blank" rel="noopener"><span>Buoy</span>46026 ↗</a>
     </div>
@@ -686,23 +688,44 @@
   let tideTimer = null;
   window.addEventListener('resize', () => { clearTimeout(tideTimer); tideTimer = setTimeout(drawTides, 150); });
 
+
+  // The Weather Service's own words for the hazard: the WHAT line of the alert, else its headline.
+  function nwsWhat(p) {
+    if (!p) return '';
+    const d = p.description || '';
+    const m = d.match(/\*\s*WHAT\.\.\.([\s\S]*?)(?:\n\s*\n|\n\s*\*|$)/);
+    let t = m ? m[1] : ((p.parameters && p.parameters.NWSheadline && p.parameters.NWSheadline[0]) || p.headline || '');
+    t = t.replace(/\s+/g, ' ').trim();
+    if (t.length > 220) t = t.slice(0, 217).replace(/\s+\S*$/, '') + '…';
+    return t;
+  }
+
   async function fetchNWSAdvisory() {
     const card = document.getElementById('conditionsCard');
     const dv = document.getElementById('dangerValue');
     try {
-      const zonesParam = NWS_ZONES.map(z => 'zone=' + z).join('&');
-      const url = 'https://api.weather.gov/alerts/active?' + zonesParam + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement';
-      const res = await fetch(url, { headers: { 'User-Agent': 'oceansafety.info, contact@oceansafety.info' } });
-      if (!res.ok) throw new Error();
-      const data = await res.json();
+      // One request per zone, then combine.
+      const results = await Promise.all(NWS_ZONES.map(async z => {
+        try {
+          const r = await fetch('https://api.weather.gov/alerts/active?zone=' + z + '&event=High+Surf+Warning,High+Surf+Advisory,Beach+Hazards+Statement');
+          if (!r.ok) return null;
+          const j = await r.json();
+          return j.features || [];
+        } catch(e) { return null; }
+      }));
+      if (results.every(x => x === null)) throw new Error('all zones failed');
+      const data = { features: results.filter(Boolean).flat() };
       const alerts = data.features || [];
       const PRIORITY = {'High Surf Warning': 3, 'High Surf Advisory': 2, 'Beach Hazards Statement': 1};
       const LEVELS = {'High Surf Warning': 'extreme', 'High Surf Advisory': 'high', 'Beach Hazards Statement': 'moderate'};
-      let best = null;
+      let best = null, bestProps = null;
       alerts.forEach(a => {
         const ev = a.properties && a.properties.event;
-        if (PRIORITY[ev] && (!best || PRIORITY[ev] > PRIORITY[best])) best = ev;
+        if (PRIORITY[ev] && (!best || PRIORITY[ev] > PRIORITY[best])) { best = ev; bestProps = a.properties; }
       });
+      const what = document.getElementById('nwsWhat'), wt = best ? nwsWhat(bestProps) : '';
+      what.textContent = wt ? '“' + wt + '” · National Weather Service' : '';
+      what.hidden = !wt;
       const lv = best ? LEVELS[best] : 'low';
       card.className = 'conditions-card level-' + lv;
       dv.textContent = best ? best + ' ↗' : 'No Active Advisory ↗';
